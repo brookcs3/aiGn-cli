@@ -1,0 +1,362 @@
+{
+  "engineer|90291": {
+    "success": true,
+    "jobs": [
+      {
+        "title": "Information Technology Development Operations Engineer II",
+        "company": "L.A. Care Health Plan",
+        "location": "Los Angeles, CA",
+        "salary_min": 105267.0,
+        "salary_max": 173689.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1009769568824",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 99
+      },
+      {
+        "title": "2026 New Graduate - Electrical Engineer",
+        "company": "Radiant",
+        "location": "El Segundo, CA",
+        "salary_min": 95741.0,
+        "salary_max": 139064.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011376511",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 99
+      },
+      {
+        "title": "Cloud Engineer",
+        "company": "Live Nation",
+        "location": "Los Angeles, CA",
+        "salary_min": 122000.0,
+        "salary_max": 153000.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011648760",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 99
+      },
+      {
+        "title": "Stationary Engineer",
+        "company": "Providence",
+        "location": "Tarzana, CA",
+        "salary_min": 41.0,
+        "salary_max": 62.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010012124602",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 99
+      },
+      {
+        "title": "Flight Safety Engineer, Flight Termination System (Starship)",
+        "company": "SpaceX",
+        "location": "Hawthorne, CA",
+        "salary_min": 100000.0,
+        "salary_max": 135000.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011669229",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 99
+      },
+      {
+        "title": "Sales Application Engineer",
+        "company": "Capstone Green Energy Holdings LLC",
+        "location": "Van Nuys, CA",
+        "salary_min": 125000.0,
+        "salary_max": 175000.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011737241",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 99
+      },
+      {
+        "title": "Systems Engineer",
+        "company": "BOEING",
+        "location": "Long Beach, CA",
+        "salary_min": NaN,
+        "salary_max": NaN,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011849103",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 99
+      },
+      {
+        "title": "Specialist, Quality Engineer",
+        "company": "L3Harris Technologies",
+        "location": "Canoga Park, CA",
+        "salary_min": 84000.0,
+        "salary_max": 156000.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010012007442",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 99
+      },
+      {
+        "title": "Senior Data Engineer (Graph)",
+        "company": "Software Resources, Inc.",
+        "location": "Glendale, CA",
+        "salary_min": 90.0,
+        "salary_max": 93.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011213109",
+        "site": "glassdoor",
+        "date_posted": "2026-01-26",
+        "match_score": 99
+      },
+      {
+        "title": "Quality Engineer 1",
+        "company": "Precision Castparts Corp.",
+        "location": "Paramount, CA",
+        "salary_min": 77600.0,
+        "salary_max": 116400.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010010976196",
+        "site": "glassdoor",
+        "date_posted": "2026-01-26",
+        "match_score": 99
+      }
+    ],
+    "total_found": 20,
+    "search_term": "engineer",
+    "location": "90291",
+    "timestamp": "2026-01-27T12:39:46.971704",
+    "from_cache": false
+  },
+  "sound designer|90291": {
+    "success": true,
+    "jobs": [
+      {
+        "title": "Design Technologist, Prime Video",
+        "company": "Amazon.com",
+        "location": "Culver City, CA, US",
+        "salary_min": 118600.0,
+        "salary_max": 205000.0,
+        "url": "https://www.indeed.com/viewjob?jk=4c5bbcc0170af329",
+        "site": "indeed",
+        "date_posted": "2025-11-23",
+        "match_score": 50
+      },
+      {
+        "title": "UX Designer, Community",
+        "company": "Amazon.com",
+        "location": "Los Angeles, CA, US",
+        "salary_min": 106000.0,
+        "salary_max": 184000.0,
+        "url": "https://www.indeed.com/viewjob?jk=1bed32baffad5651",
+        "site": "indeed",
+        "date_posted": "2025-10-16",
+        "match_score": 50
+      },
+      {
+        "title": "UX Designer, Community",
+        "company": "Amazon.com",
+        "location": "Irvine, CA, US",
+        "salary_min": 106000.0,
+        "salary_max": 184000.0,
+        "url": "https://www.indeed.com/viewjob?jk=eecce41a1fcd7a53",
+        "site": "indeed",
+        "date_posted": "2025-10-16",
+        "match_score": 50
+      },
+      {
+        "title": "UX Designer, Community",
+        "company": "Amazon.com",
+        "location": "Los Angeles, CA, US",
+        "salary_min": 106000.0,
+        "salary_max": 184000.0,
+        "url": "https://www.indeed.com/viewjob?jk=280b63e80420a3d0",
+        "site": "indeed",
+        "date_posted": "2025-10-14",
+        "match_score": 50
+      },
+      {
+        "title": "UX Designer, Community",
+        "company": "Amazon.com",
+        "location": "Irvine, CA, US",
+        "salary_min": 106000.0,
+        "salary_max": 184000.0,
+        "url": "https://www.indeed.com/viewjob?jk=694e09ac3e9023d0",
+        "site": "indeed",
+        "date_posted": "2025-10-14",
+        "match_score": 50
+      },
+      {
+        "title": "Principal UX Designer, Prime Video & Amazon MGM Studios",
+        "company": "Amazon.com",
+        "location": "Culver City, CA, US",
+        "salary_min": 147600.0,
+        "salary_max": 244000.0,
+        "url": "https://www.indeed.com/viewjob?jk=84d43c93196a0ea0",
+        "site": "indeed",
+        "date_posted": "2025-09-08",
+        "match_score": 50
+      },
+      {
+        "title": "Senior Interaction Designer, Prime Video Experience Design (PVXD)",
+        "company": "Amazon.com",
+        "location": "Culver City, CA, US",
+        "salary_min": 127100.0,
+        "salary_max": 211600.0,
+        "url": "https://www.indeed.com/viewjob?jk=b0ed8ee0024117b7",
+        "site": "indeed",
+        "date_posted": "2025-06-22",
+        "match_score": 50
+      },
+      {
+        "title": "Sr. Designer, Device Brand Studio",
+        "company": "Amazon.com",
+        "location": "Santa Monica, CA, US",
+        "salary_min": 127100.0,
+        "salary_max": 210300.0,
+        "url": "https://www.indeed.com/viewjob?jk=deadb9192b3620a6",
+        "site": "indeed",
+        "date_posted": "2025-05-27",
+        "match_score": 50
+      },
+      {
+        "title": "Designer II, Device Brand Studio",
+        "company": "Amazon.com",
+        "location": "Santa Monica, CA, US",
+        "salary_min": 108400.0,
+        "salary_max": 185000.0,
+        "url": "https://www.indeed.com/viewjob?jk=c6531c9f9efbb876",
+        "site": "indeed",
+        "date_posted": "2025-05-27",
+        "match_score": 50
+      },
+      {
+        "title": "Sr. Product Marketing Manager, Audience Development Marketing",
+        "company": "Amazon.com",
+        "location": "Culver City, CA, US",
+        "salary_min": 128600.0,
+        "salary_max": 212600.0,
+        "url": "https://www.indeed.com/viewjob?jk=66dfc6a6bfa81163",
+        "site": "indeed",
+        "date_posted": "2025-04-05",
+        "match_score": 50
+      }
+    ],
+    "total_found": 10,
+    "search_term": "sound designer",
+    "location": "90291",
+    "timestamp": "2026-01-27T12:40:07.471485",
+    "from_cache": false
+  },
+  "sound|90291": {
+    "success": true,
+    "jobs": [
+      {
+        "title": "ESPN LA Audio Account Executive",
+        "company": "Good Karma Broadcasting,",
+        "location": "Los Angeles, CA",
+        "salary_min": 75000.0,
+        "salary_max": 175000.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011269705",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 50
+      },
+      {
+        "title": "Entry Level Technician",
+        "company": "Alliance Technical Group",
+        "location": "Wilmington, CA",
+        "salary_min": 20.0,
+        "salary_max": 20.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011310691",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 50
+      },
+      {
+        "title": "Videographer/Editor",
+        "company": "Chef",
+        "location": "Los Angeles, CA",
+        "salary_min": 18.0,
+        "salary_max": 31.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011633573",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 50
+      },
+      {
+        "title": "IT Testing Technician",
+        "company": "Exante360, Inc.",
+        "location": "Torrance, CA",
+        "salary_min": 24.0,
+        "salary_max": 34.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010012264508",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 50
+      },
+      {
+        "title": "Technical Director & Editor",
+        "company": "The Telepathy Tapes",
+        "location": "Burbank, CA",
+        "salary_min": 70000.0,
+        "salary_max": 100000.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011211559",
+        "site": "glassdoor",
+        "date_posted": "2026-01-26",
+        "match_score": 50
+      },
+      {
+        "title": "Audiovisual Technician",
+        "company": "Crown Jewell Entertainment Systems, Inc.",
+        "location": "Tustin, CA, US",
+        "salary_min": 18.0,
+        "salary_max": 23.0,
+        "url": "https://www.indeed.com/viewjob?jk=defa564e1e5f6397",
+        "site": "indeed",
+        "date_posted": "2026-01-27",
+        "match_score": 50
+      },
+      {
+        "title": "Videographer/Editor",
+        "company": "Eye MDs of Inland",
+        "location": "Upland, CA, US",
+        "salary_min": 25.0,
+        "salary_max": 35.0,
+        "url": "https://www.indeed.com/viewjob?jk=def9a204abe8c2c8",
+        "site": "indeed",
+        "date_posted": "2026-01-27",
+        "match_score": 50
+      },
+      {
+        "title": "Repair Technician",
+        "company": "Extron Electronics",
+        "location": "Anaheim, CA, US",
+        "salary_min": 28.0,
+        "salary_max": 30.0,
+        "url": "https://www.indeed.com/viewjob?jk=1ae00134eaf61f91",
+        "site": "indeed",
+        "date_posted": "2026-01-27",
+        "match_score": 50
+      },
+      {
+        "title": "Podcast Studio Intern",
+        "company": "nan",
+        "location": "San Fernando Valley, CA, US",
+        "salary_min": NaN,
+        "salary_max": NaN,
+        "url": "https://www.indeed.com/viewjob?jk=4627c904bdb2a865",
+        "site": "indeed",
+        "date_posted": "2026-01-27",
+        "match_score": 50
+      },
+      {
+        "title": "IT Testing Technician",
+        "company": "Exante360, Inc",
+        "location": "Torrance, CA, US",
+        "salary_min": 24.0,
+        "salary_max": 34.0,
+        "url": "https://www.indeed.com/viewjob?jk=e7050dc458981c6e",
+        "site": "indeed",
+        "date_posted": "2026-01-27",
+        "match_score": 50
+      }
+    ],
+    "total_found": 15,
+    "search_term": "sound",
+    "location": "90291",
+    "timestamp": "2026-01-27T12:40:23.540421",
+    "from_cache": false
+  }
+}

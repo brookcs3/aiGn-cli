@@ -1,0 +1,47 @@
+Resume Analysis for Cameron Brooks - Tue Jan 27 12:47:12 PST 2026
+File: Cameron Brooks Resume, 2 page.pdf
+Score: 82/100
+
+{
+  "success": true,
+  "score": 82,
+  "component_scores": {
+    "keywords": 42,
+    "action_verbs": 100,
+    "quantifiable": 100,
+    "formatting": 75,
+    "contact": 100
+  },
+  "strengths": [
+    "Good use of action verbs (13 found)",
+    "Includes quantifiable achievements",
+    "Has experience section",
+    "Has education section",
+    "Has skills section"
+  ],
+  "improvements": [
+    "Add more industry-relevant keywords for ATS systems"
+  ],
+  "recommendations": [
+    "Consider adding keywords: react"
+  ],
+  "found_keywords": [
+    "aws",
+    "ai",
+    "api",
+    "git",
+    "cloud"
+  ],
+  "found_verbs": [
+    "implemented",
+    "built",
+    "created",
+    "led",
+    "managed",
+    "improved",
+    "optimized",
+    "reduced",
+    "increased",
+    "streamlined"
+  ]
+}

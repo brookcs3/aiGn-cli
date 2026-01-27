@@ -1,0 +1,48 @@
+{
+  "target_path": "/path/to/repo",
+  "output_dir": "/path/to/output",
+  "model": "grok-4-1-fast-reasoning",
+  "difficulty_threshold": 6,
+  "output_format": "both",
+  "tools": ["web_search", "x_search", "code_execution"],
+  "prompt_override_dir": null,
+  "phases": [
+    "overview",
+    "architecture",
+    "core_modules",
+    "pipeline",
+    "training",
+    "comparison",
+    "final"
+  ],
+  "repomix": [
+    {
+      "path": "/path/to/repo",
+      "output": "/path/to/output/repomix.md",
+      "ignore": "_archive/**,**/.git/**,**/build/**,**/*.egg-info/**"
+    }
+  ],
+  "ignore": [
+    ".git",
+    "node_modules",
+    "dist",
+    "build",
+    ".venv",
+    "__pycache__",
+    ".DS_Store"
+  ],
+  "max_files": 60,
+  "max_chars": 12000,
+  "context_budget_chars": 48000,
+  "max_tokens": 8192,
+  "max_retries": 3,
+  "retry_backoff_sec": 5,
+  "force": false,
+  "mcp_enabled": true,
+  "mcp_inject": true,
+  "phase_context_patterns": {
+    "architecture": ["**/*.py", "**/*.md"],
+    "pipeline": ["**/*.py", "**/*.yaml", "**/*.yml"]
+  },
+  "system_prompt": "You are a senior systems analyst producing a structured, actionable report. Be thorough and concise. Include diagrams where requested."
+}

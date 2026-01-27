@@ -1,0 +1,620 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONFIG_DIR="${ROOT_DIR}/.dissect"
+CONFIG_FILE="${CONFIG_DIR}/config.json"
+STATE_FILE="${CONFIG_DIR}/state.json"
+GUM_BIN="${GUM_BIN:-gum}"
+export ROOT_DIR CONFIG_DIR CONFIG_FILE
+
+require_gum() {
+  if ! command -v "${GUM_BIN}" >/dev/null 2>&1; then
+    echo "gum not found. Install with: brew install gum"
+    exit 1
+  fi
+}
+
+write_config() {
+  mkdir -p "${CONFIG_DIR}"
+  TARGET_PATH="${TARGET_PATH:-${ROOT_DIR}}"
+  OUTPUT_DIR="${OUTPUT_DIR:-${ROOT_DIR}/outputs}"
+  MODEL_NAME="${MODEL_NAME:-grok-4-1-fast-reasoning}"
+  DIFFICULTY_THRESHOLD="${DIFFICULTY_THRESHOLD:-6}"
+  OUTPUT_FORMAT="${OUTPUT_FORMAT:-md}"
+  TOOLS_CSV="${TOOLS_CSV:-web_search,x_search,code_execution}"
+  PROMPT_OVERRIDE_DIR="${PROMPT_OVERRIDE_DIR:-}"
+  PHASES_CSV="${PHASES_CSV:-overview,architecture,core_modules,pipeline,training,comparison,final}"
+  MAX_FILES="${MAX_FILES:-60}"
+  MAX_CHARS="${MAX_CHARS:-12000}"
+  CONTEXT_BUDGET_CHARS="${CONTEXT_BUDGET_CHARS:-48000}"
+  MAX_TOKENS="${MAX_TOKENS:-8192}"
+  MAX_RETRIES="${MAX_RETRIES:-3}"
+  RETRY_BACKOFF_SEC="${RETRY_BACKOFF_SEC:-5}"
+  FORCE="${FORCE:-false}"
+  MCP_ENABLED="${MCP_ENABLED:-true}"
+  MCP_INJECT="${MCP_INJECT:-true}"
+  REPOMIX_JSON="${REPOMIX_JSON:-[]}"
+  PHASE_CONTEXT_PATTERNS_JSON="${PHASE_CONTEXT_PATTERNS_JSON:-{}}"
+  TARGET_PATHS_JSON="${TARGET_PATHS_JSON:-[]}"
+
+  TARGET_PATH="${TARGET_PATH}" OUTPUT_DIR="${OUTPUT_DIR}" MODEL_NAME="${MODEL_NAME}" \
+  DIFFICULTY_THRESHOLD="${DIFFICULTY_THRESHOLD}" OUTPUT_FORMAT="${OUTPUT_FORMAT}" \
+  TOOLS_CSV="${TOOLS_CSV}" PROMPT_OVERRIDE_DIR="${PROMPT_OVERRIDE_DIR}" \
+  PHASES_CSV="${PHASES_CSV}" MAX_FILES="${MAX_FILES}" MAX_CHARS="${MAX_CHARS}" \
+  CONTEXT_BUDGET_CHARS="${CONTEXT_BUDGET_CHARS}" MAX_TOKENS="${MAX_TOKENS}" \
+  MAX_RETRIES="${MAX_RETRIES}" RETRY_BACKOFF_SEC="${RETRY_BACKOFF_SEC}" \
+  FORCE="${FORCE}" MCP_ENABLED="${MCP_ENABLED}" MCP_INJECT="${MCP_INJECT}" \
+  REPOMIX_JSON="${REPOMIX_JSON}" PHASE_CONTEXT_PATTERNS_JSON="${PHASE_CONTEXT_PATTERNS_JSON}" \
+  TARGET_PATHS_JSON="${TARGET_PATHS_JSON}" \
+  CONFIG_FILE="${CONFIG_FILE}" \
+  python3 - <<'PY'
+import json
+import os
+from pathlib import Path
+
+def _to_bool(value):
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        return value.strip().lower() in {"1", "true", "yes", "y", "on"}
+    return False
+
+config = {
+    "target_path": os.environ["TARGET_PATH"],
+    "output_dir": os.environ["OUTPUT_DIR"],
+    "model": os.environ["MODEL_NAME"],
+    "difficulty_threshold": int(os.environ["DIFFICULTY_THRESHOLD"]),
+    "output_format": os.environ["OUTPUT_FORMAT"],
+    "tools": [t for t in os.environ["TOOLS_CSV"].split(",") if t],
+    "prompt_override_dir": os.environ.get("PROMPT_OVERRIDE_DIR") or None,
+    "phases": [p for p in os.environ["PHASES_CSV"].split(",") if p],
+    "state_file": os.path.join(os.environ["OUTPUT_DIR"], ".dissect_state.json"),
+    "max_files": int(os.environ["MAX_FILES"]),
+    "max_chars": int(os.environ["MAX_CHARS"]),
+    "context_budget_chars": int(os.environ["CONTEXT_BUDGET_CHARS"]),
+    "max_tokens": int(os.environ["MAX_TOKENS"]),
+    "max_retries": int(os.environ["MAX_RETRIES"]),
+    "retry_backoff_sec": int(os.environ["RETRY_BACKOFF_SEC"]),
+    "force": _to_bool(os.environ["FORCE"]),
+    "mcp_enabled": _to_bool(os.environ["MCP_ENABLED"]),
+    "mcp_inject": _to_bool(os.environ["MCP_INJECT"]),
+    "repomix": json.loads(os.environ["REPOMIX_JSON"]),
+    "phase_context_patterns": json.loads(os.environ["PHASE_CONTEXT_PATTERNS_JSON"]),
+    "target_paths": json.loads(os.environ["TARGET_PATHS_JSON"]),
+}
+
+path = Path(os.environ["CONFIG_FILE"])
+path.write_text(json.dumps(config, indent=2))
+PY
+}
+
+show_summary() {
+  python3 - <<'PY' "${CONFIG_FILE}"
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+config = json.loads(path.read_text())
+lines = [
+    f"Target: {config.get('target_path')}",
+    f"Output: {config.get('output_dir')}",
+    f"Model: {config.get('model')}",
+    f"Phases: {', '.join(config.get('phases', []))}",
+    f"Tools: {', '.join(config.get('tools', []))}",
+    f"Format: {config.get('output_format')}",
+    f"Difficulty threshold: {config.get('difficulty_threshold')}",
+    f"MCP enabled: {config.get('mcp_enabled')}",
+    f"MCP inject: {config.get('mcp_inject')}",
+]
+targets = config.get("target_paths") or []
+if targets:
+    lines.append(f"Targets: {', '.join(targets)}")
+print("\n".join(lines))
+PY
+}
+
+style_header() {
+  "${GUM_BIN}" style \
+    --foreground 212 \
+    --border double \
+    --padding "1 2" \
+    --margin "1 0" \
+    "Deep Research Agent System"
+}
+
+list_top_level_dirs() {
+  python3 - <<'PY' "${ROOT_DIR}"
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+ignore = {".git", "node_modules", "dist", "build", ".venv", "__pycache__", ".dissect", ".github", "deepthinking-mcp"}
+dirs = []
+for path in root.iterdir():
+    if not path.is_dir():
+        continue
+    if path.name in ignore:
+        continue
+    dirs.append(path.name)
+print("\n".join(sorted(dirs)))
+PY
+}
+
+list_subdirs() {
+  python3 - <<'PY' "$1"
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1]).resolve()
+ignore = {".git", "node_modules", "dist", "build", ".venv", "__pycache__", ".dissect", ".github", "deepthinking-mcp"}
+dirs = []
+for path in root.iterdir():
+    if not path.is_dir():
+        continue
+    if path.name in ignore:
+        continue
+    dirs.append(path.name)
+print("\n".join(sorted(dirs)))
+PY
+}
+
+select_one_target() {
+  require_gum
+  local prompt="${1:-Select folder}"
+  local options selection action sub_options sub_selection
+  options="$(list_top_level_dirs)"
+  options="(Enter path)\n${options}"
+  if ! selection="$(printf "%s\n" "${options}" | "${GUM_BIN}" choose --header "${prompt}" --cursor.foreground 212 --selected.foreground 212)"; then
+    "${GUM_BIN}" style --foreground 241 "Operation cancelled"
+    exit 0
+  fi
+
+  if [[ "${selection}" == "(Enter path)" ]]; then
+    selection="$("${GUM_BIN}" input --prompt "Enter path: " --value "")"
+    if [[ -z "${selection}" ]]; then
+      "${GUM_BIN}" style --foreground 241 "No folder selected"
+      exit 0
+    fi
+    if [[ "${selection}" != /* ]]; then
+      selection="${ROOT_DIR}/${selection}"
+    fi
+    echo "${selection}"
+    return
+  fi
+
+  action="$("${GUM_BIN}" choose --header "Select or open?" --cursor.foreground 212 --selected.foreground 212 \
+    "Select this folder" "Open to select subfolder")"
+  if [[ "${action}" == "Open to select subfolder" ]]; then
+    sub_options="$(list_subdirs "${ROOT_DIR}/${selection}")"
+    sub_options="(Use parent folder)\n${sub_options}"
+    if ! sub_selection="$(printf "%s\n" "${sub_options}" | "${GUM_BIN}" choose --header "Select subfolder" --cursor.foreground 212 --selected.foreground 212)"; then
+      "${GUM_BIN}" style --foreground 241 "Operation cancelled"
+      exit 0
+    fi
+    if [[ "${sub_selection}" == "(Use parent folder)" ]]; then
+      echo "${ROOT_DIR}/${selection}"
+      return
+    fi
+    echo "${ROOT_DIR}/${selection}/${sub_selection}"
+    return
+  fi
+
+  echo "${ROOT_DIR}/${selection}"
+}
+
+select_targets() {
+  require_gum
+  local options selection manual_input action sub_options sub_selections
+  options="$(list_top_level_dirs)"
+  options="(Enter path)\n${options}"
+  if ! selection="$(printf "%s\n" "${options}" | "${GUM_BIN}" choose --header "Select a top-level folder" --cursor.foreground 212 --selected.foreground 212)"; then
+    "${GUM_BIN}" style --foreground 241 "Operation cancelled"
+    exit 0
+  fi
+
+  if [[ "${selection}" == "(Enter path)" ]]; then
+    manual_input="$("${GUM_BIN}" input --prompt "Enter target path(s) (comma-separated): " --value "")"
+    selection=""
+  else
+    manual_input=""
+  fi
+
+  if [[ -n "${selection}" ]]; then
+    action="$("${GUM_BIN}" choose --header "Select or open?" \
+      --cursor.foreground 212 --selected.foreground 212 \
+      "Select this folder" "Open to select subfolders")"
+    if [[ "${action}" == "Open to select subfolders" ]]; then
+      sub_options="$(list_subdirs "${ROOT_DIR}/${selection}")"
+      sub_options="(Use parent folder)\n(Back)\n${sub_options}"
+      if ! sub_selections="$(printf "%s\n" "${sub_options}" | "${GUM_BIN}" choose --no-limit --header "Select subfolders (Space to select)" --cursor.foreground 212 --selected.foreground 212)"; then
+        "${GUM_BIN}" style --foreground 241 "Operation cancelled"
+        exit 0
+      fi
+      if printf "%s\n" "${sub_selections}" | grep -F -q "(Back)"; then
+        select_targets
+        return
+      fi
+      if printf "%s\n" "${sub_selections}" | grep -F -q "(Use parent folder)"; then
+        sub_selections=""
+      fi
+    fi
+  fi
+
+  mapfile -t TARGET_INFO < <(ROOT_DIR="${ROOT_DIR}" TOP_LEVEL="${selection}" SUB_SELECTIONS="${sub_selections}" MANUAL_PATHS="${manual_input}" python3 - <<'PY'
+import json
+import os
+from pathlib import Path
+
+root = Path(os.environ["ROOT_DIR"]).resolve()
+top = os.environ.get("TOP_LEVEL", "").strip()
+subs = [s for s in os.environ.get("SUB_SELECTIONS", "").splitlines() if s and not s.startswith("(")]
+manual = [p.strip() for p in os.environ.get("MANUAL_PATHS", "").split(",") if p.strip()]
+
+paths = []
+if top:
+    if subs:
+        for sub in subs:
+            paths.append(str((root / top / sub).resolve()))
+    else:
+        paths.append(str((root / top).resolve()))
+
+for item in manual:
+    path = Path(item).expanduser()
+    if not path.is_absolute():
+        path = (root / path).resolve()
+    paths.append(str(path))
+
+seen = set()
+unique = []
+for path in paths:
+    if path in seen:
+        continue
+    seen.add(path)
+    unique.append(path)
+
+print(json.dumps(unique))
+print(unique[0] if unique else "")
+PY
+)
+
+  TARGET_PATHS_JSON="${TARGET_INFO[0]}"
+  TARGET_PATH="${TARGET_INFO[1]}"
+
+  if [[ -z "${TARGET_PATH}" ]]; then
+    "${GUM_BIN}" style --foreground 241 "No targets selected"
+    exit 0
+  fi
+}
+
+ensure_config() {
+  if [[ -f "${CONFIG_FILE}" ]]; then
+    return
+  fi
+  select_targets
+  OUTPUT_DIR="${OUTPUT_DIR:-${ROOT_DIR}/outputs}"
+  MODEL_NAME="${MODEL_NAME:-grok-4-1-fast-reasoning}"
+  DIFFICULTY_THRESHOLD="${DIFFICULTY_THRESHOLD:-6}"
+  OUTPUT_FORMAT="${OUTPUT_FORMAT:-md}"
+  PHASES_CSV="${PHASES_CSV:-overview,architecture,core_modules,pipeline,training,comparison,final}"
+  CONFIG_FILE="${CONFIG_FILE}" TARGET_PATH="${TARGET_PATH}" TARGET_PATHS_JSON="${TARGET_PATHS_JSON}" \
+  OUTPUT_DIR="${OUTPUT_DIR}" MODEL_NAME="${MODEL_NAME}" DIFFICULTY_THRESHOLD="${DIFFICULTY_THRESHOLD}" \
+  OUTPUT_FORMAT="${OUTPUT_FORMAT}" PHASES_CSV="${PHASES_CSV}" write_config
+}
+
+run_for_targets() {
+  local mode="${1:-run}"
+  local force_flag="${2:-}"
+  local targets count
+
+  targets="$(python3 - <<'PY' "${CONFIG_FILE}"
+import json
+import sys
+from pathlib import Path
+config = json.loads(Path(sys.argv[1]).read_text())
+targets = config.get("target_paths") or []
+print("\n".join(targets))
+PY
+)"
+  count="$(python3 - <<'PY' "${CONFIG_FILE}"
+import json
+import sys
+from pathlib import Path
+config = json.loads(Path(sys.argv[1]).read_text())
+targets = config.get("target_paths") or []
+print(len(targets))
+PY
+)"
+
+  if [[ -z "${targets}" || "${count}" -le 1 ]]; then
+    if [[ "${mode}" == "resume" ]]; then
+      python3 "${ROOT_DIR}/dissect_orchestrator.py" --config "${CONFIG_FILE}" --resume ${force_flag}
+    else
+      python3 "${ROOT_DIR}/dissect_orchestrator.py" --config "${CONFIG_FILE}" ${force_flag}
+    fi
+    return
+  fi
+
+  while IFS= read -r target; do
+    tmp_config="${CONFIG_DIR}/tmp_$(basename "${target}").json"
+    python3 - <<'PY' "${CONFIG_FILE}" "${target}" "${tmp_config}"
+import json
+import sys
+from pathlib import Path
+
+config = json.loads(Path(sys.argv[1]).read_text())
+target = sys.argv[2]
+tmp_path = Path(sys.argv[3])
+
+config["target_path"] = target
+config["target_paths"] = [target]
+
+base = Path(config["output_dir"])
+name = Path(target).name or "target"
+config["output_dir"] = str(base / name)
+config["state_file"] = str(base / name / ".dissect_state.json")
+
+tmp_path.write_text(json.dumps(config, indent=2))
+PY
+    if [[ "${mode}" == "resume" ]]; then
+      python3 "${ROOT_DIR}/dissect_orchestrator.py" --config "${tmp_config}" --resume ${force_flag}
+    else
+      python3 "${ROOT_DIR}/dissect_orchestrator.py" --config "${tmp_config}" ${force_flag}
+    fi
+  done <<< "${targets}"
+}
+
+cmd_init() {
+  require_gum
+  mkdir -p "${CONFIG_DIR}"
+
+  select_targets
+  OUTPUT_DIR="$( "${GUM_BIN}" input --prompt "Output dir: " --value "${ROOT_DIR}/outputs" )"
+  MODEL_NAME="$( "${GUM_BIN}" input --prompt "Model: " --value "grok-4-1-fast-reasoning" )"
+  DIFFICULTY_THRESHOLD="$( "${GUM_BIN}" input --prompt "DeepThinking threshold (1-10): " --value "6" )"
+  OUTPUT_FORMAT="$( "${GUM_BIN}" choose md json both --selected=md )"
+  TOOLS="$(
+    "${GUM_BIN}" choose --no-limit web_search x_search code_execution \
+      --selected=web_search,x_search,code_execution
+  )"
+  TOOLS_CSV="$(echo "${TOOLS}" | paste -sd, -)"
+  PROMPT_OVERRIDE_DIR="$( "${GUM_BIN}" input --prompt "Prompt override dir (optional): " --value "" )"
+
+  PHASES=$(
+    "${GUM_BIN}" choose --no-limit \
+      overview architecture core_modules pipeline training comparison final \
+      --selected=overview,architecture,core_modules,pipeline,training,comparison,final
+  )
+
+  PHASES_CSV="$(echo "${PHASES}" | paste -sd, -)"
+
+  CONFIG_FILE="${CONFIG_FILE}" TARGET_PATH="${TARGET_PATH}" TARGET_PATHS_JSON="${TARGET_PATHS_JSON}" OUTPUT_DIR="${OUTPUT_DIR}" \
+  MODEL_NAME="${MODEL_NAME}" DIFFICULTY_THRESHOLD="${DIFFICULTY_THRESHOLD}" \
+  OUTPUT_FORMAT="${OUTPUT_FORMAT}" TOOLS_CSV="${TOOLS_CSV}" \
+  PROMPT_OVERRIDE_DIR="${PROMPT_OVERRIDE_DIR}" PHASES_CSV="${PHASES_CSV}" write_config
+
+  "${GUM_BIN}" format --theme=dracula "Saved config to ${CONFIG_FILE}"
+}
+
+cmd_menu() {
+  require_gum
+  if [[ ! -f "${CONFIG_FILE}" ]]; then
+    mkdir -p "${CONFIG_DIR}"
+    "${GUM_BIN}" format --theme=dracula "No config found. Create one now."
+    if "${GUM_BIN}" confirm "Use defaults?"; then
+      ensure_config
+    else
+      cmd_init
+    fi
+  fi
+
+  style_header
+  ACTION="$("${GUM_BIN}" choose --header "Select Research Mode" \
+    --cursor.foreground 212 --selected.foreground 212 \
+    "🐕 Bark Dissector (Repository Analysis)" \
+    "📊 Dataset Audit Engine (Cross-Reference Validation)" \
+    "⚙️  Configuration" \
+    "📖 Documentation" \
+    "❌ Exit")"
+  case "${ACTION}" in
+    "🐕 Bark Dissector (Repository Analysis)") cmd_bark ;;
+    "📊 Dataset Audit Engine (Cross-Reference Validation)") cmd_dataset ;;
+    "⚙️  Configuration") cmd_init ;;
+    "📖 Documentation") cmd_docs ;;
+    "❌ Exit") exit 0 ;;
+  esac
+}
+
+cmd_bark() {
+  require_gum
+  if [[ -f "${CONFIG_FILE}" ]]; then
+    if "${GUM_BIN}" confirm --default=yes "Use saved Bark settings?"; then
+      cmd_run
+      return
+    fi
+  fi
+
+  select_targets
+  OUTPUT_DIR="$( "${GUM_BIN}" input --prompt "Output dir: " --value "${ROOT_DIR}/outputs" )"
+  MODEL_NAME="$( "${GUM_BIN}" input --prompt "Model: " --value "grok-4-1-fast-reasoning" )"
+  DIFFICULTY_THRESHOLD="$( "${GUM_BIN}" input --prompt "DeepThinking threshold (1-10): " --value "6" )"
+  OUTPUT_FORMAT="$( "${GUM_BIN}" choose md json both --selected=md )"
+  PHASES="$(
+    "${GUM_BIN}" choose --no-limit --header "Select analysis phases (Space to select, Enter to confirm)" \
+      --cursor.foreground 212 --selected.foreground 212 \
+      overview architecture core_modules pipeline training comparison final
+  )"
+  PHASES_CSV="$(echo "${PHASES}" | paste -sd, -)"
+
+  CONFIG_FILE="${CONFIG_FILE}" TARGET_PATH="${TARGET_PATH}" TARGET_PATHS_JSON="${TARGET_PATHS_JSON}" \
+  OUTPUT_DIR="${OUTPUT_DIR}" MODEL_NAME="${MODEL_NAME}" DIFFICULTY_THRESHOLD="${DIFFICULTY_THRESHOLD}" \
+  OUTPUT_FORMAT="${OUTPUT_FORMAT}" PHASES_CSV="${PHASES_CSV}" write_config
+
+  cmd_run
+}
+
+cmd_dataset() {
+  local script="${ROOT_DIR}/dataseta_deepresearch.py"
+  if [[ ! -f "${script}" ]]; then
+    echo "Dataset audit script not found: ${script}"
+    exit 1
+  fi
+
+  require_gum
+  local flags output_path force_flag manifest_report manifest_flag ml_folder dataset_folder outputs_dir
+  flags=""
+  if ! "${GUM_BIN}" confirm --default=yes "Run dataset audit (extract + cross-reference)?"; then
+    "${GUM_BIN}" style --foreground 241 "Operation cancelled"
+    exit 0
+  fi
+  if ! "${GUM_BIN}" confirm --default=no "Generate replacement files (fixes)?"; then
+    flags="--pass2-only"
+  fi
+
+  manifest_report=""
+  if "${GUM_BIN}" confirm --default=yes "Select the Bark report (map) file?"; then
+    if ! manifest_report="$("${GUM_BIN}" file --height 20 "/Users/cameronbrooks/Server/AI-STEM-Separator-Mad-Scientist-Edition/bark_analysis")"; then
+      "${GUM_BIN}" style --foreground 241 "Operation cancelled"
+      exit 0
+    fi
+  fi
+  manifest_flag=""
+  if [[ -n "${manifest_report}" ]]; then
+    manifest_flag="--manifest-report \"${manifest_report}\""
+  fi
+
+  ml_folder="$(select_one_target "Select the ML folder (source)")"
+  dataset_folder="$(select_one_target "Select the dataset folder (target)")"
+  outputs_dir="${ROOT_DIR}/outputs"
+
+  output_path="$( "${GUM_BIN}" input --prompt "Output path: " --value "${ROOT_DIR}/outputs/audit_$(date +%Y%m%d_%H%M%S).md" )"
+  force_flag=""
+  if [[ -f "${output_path}" ]]; then
+    if "${GUM_BIN}" confirm --default=no "Overwrite existing report?"; then
+      force_flag="--force"
+    else
+      "${GUM_BIN}" style --foreground 241 "Operation cancelled"
+      exit 0
+    fi
+  fi
+
+  "${GUM_BIN}" spin --spinner dot --title "Running Dataset Audit..." -- \
+    bash -lc "python3 \"${script}\" --output \"${output_path}\" ${flags} ${force_flag} ${manifest_flag} --project-root \"${ml_folder}\" --dataset-dir \"${dataset_folder}\" --outputs-dir \"${outputs_dir}\""
+}
+
+cmd_docs() {
+  require_gum
+  local doc="${ROOT_DIR}/README.md"
+  if [[ ! -f "${doc}" ]]; then
+    echo "No README found at ${doc}"
+    exit 1
+  fi
+  "${GUM_BIN}" pager < "${doc}"
+}
+
+cmd_deepresearch() {
+  local script="${ROOT_DIR}/dataseta_deepresearch.py"
+  if [[ ! -f "${script}" ]]; then
+    echo "Deepresearch script not found: ${script}"
+    exit 1
+  fi
+  require_gum
+  "${GUM_BIN}" spin --spinner dot --title "Running deepresearch..." -- \
+    python3 "${script}"
+}
+
+cmd_run_and_deepresearch() {
+  cmd_run "$@"
+  cmd_deepresearch
+}
+
+cmd_run() {
+  ensure_config
+  require_gum
+  "${GUM_BIN}" format --theme=dracula "$(show_summary)"
+  if ! "${GUM_BIN}" confirm "Proceed with Bark Dissector?"; then
+    "${GUM_BIN}" style --foreground 241 "Operation cancelled"
+    exit 0
+  fi
+  FORCE_FLAG=""
+  for arg in "$@"; do
+    if [[ "${arg}" == "--force" ]]; then
+      FORCE_FLAG="--force"
+    fi
+  done
+  "${GUM_BIN}" spin --spinner dot --title "Running Bark Dissector..." -- \
+    bash -lc "$(declare -f run_for_targets); run_for_targets run ${FORCE_FLAG}"
+}
+
+cmd_prepare() {
+  if [[ ! -f "${CONFIG_FILE}" ]]; then
+    echo "No config found. Run: ./dissect init"
+    exit 1
+  fi
+  require_gum
+  "${GUM_BIN}" spin --spinner dot --title "Preparing..." -- \
+    python3 "${ROOT_DIR}/dissect_orchestrator.py" --config "${CONFIG_FILE}" --prepare
+}
+
+cmd_status() {
+  if [[ ! -f "${CONFIG_FILE}" ]]; then
+    echo "No config found. Run: ./dissect init"
+    exit 1
+  fi
+  python3 - <<'PY' "${CONFIG_FILE}"
+import json
+import sys
+from pathlib import Path
+
+config = json.loads(Path(sys.argv[1]).read_text())
+state_path = Path(config.get("state_file", ""))
+if state_path.exists():
+    print(state_path.read_text())
+else:
+    print("No state found yet.")
+PY
+}
+
+cmd_resume() {
+  ensure_config
+  require_gum
+  FORCE_FLAG=""
+  for arg in "$@"; do
+    if [[ "${arg}" == "--force" ]]; then
+      FORCE_FLAG="--force"
+    fi
+  done
+  "${GUM_BIN}" spin --spinner dot --title "Resuming Bark Dissector..." -- \
+    bash -lc "$(declare -f run_for_targets); run_for_targets resume ${FORCE_FLAG}"
+}
+
+cmd_help() {
+  cat <<EOF
+Usage: ./dissect <command>
+
+Commands:
+  menu       Launch interactive menu
+  bark       Run Bark Dissector (interactive)
+  dataset    Run Dataset Audit (interactive)
+  init       Interactive config wizard (gum)
+  prepare    Prepare paths/folders
+  run        Run pipeline [--force]
+  status     Show state
+  resume     Resume from state [--force]
+EOF
+}
+
+COMMAND="${1:-menu}"
+case "${COMMAND}" in
+  menu) cmd_menu ;;
+  bark) cmd_bark ;;
+  dataset) cmd_dataset ;;
+  init) cmd_init ;;
+  prepare) cmd_prepare ;;
+  run) cmd_run ;;
+  status) cmd_status ;;
+  resume) cmd_resume ;;
+  help|-h|--help) cmd_help ;;
+  *) cmd_help; exit 1 ;;
+esac

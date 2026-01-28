@@ -14,8 +14,8 @@ if ! command -v gum &> /dev/null; then
     exit 1
 fi
 
-if ! command -v python3 &> /dev/null; then
-    echo "python3 could not be found, please install Python 3.10+"
+if ! command -v python &> /dev/null; then
+    echo "python could not be found, please install Python 3.10+"
     exit 1
 fi
 
@@ -40,7 +40,7 @@ cd "$SCRIPT_DIR" || exit 1
 call_backend() {
     local script="$1"
     shift
-    python3 "$BACKEND_DIR/$script" "$@" 2>/dev/null
+    python "$BACKEND_DIR/$script" "$@" 2>/dev/null
 }
 
 clear
@@ -89,7 +89,7 @@ while true; do
         "Resume Analyzer")
             clear
             gum style --foreground "$ACCENT_COLOR" --border normal --padding "1 2" \
-                "RESUME ANALYZER" "Upload your resume for AI-powered feedback"
+                "$(printf '\360\237\223\204') RESUME ANALYZER" "Upload your resume for AI-powered feedback"
             echo ""
 
             # File picker - filter to resume formats only
@@ -97,12 +97,25 @@ while true; do
             echo ""
 
             while true; do
-                RESUME_FILE=$(gum file ~ --height 12 --file)
+                FILE_METHOD=$(gum choose "Browse for file" "Paste file path")
+
+                if [ "$FILE_METHOD" = "Paste file path" ]; then
+                    RESUME_FILE=$(gum input --placeholder "Enter full path to resume...")
+                else
+                    RESUME_FILE=$("$SCRIPT_DIR/GumFuzzy/fuzzy-picker" < /dev/tty 2>&1)
+                fi
 
                 if [ -z "$RESUME_FILE" ]; then
                     gum style --foreground "$ERROR_COLOR" "No file selected."
                     sleep 1
                     continue 2
+                fi
+
+                # Check file exists if path was pasted
+                if [ ! -f "$RESUME_FILE" ]; then
+                    gum style --foreground "$ERROR_COLOR" "File not found: $RESUME_FILE"
+                    sleep 1
+                    continue
                 fi
 
                 # Validate file extension
@@ -121,75 +134,118 @@ while true; do
             gum style --foreground "$TEXT_COLOR" "Selected: $(basename "$RESUME_FILE")"
             echo ""
 
-            # Call real backend with spinner
-            gum spin --spinner dot --title "Scanning document structure..." -- sleep 0.5
+            # Run analysis pipeline: resume_cmd.py -> AICHAT.py
+            # Save prompt to temp file
+            PROMPT_TEMP=$(mktemp)
+            python "$SCRIPT_DIR/resume_cmd.py" --input-file "$RESUME_FILE" --output "$PROMPT_TEMP" 2>/dev/null
 
-            RESULT=$(call_backend "resume_analyzer.py" "$RESUME_FILE")
+            # Run AI with spinner
+            RESULT=$(cat "$PROMPT_TEMP" | gum spin --spinner pulse --title "Analyzing with AI..." -- python "$SCRIPT_DIR/AICHAT.py" --chat 2>/dev/null)
+            rm -f "$PROMPT_TEMP"
 
-            gum spin --spinner pulse --title "Analyzing content..." -- sleep 0.5
+            # Extract and flatten JSON from response with pandas
+            JSON_RESULT=$(echo "$RESULT" | python -c "
+import sys, json, re
+import pandas as pd
 
-            # Parse JSON result
-            SUCCESS=$(echo "$RESULT" | jq -r '.success')
+text = sys.stdin.read()
+text = re.sub(r'\`\`\`json\s*', '', text)
+text = re.sub(r'\`\`\`\s*', '', text)
 
-            if [ "$SUCCESS" != "true" ]; then
-                ERROR=$(echo "$RESULT" | jq -r '.error')
-                gum style --foreground "$ERROR_COLOR" --border normal --padding "1 2" \
-                    "Error analyzing resume:" "$ERROR"
+match = re.search(r'\{.*\}', text, re.DOTALL)
+if match:
+    obj = json.loads(match.group())
+    df = pd.json_normalize(obj)
+    flat = df.to_dict(orient='records')[0]
+    print(json.dumps(flat))
+" 2>/dev/null)
+
+            if [ -z "$JSON_RESULT" ] || ! echo "$JSON_RESULT" | jq . >/dev/null 2>&1; then
+                gum style --foreground "$WARNING_COLOR" --border normal --padding "1 2" \
+                    "AI Response (raw):" "" "$RESULT"
                 gum confirm "Return to menu?" && continue || break
             fi
-
-            SCORE=$(echo "$RESULT" | jq -r '.score')
 
             echo ""
             gum style --foreground "$SUCCESS_COLOR" --border double --padding "1 2" \
                 "$(printf '\342\234\205') ANALYSIS COMPLETE"
-
             echo ""
 
-            # Display score with color based on value
-            if [ "$SCORE" -ge 70 ]; then
-                SCORE_COLOR="$SUCCESS_COLOR"
-            elif [ "$SCORE" -ge 50 ]; then
-                SCORE_COLOR="$WARNING_COLOR"
-            else
-                SCORE_COLOR="$ERROR_COLOR"
-            fi
+            # Extract fields from flattened JSON (pandas uses dot notation as keys)
+            CANDIDATE_PROFILE=$(echo "$JSON_RESULT" | jq -r '.["variable_name.candidate_profile"] // .candidate_profile // "N/A"')
+            TARGET_ROLE=$(echo "$JSON_RESULT" | jq -r '.["variable_name.target_role"] // .target_role // "N/A"')
+            CONTENT_TYPE=$(echo "$JSON_RESULT" | jq -r '.["variable_name.content_type"] // .content_type // "N/A"')
+            SUMMARY=$(echo "$JSON_RESULT" | jq -r '.["variable_name.summary"] // .summary // "N/A"')
 
-            # Build results display
+            # Build key points display
+            KEY_POINTS_TEXT=""
+            while IFS= read -r line; do
+                [ -n "$line" ] && KEY_POINTS_TEXT="$KEY_POINTS_TEXT
+  $(printf '\342\200\242') $line"
+            done < <(echo "$JSON_RESULT" | jq -r '.["variable_name.key_points"][]? // .key_points[]?' 2>/dev/null)
+
+            # Build strengths display
             STRENGTHS_TEXT=""
             while IFS= read -r line; do
                 [ -n "$line" ] && STRENGTHS_TEXT="$STRENGTHS_TEXT
-$(printf '\342\200\242') $line"
-            done < <(echo "$RESULT" | jq -r '.strengths[]' 2>/dev/null)
+  $(printf '\342\234\223') $line"
+            done < <(echo "$JSON_RESULT" | jq -r '.["variable_name.strengths"][]? // .strengths[]?' 2>/dev/null)
 
-            IMPROVEMENTS_TEXT=""
+            # Build gaps display
+            GAPS_TEXT=""
             while IFS= read -r line; do
-                [ -n "$line" ] && IMPROVEMENTS_TEXT="$IMPROVEMENTS_TEXT
-$(printf '\342\200\242') $line"
-            done < <(echo "$RESULT" | jq -r '.improvements[]' 2>/dev/null)
+                [ -n "$line" ] && GAPS_TEXT="$GAPS_TEXT
+  $(printf '\342\200\242') $line"
+            done < <(echo "$JSON_RESULT" | jq -r '.["variable_name.gaps_or_risks"][]? // .gaps_or_risks[]?' 2>/dev/null)
 
-            RECOMMENDATION=$(echo "$RESULT" | jq -r '.recommendations[0] // empty' 2>/dev/null)
+            # Build markdown analysis display
+            ANALYSIS_MD="# Resume Analysis
 
-            # Display in styled box matching mockup
-            gum style --border normal --border-foreground "39" --padding "1 2" \
-                "$(printf '\360\237\223\212') RESUME SCORE: $SCORE/100" \
-                "" \
-                "$(printf '\342\234\205') STRENGTHS:$STRENGTHS_TEXT" \
-                "" \
-                "$(printf '\342\232\240\357\270\217') AREAS FOR IMPROVEMENT:$IMPROVEMENTS_TEXT" \
-                "" \
-                "$(printf '\360\237\222\241') TOP RECOMMENDATION:" \
-                "   $RECOMMENDATION"
+## Candidate Profile
+$CANDIDATE_PROFILE
+
+**Target Role:** $TARGET_ROLE
+**Type:** $CONTENT_TYPE
+
+## Summary
+$SUMMARY
+
+## Key Points
+$KEY_POINTS_TEXT
+
+## Strengths
+$STRENGTHS_TEXT
+
+## Areas to Improve
+$GAPS_TEXT"
+
+            # Display with glow (renders markdown, auto-scales to terminal)
+            echo "$ANALYSIS_MD" | glow -
 
             echo ""
 
             gum confirm "Save this analysis to a file?" && {
                 OUTFILE="resume_analysis_$(date +%Y%m%d_%H%M%S).txt"
-                echo "Resume Analysis for $NAME - $(date)" > "$OUTFILE"
-                echo "File: $(basename "$RESUME_FILE")" >> "$OUTFILE"
-                echo "Score: $SCORE/100" >> "$OUTFILE"
-                echo "" >> "$OUTFILE"
-                echo "$RESULT" | jq -r '.' >> "$OUTFILE"
+                {
+                    echo "Resume Analysis for $NAME - $(date)"
+                    echo "File: $(basename "$RESUME_FILE")"
+                    echo ""
+                    echo "CANDIDATE PROFILE: $CANDIDATE_PROFILE"
+                    echo "TARGET ROLE: $TARGET_ROLE"
+                    echo "TYPE: $CONTENT_TYPE"
+                    echo ""
+                    echo "SUMMARY:"
+                    echo "$SUMMARY"
+                    echo ""
+                    echo "KEY POINTS:$KEY_POINTS_TEXT"
+                    echo ""
+                    echo "STRENGTHS:$STRENGTHS_TEXT"
+                    echo ""
+                    echo "AREAS TO IMPROVE:$GAPS_TEXT"
+                    echo ""
+                    echo "--- RAW JSON ---"
+                    echo "$JSON_RESULT" | jq .
+                } > "$OUTFILE"
                 gum style --foreground "$SUCCESS_COLOR" "Saved to: $OUTFILE"
             }
 
@@ -199,7 +255,7 @@ $(printf '\342\200\242') $line"
         "Match Jobs to Skills")
             clear
             gum style --foreground "$ACCENT_COLOR" --border normal --padding "1 2" \
-                "JOB MATCHER" "Find roles that match your skillset"
+                "$(printf '\360\237\222\274') JOB MATCHER" "Find roles that match your skillset"
             echo ""
 
             # Get skills input
@@ -268,27 +324,46 @@ $(printf '\342\200\242') $line"
                 LOCATION=$(echo "$job" | jq -r '.location')
                 INDUSTRY=$(echo "$job" | jq -r '.industry // "Tech"')
 
-                # Format salary
+                # Format salary (convert floats to ints first)
                 if [ "$SAL_MIN" != "null" ] && [ "$SAL_MIN" != "N/A" ]; then
-                    SAL_MIN_K=$((SAL_MIN / 1000))
-                    SAL_MAX_K=$((SAL_MAX / 1000))
+                    SAL_MIN_INT=${SAL_MIN%.*}
+                    SAL_MAX_INT=${SAL_MAX%.*}
+                    SAL_MIN_K=$((SAL_MIN_INT / 1000))
+                    SAL_MAX_K=$((SAL_MAX_INT / 1000))
                     SALARY="\$${SAL_MIN_K}-${SAL_MAX_K}k"
                 else
                     SALARY="Salary N/A"
                 fi
 
+                URL=$(echo "$job" | jq -r '.url // "N/A"')
+
                 JOB_DISPLAY="$JOB_DISPLAY
 $COUNT. $TITLE @ $COMPANY (${SCORE}% match)
    $(printf '\360\237\222\260') $SALARY | $(printf '\360\237\223\215') $LOCATION | $(printf '\360\237\217\267\357\270\217')$INDUSTRY
+   $(printf '\360\237\224\227') $URL
 "
                 COUNT=$((COUNT + 1))
-            done < <(echo "$RESULT" | jq -c '.jobs[:5][]')
+            done < <(echo "$RESULT" | jq -c '.jobs[:10][]')
 
-            # Display in styled box
-            gum style --border normal --border-foreground "39" --padding "1 2" \
-                "$(printf '\360\237\216\257') TOP 5 JOB MATCHES (Based on: $SKILLS)" \
+            # Display in scrollable pager (using custom gum with auto-fit height)
+            SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+            GUM_CUSTOM="$SCRIPT_DIR/Deep-CLI/_vendor/gum/gum-custom"
+            if [ -x "$GUM_CUSTOM" ]; then
+                echo "$(printf '\360\237\216\257') TOP JOB MATCHES (Based on: $SKILLS)
+
+$JOB_DISPLAY" | "$GUM_CUSTOM" pager --viewport-height=-1 --show-line-numbers=false
+            else
+                gum pager "$(printf '\360\237\216\257') TOP JOB MATCHES (Based on: $SKILLS)
+
+$JOB_DISPLAY"
+            fi
+
+            echo ""
+            gum style --border normal --border-foreground "$ACCENT_COLOR" --padding "1 2" \
+                "$(printf '\360\237\223\213') Found $TOTAL jobs for: $SKILLS" \
+                "$(printf '\360\237\223\215') Location: $LOCATION" \
                 "" \
-                "$JOB_DISPLAY"
+                "Tip: Copy a URL above to apply directly"
 
             FROM_CACHE=$(echo "$RESULT" | jq -r '.from_cache // false')
             if [ "$FROM_CACHE" = "true" ]; then
@@ -296,6 +371,17 @@ $COUNT. $TITLE @ $COMPANY (${SCORE}% match)
                 echo ""
                 gum style --foreground "$TEXT_COLOR" --italic "Results from cache ($CACHE_AGE minutes ago)"
             fi
+
+            echo ""
+            gum confirm "Save job list to file?" && {
+                OUTFILE="job_matches_$(date +%Y%m%d_%H%M%S).txt"
+                echo "Job Matches for: $SKILLS" > "$OUTFILE"
+                echo "Location: $LOCATION" >> "$OUTFILE"
+                echo "Generated: $(date)" >> "$OUTFILE"
+                echo "" >> "$OUTFILE"
+                echo "$RESULT" | jq -r '.jobs[] | "\(.title) @ \(.company)\nMatch: \(.match_score)%\nLocation: \(.location)\nSalary: \(.salary_min // "N/A") - \(.salary_max // "N/A")\nURL: \(.url // "N/A")\n"' >> "$OUTFILE"
+                gum style --foreground "$SUCCESS_COLOR" "Saved to: $OUTFILE"
+            }
 
             echo ""
             gum confirm "Return to menu?" && continue || break
@@ -316,7 +402,15 @@ $COUNT. $TITLE @ $COMPANY (${SCORE}% match)
             echo ""
             gum style --foreground "$TEXT_COLOR" "Optional: Select your resume to personalize the letter"
             gum style --foreground "$TEXT_COLOR" --italic "(PDF, DOCX, or TXT)"
-            RESUME_FILE=$(gum file ~ --height 8 --file) || RESUME_FILE=""
+            FILE_METHOD=$(gum choose "Browse for file" "Paste file path" "Skip")
+            if [ "$FILE_METHOD" = "Paste file path" ]; then
+                RESUME_FILE=$(gum input --placeholder "Enter full path to resume...")
+                [ ! -f "$RESUME_FILE" ] && RESUME_FILE=""
+            elif [ "$FILE_METHOD" = "Browse for file" ]; then
+                RESUME_FILE=$("$SCRIPT_DIR/GumFuzzy/fuzzy-picker" </dev/tty) || RESUME_FILE=""
+            else
+                RESUME_FILE=""
+            fi
 
             # Validate file extension if a file was selected
             if [ -n "$RESUME_FILE" ]; then
@@ -469,12 +563,24 @@ $NUM. $QUESTION"
             echo ""
 
             while true; do
-                CODE_FILE=$(gum file ~ --height 12 --file)
+                FILE_METHOD=$(gum choose "Browse for file" "Paste file path")
+
+                if [ "$FILE_METHOD" = "Paste file path" ]; then
+                    CODE_FILE=$(gum input --placeholder "Enter full path to code file...")
+                else
+                    CODE_FILE=$("$SCRIPT_DIR/GumFuzzy/fuzzy-picker" </dev/tty)
+                fi
 
                 if [ -z "$CODE_FILE" ]; then
                     gum style --foreground "$ERROR_COLOR" "No file selected."
                     sleep 1
                     continue 2
+                fi
+
+                if [ ! -f "$CODE_FILE" ]; then
+                    gum style --foreground "$ERROR_COLOR" "File not found: $CODE_FILE"
+                    sleep 1
+                    continue
                 fi
 
                 # Validate file extension for code files

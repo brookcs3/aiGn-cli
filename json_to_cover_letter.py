@@ -11,13 +11,21 @@ from datetime import datetime
 def strip_code_blocks(content):
     """Remove markdown code block wrappers"""
     content = content.strip()
-    if content.startswith('```json'):
+    if content.startswith("```json"):
         content = content[7:]
-    elif content.startswith('```'):
+    elif content.startswith("```"):
         content = content[3:]
-    if content.endswith('```'):
+    if content.endswith("```"):
         content = content[:-3]
     return content.strip()
+
+def extract_json_substring(content: str) -> str:
+    """Best-effort extraction of the first JSON object from mixed text."""
+    start = content.find("{")
+    end = content.rfind("}")
+    if start == -1 or end == -1 or end <= start:
+        return content
+    return content[start : end + 1]
 
 
 def parse_cover_letter_from_json(json_data):
@@ -39,10 +47,9 @@ def parse_cover_letter_from_json(json_data):
     
     # Extract company name
     company = "the company"
-    for name in ['NVIDIA', 'Apple', 'Google', 'Meta', 'SpaceX', 'Microsoft', 'Amazon', 'Tesla']:
-        if name.lower() in job_text.lower():
-            company = name
-            break
+    m = re.match(r"\s*([A-Z][A-Za-z0-9&.,-]{1,40})\s+is\s+", job_text)
+    if m:
+        company = m.group(1)
     
     return {
         'opening_hook': cover_letter.get('opening_hook', ''),
@@ -73,8 +80,21 @@ def format_cover_letter(data, name="[Your Name]"):
     
     body_text = "\n\n".join(body)
     
+    company_name = data.get("company") or "Company"
+    if company_name == "the company":
+        company_name = "Company"
+
     letter = f"""{name}
+[Your Address]
+[City, State, ZIP]
+[Email]
+[Phone]
+
 {today}
+
+Hiring Manager
+{company_name}
+[Company Address]
 
 Dear Hiring Manager,
 
@@ -87,7 +107,6 @@ Dear Hiring Manager,
 Sincerely,
 {name}
 """
-    return letter
     return letter
 
 
@@ -129,6 +148,8 @@ def main():
     parser.add_argument('input', help='Input file (JSON or extracted text)')
     parser.add_argument('--output', '-o', help='Output file (default: print to console)')
     parser.add_argument('--name', '-n', default='[Your Name]', help='Applicant name')
+    parser.add_argument('--company', help='Override inferred company name')
+    parser.add_argument('--role', help='Override inferred role title')
     args = parser.parse_args()
 
     try:
@@ -140,12 +161,17 @@ def main():
         
         # Try to parse as JSON first
         try:
-            json_data = json.loads(content)
+            json_data = json.loads(extract_json_substring(content))
             data = parse_cover_letter_from_json(json_data)
         except json.JSONDecodeError:
             # If it's extracted text, extract from flattened text
             print("Note: Input is not valid JSON, using text extraction", file=sys.stderr)
             data = extract_from_text(content)
+
+        if args.company:
+            data["company"] = args.company
+        if args.role:
+            data["role"] = args.role
         
         # Format the cover letter
         cover_letter = format_cover_letter(data, name=args.name)

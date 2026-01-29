@@ -7,6 +7,7 @@ import os
 import sys
 import json
 import subprocess
+import shutil
 import pandas as pd
 
 
@@ -262,10 +263,10 @@ def format_cover_letter_with_scripts(output_path, folder):
     """Use json_text_extractor.py and json_to_cover_letter.py to format"""
     print("\n\n📝 Step 3: Formatting cover letter with Python scripts...\n")
     
-    # Step 1: Extract text from JSON
-    extracted_path = f"{folder}/extracted.txt"
+    # Step 1: Extract JSON only (strip ```json wrappers, etc.)
+    extracted_path = f"{folder}/extracted.json"
     result = subprocess.run(
-        ["python", "json_text_extractor.py", output_path],
+        [sys.executable, "json_text_extractor.py", "--mode", "json", output_path, "--output", extracted_path],
         capture_output=True,
         text=True,
         cwd=os.getcwd()
@@ -273,15 +274,12 @@ def format_cover_letter_with_scripts(output_path, folder):
     if result.returncode != 0:
         print(f"❌ json_text_extractor.py failed: {result.stderr}")
         return None
-    
-    with open(extracted_path, 'w') as f:
-        f.write(result.stdout)
-    print(f"✅ Extracted text saved to {extracted_path}")
+    print(f"✅ Extracted JSON saved to {extracted_path}")
     
     # Step 2: Convert to cover letter
     cover_letter_path = f"{folder}/cover_letter.md"
     result = subprocess.run(
-        ["python", "json_to_cover_letter.py", extracted_path, "--output", cover_letter_path],
+        [sys.executable, "json_to_cover_letter.py", extracted_path, "--output", cover_letter_path],
         capture_output=True,
         text=True,
         cwd=os.getcwd()
@@ -300,9 +298,8 @@ def display_with_glow(cover_letter_path):
     print("✉️  COVER LETTER")
     print("="*60 + "\n")
     
-    result = subprocess.run(["which", "glow"], capture_output=True)
-    if result.returncode == 0:
-        subprocess.run(["glow", cover_letter_path])
+    if shutil.which("glow"):
+        subprocess.run(["glow", "-p", cover_letter_path])
     else:
         with open(cover_letter_path, 'r') as f:
             print(f.read())

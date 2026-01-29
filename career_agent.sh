@@ -451,6 +451,15 @@ $JOB_DISPLAY"
             RESULT=$(cat "$PROMPT_TEMP" | gum spin --spinner pulse --title "Generating personalized questions..." -- python "$SCRIPT_DIR/llm_inference.py" --chat 2>/dev/null)
             rm -f "$PROMPT_TEMP"
 
+            # Strip markdown code block wrappers if present
+            RESULT=$(echo "$RESULT" | python -c "
+import sys, re
+text = sys.stdin.read()
+text = re.sub(r'\`\`\`markdown\s*', '', text)
+text = re.sub(r'\`\`\`\s*', '', text)
+print(text.strip())
+" 2>/dev/null)
+
             if [ -z "$RESULT" ]; then
                 gum style --foreground "$ERROR_COLOR" "Error: Failed to generate questions"
                 gum confirm "Return to menu?" && continue || break
@@ -460,8 +469,8 @@ $JOB_DISPLAY"
             gum style --foreground "$SUCCESS_COLOR" "$(printf '\342\234\205') Interview prep guide generated!"
             echo ""
 
-            # Display with glow piped to gum pager (starts at top, allows scrolling)
-            echo "$RESULT" | glow - | gum pager
+            # Display with glow (built-in TUI with scrolling)
+            echo "$RESULT" | glow -
 
             echo ""
             gum confirm "Save this guide to a file?" && {

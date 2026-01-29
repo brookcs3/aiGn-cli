@@ -49,7 +49,7 @@ clear
 gum style \
     --foreground "$TEXT_COLOR" --border-foreground "$BORDER_COLOR" --border double \
     --align center --width 60 --margin "1 2" --padding "2 4" \
-    'CAREER AI AGENT' 'Resume Analyzer & Job Match System' 'v2.0 - Real Backend'
+    'CAREER AI AGENT' 'Resume Analyzer & Job Match System' 'v2.0 - Real Backend' '' 'Created by Cameron Brooks' 'brooksc3@oregonstate.edu'
 
 sleep 0.5
 
@@ -84,6 +84,10 @@ while true; do
         "Technical Assessment Feedback" \
         "Exit" \
         --cursor="> " --header="Select a career task:")
+
+    # Show creator credit at bottom of menu
+    echo ""
+    gum style --foreground "$TEXT_COLOR" --italic --align center "Created by Cameron Brooks | brooksc3@oregonstate.edu"
 
     case $OPTION in
         "Resume Analyzer")

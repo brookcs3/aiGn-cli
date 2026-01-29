@@ -1,6 +1,0 @@
-Resume Analysis for cameron - Wed Jan 21 00:44:40 PST 2026
-File: Development_Plan_CS462.tex
-Score: 78/100
-
-Strengths: Technical skills, action verbs, clear contact info
-Improvements: Add metrics, ATS keywords, professional summary

@@ -7,7 +7,6 @@ import os
 import sys
 import json
 import subprocess
-import shutil
 import pandas as pd
 
 
@@ -16,7 +15,7 @@ def load_jobs():
     if os.path.exists("jobs.csv"):
         os.remove("jobs.csv")
         print("🗑️  Deleted old jobs.csv")
-    
+
     print("📡 Running job_scraper.py for fresh jobs...\n")
     result = subprocess.run(
         ["python", "job_scraper.py"],
@@ -207,104 +206,98 @@ def build_filled_template_d(job_description):
     """Copy template to filled_prompt.txt, then fill in placeholders directly"""
     import shutil
     import filecmp
-    
+
     # Step 1: Fresh copy of template
     print("📋 Copying template to filled_prompt.txt...")
     shutil.copy("prompt_resume_generator.txt", "filled_prompt.txt")
-    
+
     # Step 2: Verify copy matches original
     if filecmp.cmp("prompt_resume_generator.txt", "filled_prompt.txt", shallow=False):
         print("✅ Copy verified - templates match")
     else:
         print("❌ Copy failed - files don't match!")
         sys.exit(1)
-    
+
     # Step 3: Read the copy
     with open("filled_prompt.txt", 'r') as f:
         content = f.read()
-    
+
     # Step 4: Get questions data from debug_ai_response.txt
     with open("debug_ai_response.txt", 'r') as f:
         questions_filled = f.read()
-    
+
     # Step 5: Replace placeholders
     content = content.replace('{{JOB_POSTING}}', job_description)
     content = content.replace('{{QUESTIONS_FILLED}}', questions_filled)
-    
+
     # Step 6: Write back to filled_prompt.txt
     with open("filled_prompt.txt", 'w') as f:
         f.write(content)
-    
+
     print("✅ filled_prompt.txt ready")
     return content
 
 
-def call_ai_generate_resume(job_description, job_info):
-    """Second AI call: generate resume + cover letter JSON"""
+def call_ai_generate_resume(job_description):
+    """Second AI call: generate resume + cover letter"""
     print("\n\n🤖 Step 2: Generating analysis...\n")
     filled_prompt = build_filled_template_d(job_description)
     response_text = call_llm_inference(filled_prompt)
 
-    # Save raw AI output to application folder
-    company = str(job_info.get('company', 'Unknown') or 'Unknown').replace(' ', '_').replace('/', '_')
-    title = str(job_info.get('title', 'Unknown') or 'Unknown').replace(' ', '_').replace('/', '_')
-    folder = f"applications/{company}_{title}"
-    os.makedirs(folder, exist_ok=True)
-    
-    output_path = f"{folder}/output.txt"
-    with open(output_path, 'w') as f:
+    with open("debug_resume_response.txt", 'w') as f:
         f.write(response_text)
-    print(f"💾 Saved AI response to {output_path} ({len(response_text)} chars)")
+    print(f"💾 Debug: saved AI response to debug_resume_response.txt ({len(response_text)} chars)")
 
-    return output_path, folder
+    return response_text
 
 
-def format_cover_letter_with_scripts(output_path, folder):
-    """Use json_text_extractor.py and json_to_cover_letter.py to format"""
-    print("\n\n📝 Step 3: Formatting cover letter with Python scripts...\n")
-    
-    # Step 1: Extract JSON only (strip ```json wrappers, etc.)
-    extracted_path = f"{folder}/extracted.json"
+def format_cover_letter_with_script(analysis_json):
+    """Third step: format cover letter using Python script"""
+    print("\n\n📝 Step 3: Formatting cover letter with Python script...\n")
+
+    # Save analysis to temp file
+    with open("temp_analysis.json", 'w') as f:
+        f.write(analysis_json)
+
+    # Call json_to_cover_letter.py
     result = subprocess.run(
-        [sys.executable, "json_text_extractor.py", "--mode", "json", output_path, "--output", extracted_path],
+        [sys.executable, "json_to_cover_letter.py", "temp_analysis.json"],
         capture_output=True,
         text=True,
         cwd=os.getcwd()
     )
-    if result.returncode != 0:
-        print(f"❌ json_text_extractor.py failed: {result.stderr}")
-        return None
-    print(f"✅ Extracted JSON saved to {extracted_path}")
-    
-    # Step 2: Convert to cover letter
-    cover_letter_path = f"{folder}/cover_letter.md"
-    result = subprocess.run(
-        [sys.executable, "json_to_cover_letter.py", extracted_path, "--output", cover_letter_path],
-        capture_output=True,
-        text=True,
-        cwd=os.getcwd()
-    )
+
     if result.returncode != 0:
         print(f"❌ json_to_cover_letter.py failed: {result.stderr}")
-        return None
-    
-    print(f"✅ Cover letter saved to {cover_letter_path}")
-    return cover_letter_path
+        sys.exit(1)
+
+    cover_letter = result.stdout.strip()
+
+    # Clean up temp file
+    os.remove("temp_analysis.json")
+
+    print(f"✅ Cover letter formatted ({len(cover_letter)} chars)")
+    return cover_letter
 
 
-def display_with_glow(cover_letter_path):
-    """Display cover letter using glow if available"""
+def save_output(cover_letter_text, job_info):
+    """Save cover letter to file"""
+    company = str(job_info.get('company', 'Unknown') or 'Unknown').replace(' ', '_').replace('/', '_')
+    title = str(job_info.get('title', 'Unknown') or 'Unknown').replace(' ', '_').replace('/', '_')
+
+    folder = f"applications/{company}_{title}"
+    os.makedirs(folder, exist_ok=True)
+
+    # Save cover letter as markdown
+    with open(f"{folder}/cover_letter.md", 'w') as f:
+        f.write(cover_letter_text)
+
+    print(f"\n✅ Saved to {folder}/cover_letter.md")
     print("\n" + "="*60)
     print("✉️  COVER LETTER")
+    print("="*60)
+    print(cover_letter_text)
     print("="*60 + "\n")
-    
-    if shutil.which("glow"):
-        subprocess.run(["glow", "-p", cover_letter_path])
-    else:
-        with open(cover_letter_path, 'r') as f:
-            print(f.read())
-    
-    print("\n" + "="*60 + "\n")
 
 
 def main():
@@ -340,19 +333,16 @@ def main():
         print("\n🔧 Building filled analysis...")
         analysis_filled = build_analysis_with_answers(analysis, answers_lookup)
 
-        # Step 2: AI generates JSON analysis
-        output_path, folder = call_ai_generate_resume(job_description, selected_job)
-        
-        # Step 3: Python scripts format the cover letter (no more AI!)
-        cover_letter_path = format_cover_letter_with_scripts(output_path, folder)
-        
-        if cover_letter_path:
-            # Step 4: Display with glow
-            display_with_glow(cover_letter_path)
-            print(f"\n🎉 Done! Your application is ready at: {folder}/")
-        else:
-            print("\n❌ Failed to format cover letter")
+        # Step 2: Generate analysis JSON
+        analysis_json = call_ai_generate_resume(job_description)
 
+        # Step 3: Format as cover letter with Python script
+        cover_letter = format_cover_letter_with_script(analysis_json)
+
+        # Save cover letter
+        save_output(cover_letter, selected_job)
+
+        print("\n🎉 Done! Your application is ready.")
         if ask_yes_no("Apply to another job?"):
             print("\n" + "="*60 + "\n")
             main()

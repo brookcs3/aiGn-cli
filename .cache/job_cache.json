@@ -358,5 +358,495 @@
     "location": "90291",
     "timestamp": "2026-01-27T12:40:23.540421",
     "from_cache": false
+  },
+  "python, javascript, react, sql|90291": {
+    "success": true,
+    "jobs": [
+      {
+        "title": "Application Software Engineer",
+        "company": "SpaceX",
+        "location": "Hawthorne, CA",
+        "salary_min": 111277.0,
+        "salary_max": 163132.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010014055446",
+        "site": "glassdoor",
+        "date_posted": "2026-01-28",
+        "match_score": 76
+      },
+      {
+        "title": "Application Software Engineer",
+        "company": "SpaceX",
+        "location": "Hawthorne, CA, US",
+        "salary_min": NaN,
+        "salary_max": NaN,
+        "url": "https://www.indeed.com/viewjob?jk=2ec0593e95ca222d",
+        "site": "indeed",
+        "date_posted": "2026-01-27",
+        "match_score": 75
+      },
+      {
+        "title": "Design Technologist, Prime Video",
+        "company": "Amazon.com Services LLC",
+        "location": "Culver City, CA",
+        "salary_min": 118600.0,
+        "salary_max": 205000.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010014077903",
+        "site": "glassdoor",
+        "date_posted": "2026-01-28",
+        "match_score": 63
+      },
+      {
+        "title": "Application Developer I",
+        "company": "Herbalife",
+        "location": "Torrance, CA, US",
+        "salary_min": NaN,
+        "salary_max": NaN,
+        "url": "https://www.indeed.com/viewjob?jk=8c6ef6e1e7eadaac",
+        "site": "indeed",
+        "date_posted": "2026-01-26",
+        "match_score": 63
+      },
+      {
+        "title": "Application Developer I",
+        "company": "Herbalife",
+        "location": "Torrance, CA",
+        "salary_min": 77303.0,
+        "salary_max": 98925.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010013271050",
+        "site": "glassdoor",
+        "date_posted": "2026-01-28",
+        "match_score": 62
+      },
+      {
+        "title": "Application Developer III, Platform Engineering",
+        "company": "Herbalife",
+        "location": "Torrance, CA",
+        "salary_min": 95917.0,
+        "salary_max": 141539.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010013271040",
+        "site": "glassdoor",
+        "date_posted": "2026-01-28",
+        "match_score": 62
+      },
+      {
+        "title": "Design Technologist, Prime Video",
+        "company": "Amazon.com",
+        "location": "Culver City, CA, US",
+        "salary_min": 118600.0,
+        "salary_max": 205000.0,
+        "url": "https://www.indeed.com/viewjob?jk=73f39e7a6c13a4e5",
+        "site": "indeed",
+        "date_posted": "2025-11-23",
+        "match_score": 61
+      },
+      {
+        "title": "Application Developer III, Platform Engineering",
+        "company": "Herbalife",
+        "location": "Torrance, CA, US",
+        "salary_min": NaN,
+        "salary_max": NaN,
+        "url": "https://www.indeed.com/viewjob?jk=3c2578a5352fa976",
+        "site": "indeed",
+        "date_posted": "2026-01-26",
+        "match_score": 59
+      }
+    ],
+    "total_found": 8,
+    "search_term": "Python JavaScript React",
+    "location": "90291",
+    "timestamp": "2026-01-28T17:08:14.247993",
+    "from_cache": false
+  },
+  "plumber|90291": {
+    "success": true,
+    "jobs": [
+      {
+        "title": "Plumber",
+        "company": "Hobi Plumbing",
+        "location": "Anaheim, CA, US",
+        "salary_min": NaN,
+        "salary_max": NaN,
+        "url": "https://www.indeed.com/viewjob?jk=62973576cb850050",
+        "site": "indeed",
+        "date_posted": "2026-01-26",
+        "match_score": 98
+      },
+      {
+        "title": "Plumber",
+        "company": "Hobi Plumbing",
+        "location": "Anaheim, CA, US",
+        "salary_min": 26.0,
+        "salary_max": 36.0,
+        "url": "https://www.indeed.com/viewjob?jk=183d973ece8bcca7",
+        "site": "indeed",
+        "date_posted": "2026-01-26",
+        "match_score": 98
+      },
+      {
+        "title": "Journeyman Plumber",
+        "company": "Custom Plumbing Inc",
+        "location": "Long Beach, CA",
+        "salary_min": 30.0,
+        "salary_max": 45.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011405062",
+        "site": "glassdoor",
+        "date_posted": "2026-01-26",
+        "match_score": 97
+      },
+      {
+        "title": "Plumber Service Technician (Experience 5 yrs req)",
+        "company": "Successful Plumbing Inc.",
+        "location": "Long Beach, CA, US",
+        "salary_min": 72000.0,
+        "salary_max": 120000.0,
+        "url": "https://www.indeed.com/viewjob?jk=cb62cf7e16d92334",
+        "site": "indeed",
+        "date_posted": "2026-01-27",
+        "match_score": 97
+      },
+      {
+        "title": "Journeyman Plumber",
+        "company": "Volarify",
+        "location": "Santa Ana, CA, US",
+        "salary_min": 28.0,
+        "salary_max": 38.0,
+        "url": "https://www.indeed.com/viewjob?jk=f485b1b0c0b40498",
+        "site": "indeed",
+        "date_posted": "2026-01-06",
+        "match_score": 97
+      },
+      {
+        "title": "Apprentice Plumber",
+        "company": "FRM PLUMBING & MAINTENANCE",
+        "location": "Los Angeles, CA",
+        "salary_min": 20.0,
+        "salary_max": 24.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011363051",
+        "site": "glassdoor",
+        "date_posted": "2026-01-26",
+        "match_score": 96
+      },
+      {
+        "title": "Apprentice Plumber/Service Technician",
+        "company": "Roto-Rooter Services Company",
+        "location": "Alhambra, CA",
+        "salary_min": 17.0,
+        "salary_max": 20.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011923571",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 95
+      },
+      {
+        "title": "Apprentice Plumber/Service Technician",
+        "company": "Roto-Rooter Plumbing & Water Cleanup",
+        "location": "Alhambra, CA, US",
+        "salary_min": 17.0,
+        "salary_max": 20.0,
+        "url": "https://www.indeed.com/viewjob?jk=1e5c330bf1977060",
+        "site": "indeed",
+        "date_posted": "2026-01-25",
+        "match_score": 95
+      },
+      {
+        "title": "Plumber",
+        "company": "Roto-Rooter Plumbing & Water Cleanup",
+        "location": "Alhambra, CA, US",
+        "salary_min": 17.0,
+        "salary_max": 20.0,
+        "url": "https://www.indeed.com/viewjob?jk=766793e75b534ce4",
+        "site": "indeed",
+        "date_posted": "2026-01-25",
+        "match_score": 95
+      },
+      {
+        "title": "Plumber Service Technician (Experience 5 yrs req)",
+        "company": "Benjamin Franklin Plumbing",
+        "location": "Long Beach, CA",
+        "salary_min": 72000.0,
+        "salary_max": 120000.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010012246776",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 94
+      }
+    ],
+    "total_found": 20,
+    "search_term": "Plumber",
+    "location": "90291",
+    "timestamp": "2026-01-27T18:37:55.710553",
+    "from_cache": false
+  },
+  "python, javascript, react, sql|remote": {
+    "success": true,
+    "jobs": [
+      {
+        "title": "Software Engineer (Workbench Core, Full Stack)",
+        "company": "Expel",
+        "location": "Herndon, VA",
+        "salary_min": 118400.0,
+        "salary_max": 171700.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010013812921",
+        "site": "glassdoor",
+        "date_posted": "2026-01-29",
+        "match_score": 78
+      },
+      {
+        "title": "Senior Software Developer- Full Stack (Remote)",
+        "company": "Cisco Systems",
+        "location": "nan",
+        "salary_min": 131000.0,
+        "salary_max": 277600.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010014693579",
+        "site": "glassdoor",
+        "date_posted": "2026-01-29",
+        "match_score": 77
+      },
+      {
+        "title": "Senior Java Developer (ReactJS)",
+        "company": "American Recruiting & Consulting Group",
+        "location": "nan",
+        "salary_min": NaN,
+        "salary_max": NaN,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010014151160",
+        "site": "glassdoor",
+        "date_posted": "2026-01-29",
+        "match_score": 77
+      },
+      {
+        "title": "Senior Software Engineer",
+        "company": "GitHub, Inc.",
+        "location": "nan",
+        "salary_min": 124000.0,
+        "salary_max": 329200.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011445019",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 76
+      },
+      {
+        "title": "Senior Java Developer (ReactJS)",
+        "company": "American Recruiting & Consulting Group",
+        "location": "Remote, US",
+        "salary_min": NaN,
+        "salary_max": NaN,
+        "url": "https://www.indeed.com/viewjob?jk=2cabf16ce3f9b07a",
+        "site": "indeed",
+        "date_posted": "2026-01-27",
+        "match_score": 76
+      },
+      {
+        "title": "Backend Developer",
+        "company": "Viderity Inc.",
+        "location": "Alexandria, VA",
+        "salary_min": 101465.0,
+        "salary_max": 158115.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010014217860",
+        "site": "glassdoor",
+        "date_posted": "2026-01-29",
+        "match_score": 75
+      },
+      {
+        "title": "Software engineer",
+        "company": "nan",
+        "location": "Remote, US",
+        "salary_min": 15282.0,
+        "salary_max": 39905.0,
+        "url": "https://www.indeed.com/viewjob?jk=f6b265fe7ebd38fd",
+        "site": "indeed",
+        "date_posted": "2026-01-28",
+        "match_score": 75
+      },
+      {
+        "title": "Senior Software Engineer FS",
+        "company": "Ad Hoc",
+        "location": "Remote, US",
+        "salary_min": 142000.0,
+        "salary_max": 148000.0,
+        "url": "https://www.indeed.com/viewjob?jk=320e13e541a6c5a7",
+        "site": "indeed",
+        "date_posted": "2026-01-27",
+        "match_score": 74
+      },
+      {
+        "title": "Sr JAVA/React Developer",
+        "company": "The Computer Merchant, Ltd",
+        "location": "Jacksonville, FL",
+        "salary_min": 60.0,
+        "salary_max": 66.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010013682557",
+        "site": "glassdoor",
+        "date_posted": "2026-01-29",
+        "match_score": 72
+      },
+      {
+        "title": "Senior Software Engineer FS",
+        "company": "Ad Hoc",
+        "location": "nan",
+        "salary_min": 142000.0,
+        "salary_max": 148000.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010014326906",
+        "site": "glassdoor",
+        "date_posted": "2026-01-29",
+        "match_score": 72
+      }
+    ],
+    "total_found": 20,
+    "search_term": "Python JavaScript React",
+    "location": "Remote",
+    "timestamp": "2026-01-29T00:58:34.450687",
+    "from_cache": false
+  },
+  "python, javascript, react, sql|90201": {
+    "success": true,
+    "jobs": [
+      {
+        "title": "Design Technologist, Prime Video",
+        "company": "Amazon.com Services LLC",
+        "location": "Culver City, CA",
+        "salary_min": 118600.0,
+        "salary_max": 205000.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010012648366",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 59
+      },
+      {
+        "title": "Design Technologist, Prime Video",
+        "company": "Amazon.com",
+        "location": "Culver City, CA, US",
+        "salary_min": 118600.0,
+        "salary_max": 205000.0,
+        "url": "https://www.indeed.com/viewjob?jk=edcb9a2f18bbc3bc",
+        "site": "indeed",
+        "date_posted": "2025-11-23",
+        "match_score": 58
+      }
+    ],
+    "total_found": 2,
+    "search_term": "Python JavaScript React",
+    "location": "90201",
+    "timestamp": "2026-01-27T19:07:46.656158",
+    "from_cache": false
+  },
+  "python, javascript, react, sql|": {
+    "success": true,
+    "jobs": [
+      {
+        "title": "Software Engineer ll",
+        "company": "Cohere Health",
+        "location": "nan",
+        "salary_min": 105000.0,
+        "salary_max": 125000.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011371412",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 78
+      },
+      {
+        "title": "Senior Software Engineer [Chicago Only]",
+        "company": "8th Light",
+        "location": "Chicago, IL",
+        "salary_min": 104160.0,
+        "salary_max": 130200.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011419783",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 78
+      },
+      {
+        "title": "Software Engineer",
+        "company": "Dynamic Animation Systems, Inc.",
+        "location": "Orlando, FL, US",
+        "salary_min": 80000.0,
+        "salary_max": 130000.0,
+        "url": "https://www.indeed.com/viewjob?jk=27d841329f0058d8",
+        "site": "indeed",
+        "date_posted": "2026-01-28",
+        "match_score": 78
+      },
+      {
+        "title": "Software Engineer (Workbench Core, Full Stack)",
+        "company": "Expel",
+        "location": "Herndon, VA",
+        "salary_min": 118400.0,
+        "salary_max": 171700.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010013812921",
+        "site": "glassdoor",
+        "date_posted": "2026-01-28",
+        "match_score": 76
+      },
+      {
+        "title": "Senior Engineer II - React Native (REMOTE)",
+        "company": "Discogs",
+        "location": "Portland, OR",
+        "salary_min": 120000.0,
+        "salary_max": 127500.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010012471755",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 76
+      },
+      {
+        "title": "Sr. Software Engineer II (6131)",
+        "company": "Metrostar Systems",
+        "location": "St. Louis, MO, US",
+        "salary_min": 155000.0,
+        "salary_max": 215000.0,
+        "url": "https://www.indeed.com/viewjob?jk=f3a3618b315812da",
+        "site": "indeed",
+        "date_posted": "2026-01-27",
+        "match_score": 76
+      },
+      {
+        "title": "Software Developer",
+        "company": "World Hyundai Matteson",
+        "location": "Matteson, IL, US",
+        "salary_min": 70000.0,
+        "salary_max": 80000.0,
+        "url": "https://www.indeed.com/viewjob?jk=8a0bc1f58c770adb",
+        "site": "indeed",
+        "date_posted": "2026-01-28",
+        "match_score": 75
+      },
+      {
+        "title": "Application Software Engineer",
+        "company": "SpaceX",
+        "location": "Hawthorne, CA, US",
+        "salary_min": NaN,
+        "salary_max": NaN,
+        "url": "https://www.indeed.com/viewjob?jk=2ec0593e95ca222d",
+        "site": "indeed",
+        "date_posted": "2026-01-27",
+        "match_score": 75
+      },
+      {
+        "title": "Senior Software Engineer",
+        "company": "GitHub, Inc.",
+        "location": "nan",
+        "salary_min": 124000.0,
+        "salary_max": 329200.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011445019",
+        "site": "glassdoor",
+        "date_posted": "2026-01-27",
+        "match_score": 74
+      },
+      {
+        "title": "Software Engineer",
+        "company": "fullstory",
+        "location": "Atlanta, GA, US",
+        "salary_min": NaN,
+        "salary_max": NaN,
+        "url": "https://www.indeed.com/viewjob?jk=cac8ce98657ff0f3",
+        "site": "indeed",
+        "date_posted": "2026-01-27",
+        "match_score": 74
+      }
+    ],
+    "total_found": 19,
+    "search_term": "Python JavaScript React",
+    "location": "",
+    "timestamp": "2026-01-28T14:07:56.089405",
+    "from_cache": false
   }
 }

@@ -10,8 +10,11 @@ tmp/
 wandb/
 .claude/
 applications/
+model/
+screenshots from plan/
+SmolAgents-MCPs/
 
-*.gguf
+# *.gguf  # Disabled - tracking smollm2-135m.gguf with LFS
 *.safetensors
 *.pt
 *.pth

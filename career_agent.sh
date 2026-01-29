@@ -134,13 +134,13 @@ while true; do
             gum style --foreground "$TEXT_COLOR" "Selected: $(basename "$RESUME_FILE")"
             echo ""
 
-            # Run analysis pipeline: resume_cmd.py -> AICHAT.py
+            # Run analysis pipeline: resume_parser.py -> llm_inference.py
             # Save prompt to temp file
             PROMPT_TEMP=$(mktemp)
-            python "$SCRIPT_DIR/resume_cmd.py" --input-file "$RESUME_FILE" --output "$PROMPT_TEMP" 2>/dev/null
+            python "$SCRIPT_DIR/resume_parser.py" --input-file "$RESUME_FILE" --output "$PROMPT_TEMP" 2>/dev/null
 
             # Run AI with spinner
-            RESULT=$(cat "$PROMPT_TEMP" | gum spin --spinner pulse --title "Analyzing with AI..." -- python "$SCRIPT_DIR/AICHAT.py" --chat 2>/dev/null)
+            RESULT=$(cat "$PROMPT_TEMP" | gum spin --spinner pulse --title "Analyzing with AI..." -- python "$SCRIPT_DIR/llm_inference.py" --chat 2>/dev/null)
             rm -f "$PROMPT_TEMP"
 
             # Extract and flatten JSON from response with pandas
@@ -390,87 +390,43 @@ $JOB_DISPLAY"
         "Generate Cover Letter")
             clear
             gum style --foreground "$ACCENT_COLOR" --border normal --padding "1 2" \
-                "$(printf '\342\234\215\357\270\217') COVER LETTER GENERATOR" "AI-powered personalized cover letters"
+                "$(printf '\342\234\215\357\270\217') JOB APPLICATION PIPELINE" "AI-powered resume & cover letter generation"
             echo ""
 
-            COMPANY=$(gum input --placeholder "Company name..." --header "What company are you applying to?")
-            [ -z "$COMPANY" ] && COMPANY="Acme Corp"
-
-            ROLE=$(gum input --placeholder "Job title..." --header "What role?")
-            [ -z "$ROLE" ] && ROLE="Software Engineer"
+            # Run the job application pipeline directly
+            # It handles everything: job search, selection, Q&A, generation, saving
+            python "job_application_pipeline.py" </dev/tty
 
             echo ""
-            gum style --foreground "$TEXT_COLOR" "Optional: Select your resume to personalize the letter"
-            gum style --foreground "$TEXT_COLOR" --italic "(PDF, DOCX, or TXT)"
-            FILE_METHOD=$(gum choose "Browse for file" "Paste file path" "Skip")
-            if [ "$FILE_METHOD" = "Paste file path" ]; then
-                RESUME_FILE=$(gum input --placeholder "Enter full path to resume...")
-                [ ! -f "$RESUME_FILE" ] && RESUME_FILE=""
-            elif [ "$FILE_METHOD" = "Browse for file" ]; then
-                RESUME_FILE=$("$SCRIPT_DIR/GumFuzzy/fuzzy-picker" </dev/tty) || RESUME_FILE=""
-            else
-                RESUME_FILE=""
-            fi
-
-            # Validate file extension if a file was selected
-            if [ -n "$RESUME_FILE" ]; then
-                EXT="${RESUME_FILE##*.}"
-                EXT_LOWER=$(echo "$EXT" | tr '[:upper:]' '[:lower:]')
-                if [[ "$EXT_LOWER" != "pdf" && "$EXT_LOWER" != "docx" && "$EXT_LOWER" != "doc" && "$EXT_LOWER" != "txt" ]]; then
-                    gum style --foreground "$WARNING_COLOR" "Skipping invalid file type. Generating without resume."
-                    RESUME_FILE=""
-                fi
-            fi
-
-            echo ""
-            gum spin --spinner pulse --title "Generating personalized cover letter..." -- sleep 1
-
-            if [ -n "$RESUME_FILE" ]; then
-                RESULT=$(call_backend "cover_letter.py" "$COMPANY" "$ROLE" "$NAME" "$RESUME_FILE")
-            else
-                RESULT=$(call_backend "cover_letter.py" "$COMPANY" "$ROLE" "$NAME")
-            fi
-
-            SUCCESS=$(echo "$RESULT" | jq -r '.success')
-
-            if [ "$SUCCESS" != "true" ]; then
-                ERROR=$(echo "$RESULT" | jq -r '.error')
-                gum style --foreground "$ERROR_COLOR" "Error: $ERROR"
-                gum confirm "Return to menu?" && continue || break
-            fi
-
-            echo ""
-            gum style --foreground "$SUCCESS_COLOR" "$(printf '\342\234\205') Cover letter generated!"
-            echo ""
-
-            # Display cover letter with yellow/orange border matching mockup
-            COVER_LETTER=$(echo "$RESULT" | jq -r '.cover_letter')
-            gum style --border normal --border-foreground "220" --padding "1 2" \
-                "$COVER_LETTER"
-
-            USED_RESUME=$(echo "$RESULT" | jq -r '.used_resume')
-            if [ "$USED_RESUME" = "true" ]; then
-                echo ""
-                gum style --foreground "$SUCCESS_COLOR" --italic "Personalized using your resume"
-            fi
-
-            echo ""
-            gum confirm "Save cover letter to file?" && {
-                OUTFILE="cover_letter_${COMPANY// /_}_$(date +%Y%m%d).txt"
-                echo "$COVER_LETTER" > "$OUTFILE"
-                gum style --foreground "$SUCCESS_COLOR" "Saved to: $OUTFILE"
-            }
-
             gum confirm "Return to menu?" && continue || break
             ;;
 
         "Interview Prep Questions")
             clear
             gum style --foreground "$ACCENT_COLOR" --border normal --padding "1 2" \
-                "$(printf '\360\237\222\254') INTERVIEW PREP" "Practice with AI-generated questions"
+                "$(printf '\360\237\222\254') INTERVIEW PREP" "AI-personalized interview questions"
             echo ""
 
+            # Get user context for personalization
+            TARGET_ROLE=$(gum input --placeholder "e.g., Senior Software Engineer, Product Manager..." \
+                --header "What role are you interviewing for?" \
+                --value "Software Engineer")
+
+            if [ -z "$TARGET_ROLE" ]; then
+                TARGET_ROLE="Software Engineer"
+            fi
+
+            echo ""
+            SKILLS=$(gum input --placeholder "e.g., Python, React, System Design..." \
+                --header "What are your key skills?" \
+                --value "Python, JavaScript, React, SQL")
+
+            if [ -z "$SKILLS" ]; then
+                SKILLS="Python, JavaScript, React, SQL"
+            fi
+
             # Category descriptions to help user choose
+            echo ""
             gum style --foreground "$TEXT_COLOR" "Select interview type:"
             echo ""
             gum style --foreground "$TEXT_COLOR" --italic \
@@ -483,69 +439,35 @@ $JOB_DISPLAY"
             TYPE=$(gum choose "Behavioral" "Technical" "System Design" "Culture Fit" \
                 --cursor="> ")
 
-            # Map selection to backend category
-            case "$TYPE" in
-                "Behavioral") CATEGORY="behavioral" ;;
-                "Technical") CATEGORY="technical" ;;
-                "System Design") CATEGORY="system_design" ;;
-                "Culture Fit") CATEGORY="culture_fit" ;;
-            esac
-
             echo ""
-            gum spin --spinner dot --title "Generating relevant questions..." -- sleep 0.5
+            gum spin --spinner dot --title "Analyzing your profile..." -- sleep 0.3
 
-            RESULT=$(call_backend "interview_prep.py" "$CATEGORY" 4)
+            # Build personalized prompt from template
+            PROMPT_TEMP=$(mktemp)
+            sed "s/{{INTERVIEW_TYPE}}/$TYPE/g; s/{{TARGET_ROLE}}/$TARGET_ROLE/g; s/{{SKILLS}}/$SKILLS/g" \
+                "$SCRIPT_DIR/interview_prep_prompt.txt" > "$PROMPT_TEMP"
 
-            SUCCESS=$(echo "$RESULT" | jq -r '.success')
+            # Generate with AI
+            RESULT=$(cat "$PROMPT_TEMP" | gum spin --spinner pulse --title "Generating personalized questions..." -- python "$SCRIPT_DIR/llm_inference.py" --chat 2>/dev/null)
+            rm -f "$PROMPT_TEMP"
 
-            if [ "$SUCCESS" != "true" ]; then
-                ERROR=$(echo "$RESULT" | jq -r '.error')
-                gum style --foreground "$ERROR_COLOR" "Error: $ERROR"
+            if [ -z "$RESULT" ]; then
+                gum style --foreground "$ERROR_COLOR" "Error: Failed to generate questions"
                 gum confirm "Return to menu?" && continue || break
             fi
 
             echo ""
+            gum style --foreground "$SUCCESS_COLOR" "$(printf '\342\234\205') Interview prep guide generated!"
+            echo ""
 
-            # Build questions display
-            QUESTIONS_TEXT=""
-            while IFS= read -r q; do
-                NUM=$(echo "$q" | jq -r '.number')
-                QUESTION=$(echo "$q" | jq -r '.question')
-                QUESTIONS_TEXT="$QUESTIONS_TEXT
-$NUM. $QUESTION"
-            done < <(echo "$RESULT" | jq -c '.questions[]')
-
-            # Get general tip
-            GENERAL_TIP=$(echo "$RESULT" | jq -r '.general_tip')
-
-            # Display in styled box matching mockup
-            gum style --border normal --border-foreground "255" --padding "1 2" \
-                "$(printf '\360\237\223\213') ${TYPE^^} INTERVIEW QUESTIONS:" \
-                "$QUESTIONS_TEXT" \
-                "" \
-                "$(printf '\360\237\222\241') TIP: $GENERAL_TIP"
+            # Display with glow piped to gum pager (starts at top, allows scrolling)
+            echo "$RESULT" | glow - | gum pager
 
             echo ""
-            gum confirm "Get different questions?" && {
-                RESULT=$(call_backend "interview_prep.py" "$CATEGORY" 4)
-
-                # Rebuild questions display
-                QUESTIONS_TEXT=""
-                while IFS= read -r q; do
-                    NUM=$(echo "$q" | jq -r '.number')
-                    QUESTION=$(echo "$q" | jq -r '.question')
-                    QUESTIONS_TEXT="$QUESTIONS_TEXT
-$NUM. $QUESTION"
-                done < <(echo "$RESULT" | jq -c '.questions[]')
-
-                GENERAL_TIP=$(echo "$RESULT" | jq -r '.general_tip')
-
-                echo ""
-                gum style --border normal --border-foreground "255" --padding "1 2" \
-                    "$(printf '\360\237\223\213') ${TYPE^^} INTERVIEW QUESTIONS:" \
-                    "$QUESTIONS_TEXT" \
-                    "" \
-                    "$(printf '\360\237\222\241') TIP: $GENERAL_TIP"
+            gum confirm "Save this guide to a file?" && {
+                OUTFILE="interview_prep_$(echo "$TYPE" | tr ' ' '_' | tr '[:upper:]' '[:lower:]')_$(date +%Y%m%d_%H%M%S).md"
+                echo "$RESULT" > "$OUTFILE"
+                gum style --foreground "$SUCCESS_COLOR" "Saved to: $OUTFILE"
             }
 
             echo ""

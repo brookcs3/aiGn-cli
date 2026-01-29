@@ -188,13 +188,36 @@ Best regards,
 
 def _fallback_template(company: str, role: str, user_name: str, context: str) -> str:
     """Fallback template-based cover letter if LLM fails."""
-    context_sentence = f" With {context.lower()}, I" if context else " I"
+    import random
 
-    return f"""I am excited to apply for the {role} position at {company}.{context_sentence} believe I would be a strong addition to your team.
+    # Varied openings
+    openings = [
+        f"I am excited to apply for the {role} position at {company}.",
+        f"I am writing to express my strong interest in the {role} role at {company}.",
+        f"I was thrilled to see the {role} opening at {company}.",
+    ]
 
-In my previous roles, I have successfully delivered projects that improved system performance and team productivity. I am particularly drawn to {company}'s mission and innovative approach to solving complex problems.
+    # Build context-aware middle section
+    if context:
+        context_parts = context.split(". ")
+        skills_mention = context_parts[0] if context_parts else "strong technical skills"
+        middle = f"With my background in {skills_mention.lower()}, I have successfully delivered multiple projects that improved system performance by 35% and reduced deployment time by 50%."
+    else:
+        middle = "In my previous role, I successfully delivered multiple projects that improved system performance by 35% and reduced deployment time by 50%."
 
-I would welcome the opportunity to discuss how my skills and experience align with your team's needs. Thank you for considering my application."""
+    # Company-specific mention
+    company_sentence = f"I am particularly drawn to {company}'s mission and innovative approach."
+
+    # Closing
+    closing = "I would welcome the opportunity to discuss how my skills align with your team's needs."
+
+    opening = random.choice(openings)
+
+    return f"""{opening} With my background in software development and passion for building impactful products, I believe I would be a strong addition to your team.
+
+{middle} {company_sentence}
+
+{closing}"""
 
 
 def main():

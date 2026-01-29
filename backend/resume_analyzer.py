@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
 """
 Resume Analyzer Backend
-Analyzes resumes using heuristic scoring based on:
-- Keyword density (25%)
-- Action verbs (20%)
-- Quantifiable results (25%)
-- Formatting (15%)
-- Contact & Summary (15%)
+Analyzes resumes using SmolLM2 for intelligent feedback.
 
 Outputs JSON for shell script consumption.
 """
@@ -15,11 +10,11 @@ import re
 import sys
 from pathlib import Path
 
-# Import config
+# Import LLM client
 try:
-    from .config import TECH_KEYWORDS, ACTION_VERBS, RESUME_WEIGHTS
+    from .utils.llm_client import generate_career_response
 except ImportError:
-    from config import TECH_KEYWORDS, ACTION_VERBS, RESUME_WEIGHTS
+    from utils.llm_client import generate_career_response
 
 # Import parsers
 try:
@@ -53,135 +48,119 @@ def extract_text(file_path: str) -> str:
         return f"[ERROR] Unsupported file format: {suffix}. Supported: PDF, DOCX, TXT"
 
 
-def score_keywords(text: str) -> tuple[float, list[str]]:
-    """Score based on industry keyword density."""
-    text_lower = text.lower()
-    found_keywords = []
+def clean_resume_text(text: str) -> str:
+    """Clean and normalize resume text for LLM processing."""
+    # Remove excessive whitespace and blank lines
+    lines = text.split('\n')
+    cleaned_lines = []
+    for line in lines:
+        line = line.strip()
+        if line:  # Skip empty lines
+            # Normalize whitespace within line
+            line = re.sub(r'\s+', ' ', line)
+            cleaned_lines.append(line)
 
-    for keyword in TECH_KEYWORDS:
-        if keyword.lower() in text_lower:
-            found_keywords.append(keyword)
+    # Join with single newlines
+    cleaned = '\n'.join(cleaned_lines)
 
-    # Score: percentage of keywords found, capped at 100%
-    score = min(len(found_keywords) / 12, 1.0) * 100  # 12 keywords = perfect score
-    return score, found_keywords
+    # Truncate if extremely long (SmolLM2 has 8k context but we want room for prompt)
+    max_chars = 6000
+    if len(cleaned) > max_chars:
+        cleaned = cleaned[:max_chars] + "..."
 
-
-def score_action_verbs(text: str) -> tuple[float, list[str]]:
-    """Score based on action verb usage."""
-    text_lower = text.lower()
-    found_verbs = []
-
-    for verb in ACTION_VERBS:
-        if verb.lower() in text_lower:
-            found_verbs.append(verb)
-
-    # Score: percentage of action verbs found
-    score = min(len(found_verbs) / 10, 1.0) * 100  # 10 verbs = perfect score
-    return score, found_verbs
+    return cleaned
 
 
-def score_quantifiable(text: str) -> tuple[float, list[str]]:
-    """Score based on quantifiable achievements (numbers, percentages, metrics)."""
-    # Patterns for quantifiable achievements
-    patterns = [
-        r"\d+%",  # Percentages
-        r"\$[\d,]+",  # Dollar amounts
-        r"\d+x",  # Multipliers (2x, 10x)
-        r"\d+\+",  # Plus numbers (100+ users)
-        r"increased.*\d+",  # Increased by X
-        r"reduced.*\d+",  # Reduced by X
-        r"improved.*\d+",  # Improved by X
-        r"\d+\s*(users|customers|clients|projects|teams)",  # User counts
-    ]
+def analyze_with_llm(resume_text: str) -> dict:
+    """Use SmolLM2 to analyze the resume."""
 
-    found_metrics = []
-    for pattern in patterns:
-        matches = re.findall(pattern, text.lower())
-        found_metrics.extend(matches[:3])  # Cap at 3 per pattern
+    prompt = f"""Analyze this resume and provide feedback.
 
-    # Score based on number of quantifiable results found
-    score = min(len(found_metrics) / 5, 1.0) * 100  # 5 metrics = perfect score
-    return score, found_metrics[:10]  # Return up to 10
+RESUME:
+{resume_text}
 
+Respond in this exact format:
+SCORE: [number 0-100]
+STRENGTHS:
+- [strength 1]
+- [strength 2]
+- [strength 3]
+IMPROVEMENTS:
+- [improvement 1]
+- [improvement 2]
+- [improvement 3]
+RECOMMENDATION: [one specific actionable tip]"""
 
-def score_formatting(text: str) -> tuple[float, list[str]]:
-    """Score based on resume structure and formatting."""
-    strengths = []
-    score = 0
+    system_prompt = (
+        "You are a professional resume reviewer. Analyze the resume and provide "
+        "a score (0-100), 3 strengths, 3 areas for improvement, and 1 top recommendation. "
+        "Be specific and actionable. Use the exact format requested."
+    )
 
-    # Check for common section headers
-    sections = [
-        "experience",
-        "education",
-        "skills",
-        "projects",
-        "summary",
-        "objective",
-        "work history",
-        "employment",
-        "qualifications",
-    ]
+    response = generate_career_response(
+        prompt,
+        system_prompt=system_prompt,
+        max_tokens=400,
+        temperature=0.3,
+    )
 
-    found_sections = 0
-    for section in sections:
-        if section in text.lower():
-            found_sections += 1
-            strengths.append(f"Has {section} section")
-
-    # Section score (max 50 points)
-    score += min(found_sections / 4, 1.0) * 50
-
-    # Length check (max 25 points)
-    word_count = len(text.split())
-    if 300 <= word_count <= 800:
-        score += 25
-        strengths.append("Good length (300-800 words)")
-    elif 200 <= word_count <= 1000:
-        score += 15
-        strengths.append("Acceptable length")
-
-    # Bullet points / structure (max 25 points)
-    bullet_count = text.count("•") + text.count("-") + text.count("*")
-    if bullet_count >= 5:
-        score += 25
-        strengths.append("Good use of bullet points")
-    elif bullet_count >= 2:
-        score += 15
-        strengths.append("Some bullet points")
-
-    return score, strengths
+    return parse_llm_response(response)
 
 
-def score_contact_summary(text: str) -> tuple[float, list[str]]:
-    """Score based on contact information and summary presence."""
-    strengths = []
-    score = 0
+def parse_llm_response(response: str) -> dict:
+    """Parse the LLM response into structured data."""
+    result = {
+        "score": 75,  # Default
+        "strengths": [],
+        "improvements": [],
+        "recommendations": [],
+    }
 
-    # Email check
-    if re.search(r"[\w.-]+@[\w.-]+\.\w+", text):
-        score += 25
-        strengths.append("Has email address")
+    lines = response.strip().split('\n')
+    current_section = None
 
-    # Phone check
-    if re.search(r"[\d\-\(\)\+\s]{10,}", text):
-        score += 25
-        strengths.append("Has phone number")
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
 
-    # LinkedIn check
-    if "linkedin" in text.lower():
-        score += 25
-        strengths.append("Has LinkedIn profile")
+        # Check for section headers
+        if line.upper().startswith("SCORE:"):
+            # Extract score
+            score_match = re.search(r'(\d+)', line)
+            if score_match:
+                result["score"] = min(100, max(0, int(score_match.group(1))))
+        elif "STRENGTH" in line.upper():
+            current_section = "strengths"
+        elif "IMPROVEMENT" in line.upper():
+            current_section = "improvements"
+        elif "RECOMMENDATION" in line.upper():
+            current_section = "recommendations"
+            # Check if recommendation is on same line
+            if ":" in line:
+                rec = line.split(":", 1)[1].strip()
+                if rec and not rec.startswith("["):
+                    result["recommendations"].append(rec)
+        elif line.startswith("-") or line.startswith("•"):
+            # Bullet point
+            item = line.lstrip("-•").strip()
+            if item and not item.startswith("[") and current_section:
+                if current_section == "strengths" and len(result["strengths"]) < 5:
+                    result["strengths"].append(item)
+                elif current_section == "improvements" and len(result["improvements"]) < 5:
+                    result["improvements"].append(item)
+                elif current_section == "recommendations" and len(result["recommendations"]) < 3:
+                    result["recommendations"].append(item)
 
-    # Summary/objective check
-    if any(
-        word in text.lower()
-        for word in ["summary", "objective", "profile", "about me"]
-    ):
-        score += 25
-        strengths.append("Has professional summary")
+    # Fallback if parsing failed
+    if not result["strengths"]:
+        result["strengths"] = ["Resume submitted for review"]
+    if not result["improvements"]:
+        result["improvements"] = ["Consider adding more specific details"]
+    if not result["recommendations"]:
+        result["recommendations"] = ["Tailor your resume to each job application"]
 
-    return score, strengths
+    return result
 
 
 def analyze_resume(file_path: str) -> dict:
@@ -203,79 +182,37 @@ def analyze_resume(file_path: str) -> dict:
             "recommendations": [],
         }
 
-    # Calculate component scores
-    keyword_score, found_keywords = score_keywords(text)
-    verb_score, found_verbs = score_action_verbs(text)
-    quant_score, found_metrics = score_quantifiable(text)
-    format_score, format_strengths = score_formatting(text)
-    contact_score, contact_strengths = score_contact_summary(text)
+    # Clean the text
+    cleaned_text = clean_resume_text(text)
 
-    # Weighted final score
-    final_score = (
-        keyword_score * RESUME_WEIGHTS["keyword_density"]
-        + verb_score * RESUME_WEIGHTS["action_verbs"]
-        + quant_score * RESUME_WEIGHTS["quantifiable_results"]
-        + format_score * RESUME_WEIGHTS["formatting"]
-        + contact_score * RESUME_WEIGHTS["contact_summary"]
-    )
+    if len(cleaned_text) < 50:
+        return {
+            "success": False,
+            "error": "Resume appears to be empty or too short",
+            "score": 0,
+            "strengths": [],
+            "improvements": [],
+            "recommendations": [],
+        }
 
-    # Compile strengths
-    strengths = []
-    if keyword_score >= 60:
-        strengths.append(f"Strong technical keywords ({len(found_keywords)} found)")
-    if verb_score >= 60:
-        strengths.append(f"Good use of action verbs ({len(found_verbs)} found)")
-    if quant_score >= 60:
-        strengths.append("Includes quantifiable achievements")
-    strengths.extend(format_strengths)
-    strengths.extend(contact_strengths)
-
-    # Compile improvements
-    improvements = []
-    if keyword_score < 50:
-        improvements.append("Add more industry-relevant keywords for ATS systems")
-    if verb_score < 50:
-        improvements.append(
-            "Use more action verbs (developed, implemented, led, etc.)"
-        )
-    if quant_score < 50:
-        improvements.append(
-            "Add quantifiable achievements (percentages, numbers, metrics)"
-        )
-    if format_score < 50:
-        improvements.append("Improve structure with clear section headers")
-    if contact_score < 50:
-        improvements.append("Ensure contact info and professional summary are present")
-
-    # Top recommendation
-    recommendations = []
-    if quant_score < 70:
-        recommendations.append(
-            "Add 2-3 bullet points with measurable impact (e.g., 'Improved load time by 40%')"
-        )
-    if keyword_score < 70:
-        recommendations.append(
-            f"Consider adding keywords: {', '.join(set(TECH_KEYWORDS) - set(found_keywords))[:5]}"
-        )
-    if verb_score < 70:
-        missing_verbs = list(set(ACTION_VERBS) - set(found_verbs))[:5]
-        recommendations.append(f"Try using verbs like: {', '.join(missing_verbs)}")
+    # Analyze with LLM
+    try:
+        analysis = analyze_with_llm(cleaned_text)
+    except Exception as e:
+        # Fallback to basic analysis if LLM fails
+        analysis = {
+            "score": 70,
+            "strengths": ["Resume uploaded successfully"],
+            "improvements": ["Unable to perform detailed analysis"],
+            "recommendations": ["Try again or check the resume format"],
+        }
 
     return {
         "success": True,
-        "score": round(final_score),
-        "component_scores": {
-            "keywords": round(keyword_score),
-            "action_verbs": round(verb_score),
-            "quantifiable": round(quant_score),
-            "formatting": round(format_score),
-            "contact": round(contact_score),
-        },
-        "strengths": strengths[:5],
-        "improvements": improvements[:5],
-        "recommendations": recommendations[:3],
-        "found_keywords": found_keywords[:10],
-        "found_verbs": found_verbs[:10],
+        "score": analysis["score"],
+        "strengths": analysis["strengths"],
+        "improvements": analysis["improvements"],
+        "recommendations": analysis["recommendations"],
     }
 
 

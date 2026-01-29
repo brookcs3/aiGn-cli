@@ -1,0 +1,23 @@
+.DS_Store
+**/.DS_Store
+
+__pycache__/
+**/__pycache__/
+*.pyc
+
+.cache/
+tmp/
+wandb/
+.claude/
+applications/
+
+*.gguf
+*.safetensors
+*.pt
+*.pth
+*.bin
+*.onnx
+
+# Built artifacts
+GumMouse/cover_editor
+backend/utils/glamour/main

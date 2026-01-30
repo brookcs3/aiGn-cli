@@ -6,7 +6,6 @@ __pycache__/
 *.pyc
 
 .cache/
-tmp/
 wandb/
 .claude/
 applications/
@@ -14,13 +13,3 @@ model/
 screenshots from plan/
 SmolAgents-MCPs/
 
-# *.gguf  # Disabled - tracking smollm2-135m.gguf with LFS
-*.safetensors
-*.pt
-*.pth
-*.bin
-*.onnx
-
-# Built artifacts
-GumMouse/cover_editor
-backend/utils/glamour/main

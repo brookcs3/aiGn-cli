@@ -1,0 +1,165 @@
+,
+    "question_bank": {
+      "skill_questions": [
+        {
+          "question_id": "1",
+          "group_id": "frontend",
+          "skill": "React",
+          "question_text": "Do you have experience with React?",
+          "answer_fields": [
+            {
+              "field_key": "experience",
+              "field_label": "Experience with",
+              "expected_format": "short_text",
+              "required": true
+            }
+          ]
+        },
+        {
+          "question_id": "2",
+          "group_id": "backend",
+          "skill": "node.js",
+          "question_text": "Do you have experience with Node.js?",
+          "answer_fields": [
+            {
+              "field_key": "experience",
+              "field_label": "Experience with",
+              "expected_format": "short_text",
+              "required": true
+            }
+          ]
+        },
+        {
+          "question_id": "3",
+          "group_id": "mobile",
+          "skill": "SaaS",
+          "question_text": "Do you have experience with SaaS?",
+          "answer_fields": [
+            {
+              "field_key": "experience",
+              "field_label": "Experience with",
+              "expected_format": "short_text",
+              "required": true
+            }
+          ]
+        },
+        {
+          "question_id": "4",
+          "group_id": "cloud",
+          "skill": "cloud platforms",
+          "question_text": "Do you have experience with cloud platforms?",
+          "answer_fields": [
+            {
+              "field_key": "experience",
+              "field_label": "Experience with",
+              "expected_format": "short_text",
+              "required": true
+            }
+          ]
+        },
+        {
+          "question_id": "5",
+          "group_id": "data",
+          "skill": "data",
+          "question_text": "Do you have experience with data?",
+          "answer_fields": [
+            {
+              "field_key": "experience",
+              "field_label": "Experience with",
+              "expected_format": "short_text",
+              "required": true
+            }
+          ]
+        },
+        {
+          "question_id": "6",
+          "group_id": "devops",
+          "skill": "testing",
+          "question_text": "Do you have experience with testing?",
+          "answer_fields": [
+            {
+              "field_key": "experience",
+              "field_label": "Experience with",
+              "expected_format": "short_text",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "category_questions": [
+        {
+          "question_id": "7",
+          "category_id": "frontend",
+          "question_text": "What are your strengths in frontend engineering?",
+          "answer_fields": [
+            {
+              "field_key": "strengths",
+              "field_label": "Strengths",
+              "expected_format": "short_text",
+              "required": true
+            }
+          ]
+        },
+        {
+          "question_id": "8",
+          "category_id": "backend",
+          "question_text": "What are your strengths in backend engineering?",
+          "answer_fields": [
+            {
+              "field_key": "strengths",
+              "field_label": "Strengths",
+              "expected_format": "short_text",
+              "required": true
+            }
+          ]
+        },
+        {
+          "question_id": "9",
+          "category_id": "mobile",
+          "question_text": "What are your strengths in mobile engineering?",
+          "answer_fields": [
+            {
+              "field_key": "strengths",
+              "field_label": "Strengths",
+              "expected_format": "short_text",
+              "required": true
+            }
+          ]
+        },
+        {
+          "question_id": "10",
+          "category_id": "cloud",
+          "question_text": "What are your strengths in cloud platforms?",
+          "answer_fields": [
+            {
+              "field_key": "strengths",
+              "field_label": "Strengths",
+              "expected_format": "short_text",
+              "required": true
+            }
+          ]
+        },
+        {
+          "question_id": "11",
+          "category_id": "data",
+          "question_text": "What are your strengths in data?",
+          "answer_fields": [
+            {
+              "field_key": "strengths",
+              "field_label": "Strengths",
+              "expected_format": "short_text",
+              "required": true
+            }
+          ]
+        },
+        {
+          "question_id": "12",
+          "category_id": "devops",
+          "question_text": "What are your strengths in testing?",
+          "answer_fields": [
+            {
+              "field_key": "strengths",
+              "field_label": "Strengths",
+              "expected_format": "short_text",
+              "required": true
+            }

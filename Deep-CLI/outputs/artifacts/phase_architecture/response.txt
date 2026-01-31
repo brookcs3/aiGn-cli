@@ -1,0 +1,84 @@
+# C4 Architecture Diagrams Report
+
+**Report Date:** October 2023  
+**Author:** Senior Systems Analyst  
+**Scope:** C4 model Context and Container diagrams for the project.  
+**Note:** No specific code/context was provided in the request. Diagrams are based on a representative **Web-based User Management System** (common project archetype):  
+- End users authenticate and manage profiles via a web app.  
+- Backend handles logic; persistent storage in a database.  
+- External identity provider for auth (e.g., OAuth).  
+If actual code/context differs, provide it for refinement. Diagrams use **PlantUML C4 notation** (renderable at [plantuml.com](http://www.plantuml.com/plantuml)).
+
+## 1. System Context Diagram (Level 1)
+**Brief Explanation:**  
+Highest-level view showing the software system as a black box, its key users/actors, and external systems. Focuses on *who* interacts with *what*.  
+- **Users:** End Users (manage profiles).  
+- **External:** Identity Provider (auth).  
+- **System:** User Management System (core boundary).
+
+```plantuml
+@startuml id1
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(user, "End User", "Registers, logs in, manages profile")
+System_Ext(identityProvider, "Identity Provider", "External OAuth service (e.g., Google/Auth0)")
+
+System(userManagementSystem, "User Management System", "Web app for user auth and profile management")
+
+Rel(user, userManagementSystem, "Uses", "HTTPS")
+Rel(userManagementSystem, identityProvider, "Authenticates via", "OAuth")
+
+SHOW_LEGEND()
+@enduml
+```
+
+**Key Interactions:**  
+- Users → System (profile CRUD).  
+- System ↔ Identity Provider (secure auth delegation).
+
+## 2. Container Diagram (Level 2)
+**Brief Explanation:**  
+Zooms into the User Management System, showing high-level containers (runnables/deployables like web apps, APIs, DBs) and their interactions. Hides implementation details. Focuses on *how* the system is structured.  
+- **Containers:** Web UI (browser SPA), API (backend service), Database (persistent store).  
+- Tech: Frontend (React), Backend (Node.js/Express), DB (PostgreSQL).
+
+```plantuml
+@startuml id2
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "End User", "Web browser")
+
+System_Ext(identityProvider, "Identity Provider", "OAuth service")
+
+System_Boundary(userManagementSystem, "User Management System") {
+    Container(webApp, "Web UI", "React SPA", "Single-page app for user interactions")
+    ContainerDb(api, "API", "Node.js/Express", "RESTful backend for business logic")
+    ContainerDb(postgres, "Database", "PostgreSQL", "Stores user profiles & sessions")
+}
+
+Rel(user, webApp, "Uses", "HTTPS/JSON")
+Rel(webApp, api, "Calls", "HTTPS/JSON")
+Rel(api, postgres, "Reads/Writes", "JDBC/SQL")
+Rel(api, identityProvider, "Authenticates", "OAuth2")
+
+SHOW_LEGEND()
+@enduml
+```
+
+**Key Interactions:**  
+| Source → Target | Protocol | Description |
+|-----------------|----------|-------------|
+| End User → Web UI | HTTPS/JSON | UI rendering & form submissions |
+| Web UI → API | HTTPS/JSON | API calls for CRUD operations |
+| API → Database | JDBC/SQL | Data persistence |
+| API → Identity Provider | OAuth2 | Token-based auth |
+
+## Recommendations & Next Steps
+- **Refinement:** Provide source code/repo details (e.g., package structure, services) for Component/Code-level diagrams (Level 3/4).  
+- **Tools:** Use Structurizr/PlantUML for interactive rendering; integrate into docs (e.g., Confluence/GitHub).  
+- **Validation:** Aligns with C4 principles (abstraction, consistency). Review for security (e.g., add queues for scalability).  
+- **Action Items:**  
+  1. Render diagrams.  
+  2. Share feedback/context for iteration.
+
+**End of Report.**

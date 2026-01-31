@@ -1,0 +1,24 @@
+| Step  | Original File                            | Role                             |
+| ----- | ---------------------------------------- | -------------------------------- |
+| A     | A-Before Posting Data is pulled.txt      | Empty job analysis template      |
+| B     | B-Posting Data filled.txt                | A + job posting → sent to AI     |
+| C     | c-FULL C.txt / C-USERANSWERSQEUSTIONS... | AI outputs questions             |
+| (ref) | C-ASK QUESTION USING THIS.txt            | TUI reference (bubbletea link)   |
+| D     | D-template to fill C into.txt            | Empty resume builder template    |
+| E     | E-FIlled w C.txt                         | D + user answers → sent to AI    |
+| OUT   | FINALOUT-AICAHt gets E.txt               | AI outputs resume + cover letter |
+
+Done! Here's your renamed pipeline:
+
+**Resume Generation Pipeline**
+
+| #    | File                                           | Purpose                               |
+| ---- | ---------------------------------------------- | ------------------------------------- |
+| 01   | `01-A-job-analysis-template-empty.txt`         | Empty template with schema            |
+| 02   | `02-B-job-analysis-filled-TO-AI.txt`           | A + job posting → **AI INPUT**        |
+| 03   | `03-C-ai-generated-questions.txt`              | **AI OUTPUT** = questions             |
+| 03a  | `03a-C-tui-reference-bubbletea.txt`            | TUI example link                      |
+| 03b  | `03b-C-question-bank-extract.txt`              | Extracted question bank               |
+| 04   | `04-D-resume-builder-template-empty.txt`       | Empty resume/cover letter template    |
+| 05   | `05-E-resume-builder-filled-TO-AI.txt`         | D + user answers → **AI INPUT**       |
+| 06   | `06-FINAL-ai-generated-resume-coverletter.txt` | **AI OUTPUT** = resume + cover letter |

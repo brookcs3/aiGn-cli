@@ -1,0 +1,205 @@
+<instructions>
+1. Build from scratch using ONLY:
+   - job_post_text
+   - responses.categories[].questions[].answer
+2. DO NOT invent facts. If the job requires something not supported by answers, add it to do_not_invent_list.
+3. Extract ATS keywords and mirror phrasing naturally (no keyword stuffing).
+4. Convert answers into proof points:
+   - Action + Tool/Tech + Scope + Result/Impact
+   - Prefer numbers if the answer includes them. Do not fabricate metrics.
+5. Resume output rules:
+   - 1 page-ish, ATS-friendly, plain text
+   - 2–4 summary bullets
+   - Skills grouped to match job emphasis
+   - 2–4 projects (preferred for interns/new grads)
+   - Experience section allowed but must not be invented
+6. Cover letter rules:
+   - 250–400 words, 3–4 paragraphs
+   - Hook: builder mindset + mission alignment
+   - Body: 2 proof paragraphs anchored by strongest evidence
+   - Close: collaboration/learning + call to action
+7. Output JSON matching the schema. Include both resume_text and cover_letter_text unless output_mode says otherwise.
+</instructions>
+{
+  "type": "object",
+  "properties": {
+    "variable_name": {
+      "type": "object",
+      "properties": {
+        "{{job_post_text}}": {
+          "description": "PASTE THE FULL JOB POSTING HERE"
+        },
+
+        "{{builder_guide}}": {
+          "type": "string",
+          "description": "RULES: Build from scratch. Do not invent facts. Use ONLY answers in responses. If missing, add to do_not_invent_list. Output must include BOTH a resume and a cover letter unless output_mode says otherwise. Resume must be 1 page-ish and ATS-friendly. Cover letter must be 250–400 words, 3–4 paragraphs, role-specific."
+        },
+
+        "{{output_mode}}": {
+          "type": "string",
+          "description": "resume_only | cover_letter_only | resume_and_cover_letter"
+        },
+
+        "responses": {
+          "description": "THIS IS THE CATEGORY/QUESTION/ANSWER STRUCTURE. Your script fills answers.",
+          "properties": {
+            "categories": {
+              "type": "array",
+              "description": "Variable length categories derived from the job post",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "category_id": { "type": "string", "description": "e.g., frontend, backend, mobile, cloud, data, devops, ai_tools" },
+                  "category_label": { "type": "string", "description": "Human label" },
+                  "priority": { "type": "string", "description": "must_have | strong_signal | nice_to_have" },
+
+                  "questions": {
+                    "type": "array",
+                    "description": "Variable length questions in this category",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "question_id": { "type": "string", "description": "numeric or stable id" },
+                        "question_text": { "type": "string", "description": "exact question asked" },
+                        "answer": { "type": "string", "description": "PASTE USER ANSWER HERE (or placeholder until filled)" },
+
+                        "resume_mapping_hint": {
+                          "type": "string",
+                          "description": "Where this answer belongs: summary | skills | project_bullets | experience_bullets | cover_letter_proof"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": ["{{job_post_text}}", "responses"]
+    },
+
+    "analysis": {
+      "type": "object",
+      "properties": {
+        "inferred_target_role": { "type": "string" },
+        "positioning_thesis": { "type": "string" },
+
+        "ats_keyword_set": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+
+        "proof_points": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Top 3–6 strongest evidence points pulled from answers"
+        },
+
+        "coverage_by_category": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category_id": { "type": "string" },
+              "coverage_score": { "type": "number" },
+              "missing_question_ids": { "type": "array", "items": { "type": "string" } },
+              "notes": { "type": "string" }
+            }
+          }
+        },
+
+        "do_not_invent_list": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["inferred_target_role", "positioning_thesis", "ats_keyword_set", "coverage_by_category", "do_not_invent_list"]
+    },
+
+    "deliverable": {
+      "type": "object",
+      "properties": {
+        "resume": {
+          "type": "object",
+          "properties": {
+            "headline": { "type": "string", "description": "Name + target role + location/remote (if known)" },
+
+            "summary_bullets": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "2–4 bullets. Use job language + proof points."
+            },
+
+            "skills_groups": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "group": { "type": "string" },
+                  "items": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+
+            "projects": {
+              "type": "array",
+              "description": "Prefer 2–4 projects for intern/new grad",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "stack": { "type": "array", "items": { "type": "string" } },
+                  "bullets": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "3–5 bullets each. Action + tool + scope + result/impact."
+                  },
+                  "links": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+
+            "experience": {
+              "type": "array",
+              "description": "Can be empty if no work experience; do not invent",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "role": { "type": "string" },
+                  "company": { "type": "string" },
+                  "dates": { "type": "string" },
+                  "bullets": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+
+            "education": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+
+        "resume_text": { "type": "string", "description": "Fully assembled plain-text resume" },
+
+        "cover_letter": {
+          "type": "object",
+          "properties": {
+            "opening_hook": { "type": "string" },
+            "proof_paragraphs": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "2 paragraphs, each anchored by a proof point"
+            },
+            "closing": { "type": "string" }
+          }
+        },
+
+        "cover_letter_text": { "type": "string", "description": "Fully assembled cover letter" }
+      },
+      "required": ["resume_text", "cover_letter_text"]
+    }
+  },
+  "required": ["variable_name", "analysis", "deliverable"]
+}

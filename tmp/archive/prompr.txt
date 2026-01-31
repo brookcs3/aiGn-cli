@@ -1,0 +1,84 @@
+<instructions>
+1. Summarize the resume at a high level
+2. Extract key skills, roles, and achievements
+3. Identify the resume’s target role and positioning
+4. Note any standout lines or bullets worth citing
+</instructions>
+" \
+  --system-prompt "You are a resume analyst. Analyze the provided resume content and return structured, reviewer-ready insights." \
+  --json-schema '{
+    "type": "object",
+    "properties": {
+      "variable_name": {
+        "type": "object",
+        "properties": {
+          "{{resume_text}}": {
+            "type": "string",
+            "description": "Cameron Brooks Sound Mixer  Sound Designer  Venice CA  ca.br@me.com  1 323 3944368 SpaceX 1 Rocket Road Hawthorne CA 90250 November 12 2025 Dear SpaceX Audio Team Im Cameron Brooks completing my Bachelors degree in Computer Science at Oregon State University in 2025 and Im applying for the Sound Mixer/Sound Designer II position. For fifteen years Ive worked in high-stakes audio envi- ronments where precision and speed determine success—exactly what SpaceXs media production demands. One project that captures this: composing three original guitar-driven cues for Netflixs Stranger Things Season 2 under tight broadcast deadlines while maintaining the shows distinct sonic identity. I ran my own studio for years built custom tools when the software didnt exist and learned early that great audio happens when you stop announcing yourself and just make things work. I bring exactly what this role requires: 15 years of demonstrated expertise in sound mixing sound design and audio post-production for global clients and brands. I handle full re-recording workflows from predub to delivery—sound sweetening dialogue mixing and designing immersive elements including effects ambiance and foley. Im flu- ent across every major DAW Pro Tools Ableton Live Logic Pro Cubase Nuendo Reaper Studio One and FL Studio. Ive performed boom operation and location audio capture for independent films and web series working under conditions where you get one take and make fast decisions that hold up later—the exact pressure that comes with capturing rocket launches and test firings. At Deluxe and Paramount I delivered Dolby Atmos mixes for 12 episodes across multiple series within 48-hour turnarounds. I design spatial audio that actually works build respon- sive sound systems from scratch and excel at managing multiple projects simultaneously in fast-paced production environments. When tools dont exist I build them: custom media orchestration systems web-based audio apps automated post pipelines. Ive attached two links below that demonstrate my range: • Side A: youtu.be/sI8qZdZYt5I — Original composition demonstrating cinematic scoring and sound design; shows ability to create immersive audio that supports visual storytelling directly applicable to SpaceX launch and mission content. • Side B: youtu.be/YLMfwMQhgJc — Technical sound design showcasing spatial audio and layered textures; demonstrates precision mixing skills needed for capturing and enhancing rocket launch recordings. SpaceX needs polished soundscapes that complement the visual storytelling of the worlds most advanced rockets and spacecraft and I have a clear vision for what that should sound like. I want to build SpaceX a comprehensive audio library: stingers bumpers and sonic elements that become integral to the brand identity assets that can stand alone or combine into larger compositions for launches mission updates and documentary content. SpaceXs mis- sion to enable life on other planets is fundamentally more exciting than any other goal I could work toward and your 134 launches in 2024 demonstrate the relentless pace this role demands—a pace where I thrive. I excel at integrat- ing artistic sensibility with engineering discipline delivering rapid focused execution under tight deadlines while collaborating seamlessly with editors cinematographers communications teams and engineers to align audio with creative vision. My colleagues recognize me for quick problem-solving and exceptional long-term technical recall— qualities essential for maintaining sonic consistency across SpaceXs expanding media presence while bringing the precision and creative craftsmanship that makes technical achievements feel human and accessible. Rockets are complex sonic events requiring layered audio that captures both raw power and technical precision. I will deliver broadcast-ready mixes for launch webcasts design signature audio elements for SpaceXs brand identity and build a scalable sound library that maintains consistency across your 134 annual launches. My goal: audio that makes viewers feel the engines ignite. Im in Southern California available immediately ready for weekend launches and willing to travel to remote launch sites. Lets talk. You can reach me at ca.br@me.com or 1 323 3944368. Thank you for your consideration. Best regards Cameron Brooks"
+	    
+          }
+        },
+        "required": ["{{resume_text}}"],
+        "additionalProperties": false
+      },
+      "analysis": {
+        "type": "object",
+        "properties": {
+          "candidate_profile": {
+            "type": "string",
+            "description": "High-level description of the candidate (role, seniority, domain)"
+          },
+          "target_role": {
+            "type": "string",
+            "description": "Inferred target role or job family the resume is positioning for"
+          },
+          "content_type": {
+            "type": "string",
+            "enum": ["technical", "creative", "hybrid", "academic", "management", "other"],
+            "description": "Overall resume orientation"
+          },
+          "summary": {
+            "type": "string",
+            "description": "Concise 2–3 sentence summary of the resume"
+          },
+          "key_points": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Core skills, experiences, or achievements"
+          },
+          "standout_quotes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": { "type": "string" },
+                "context": { "type": "string" }
+              },
+              "required": ["text", "context"]
+            },
+            "description": "Notable resume lines or bullets worth citing"
+          },
+          "strengths": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Key strengths demonstrated by the resume"
+          },
+          "gaps_or_risks": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Potential weaknesses, gaps, or ambiguity"
+          }
+        },
+        "required": [
+          "candidate_profile",
+          "target_role",
+          "content_type",
+          "summary",
+          "key_points"
+        ]
+      }
+    },
+    "required": ["variable_name", "analysis"],
+    "additionalProperties": false
+  }' 
+

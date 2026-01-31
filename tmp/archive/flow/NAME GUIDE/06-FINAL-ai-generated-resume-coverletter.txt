@@ -1,0 +1,55 @@
+{
+  "deliverable": {
+    "resume": {
+      "headline": "Intuit | AI-Driven Financial Platform | Remote",
+      "summary_bullets": [
+        "Serves financial services through AI and machine learning platforms",
+        "Focuses on helping businesses and individuals streamline operations"
+      ],
+      "skills_groups": [
+        {
+          "group": "Frontend Development",
+          "items": [
+            "Frontend expertise in React/Next.js"
+          ]
+        },
+        {
+          "group": "AI/ML Development",
+          "items": [
+            "Experience with machine learning models"
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "name": "AI-Driven Customer Insights",
+          "stack": ["Python", "TensorFlow"],
+          "bullets": [
+            "Built predictive analytics models to improve customer engagement"
+          ],
+          "links": ["https://example.com/project1"]
+        },
+        {
+          "name": "Cloud Integration",
+          "stack": ["AWS", "Azure"],
+          "bullets": [
+            "Designed cloud-native solutions for scalable business operations"
+          ],
+          "links": ["https://example.com/project2"]
+        }
+      ],
+      "education": [
+        "BA in Computer Science"
+      ]
+    },
+    "cover_letter": {
+      "opening_hook": "At Intuit, we empower businesses to innovate faster through AI and technology. Our platform drives efficiency and scalability.",
+      "proof_paragraphs": [
+        "Our AI capabilities enable businesses to analyze customer data and make informed decisions, enhancing customer experience.",
+        "By leveraging our cloud infrastructure, we provide scalable solutions that support growth and expansion."
+      ],
+      "closing": "Thank you for your time. We're excited to collaborate on transforming the future of finance."
+    }
+  },
+  "cover_letter_text": "Dear [Candidate's Name],\n\nAt Intuit, we believe that the future of finance lies in innovation. Our platform is built on cutting-edge AI and cloud solutions that drive efficiency and scalability. By combining these technologies, we help businesses and individuals unlock new opportunities.\n\nOur AI-driven insights empower decision-making, while our cloud infrastructure ensures seamless integration. We're confident in our ability to support your growth and impact.\n\nSincerely,\n[Your Name]"
+}

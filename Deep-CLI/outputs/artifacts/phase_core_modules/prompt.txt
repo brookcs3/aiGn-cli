@@ -1,0 +1,3 @@
+Deep dive the core modules. Identify key classes/functions and data flow.
+
+Context:

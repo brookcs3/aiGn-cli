@@ -1,0 +1,207 @@
+<instructions>
+1. Build from scratch using ONLY:
+   - job_post_text
+   - responses.categories[].questions[].answer
+2. DO NOT invent facts. If the job requires something not supported by answers, add it to do_not_invent_list.
+3. Extract ATS keywords and mirror phrasing naturally (no keyword stuffing).
+4. Convert answers into proof points:
+   - Action + Tool/Tech + Scope + Result/Impact
+   - Prefer numbers if the answer includes them. Do not fabricate metrics.
+5. Resume output rules:
+   - 1 page-ish, ATS-friendly, plain text
+   - 2–4 summary bullets
+   - Skills grouped to match job emphasis
+   - 2–4 projects (preferred for interns/new grads)
+   - Experience section allowed but must not be invented
+6. Cover letter rules:
+   - 250–400 words, 3–4 paragraphs
+   - Hook: builder mindset + mission alignment
+   - Body: 2 proof paragraphs anchored by strongest evidence
+   - Close: collaboration/learning + call to action
+7. Output JSON matching the schema. Include both resume_text and cover_letter_text unless output_mode says otherwise.
+</instructions>
+{
+  "type": "object",
+  "properties": {
+    "variable_name": {
+      "type": "object",
+      "properties": {
+        "{{job_post_text}}": {
+          "type": "string",
+          "description": "Qualifications We're looking for an engineer with a background in graphics and real-time 3D programming who finds the greatest satisfaction in building the systems that make other engineers more productive. You'll work at the boundary between graphics frameworks and infrastructure engineering, ensuring that complex spatial computing technologies can be developed, tested, and delivered with confidence across Apple's platforms. Expert knowledge of Swift and Swift build systems Hands-on experience managing Jenkins or similar CI/CD platforms at scale Experience with distributed build systems and build caching strategies 5+ years of industry experience in graphics, game engines, or related fields BS in Computer Science, Computer Graphics, or equivalent degree/experience Strong knowledge of C++ and modern build systems Solid understanding of 3D mathematics Experience with CI/CD systems and build automation Proficiency in Python for tooling and automation Demonstrated ability to identify and solve infrastructure bottlenecks Excellent communication skills for cross-functional collaboration Apple is an equal opportunity employer that is committed to inclusion and diversity. We seek to promote equal opportunity for all applicants without regard to race, color, religion, sex, sexual orientation, gender identity, national origin, disability, Veteran status, or other legally protected characteristics."
+        },
+
+        "{{builder_guide}}": {
+          "type": "string",
+          "description": "RULES: Build from scratch. Do not invent facts. Use ONLY answers in responses. If missing, add to do_not_invent_list. Output must include BOTH a resume and a cover letter unless output_mode says otherwise. Resume must be 1 page-ish and ATS-friendly. Cover letter must be 250–400 words, 3–4 paragraphs, role-specific."
+        },
+
+        "{{output_mode}}": {
+          "type": "string",
+          "description": "cover_letter_only"
+        },
+
+        "responses": {
+          "type": "object",
+          "description": "{   "type": "object",   "properties": {     "variable_name": {       "properties": {         "{{job_post_text}}": {           "type": "string",           "description": "Qualifications We're looking for an engineer with a background in graphics and real-time 3D programming who finds the greatest satisfaction in building the systems that make other engineers more productive. You'll work at the boundary between graphics frameworks and infrastructure engineering, ensuring that complex spatial computing technologies can be developed, tested, and delivered with confidence across Apple's platforms. Expert knowledge of Swift and Swift build systems Hands-on experience managing Jenkins or similar CI/CD platforms at scale Experience with distributed build systems and build caching strategies 5+ years of industry experience in graphics, game engines, or related fields BS in Computer Science, Computer Graphics, or equivalent degree/experience Strong knowledge of C++ and modern build systems Solid understanding of 3D mathematics Experience with CI/CD systems and build automation Proficiency in Python for tooling and automation Demonstrated ability to identify and solve infrastructure bottlenecks Excellent communication skills for cross-functional collaboration Apple is an equal opportunity employer that is committed to inclusion and diversity."         }       }     },     "analysis": {       "role_title": "engineer with a background in graphics and real-time 3D programming",       "company_name": "Apple Vision Pro",       "seniority_level": "principal",       "ats_keywords": [         "real-time 3D programming",         "build technologies",         "CI/CD pipelines",         "distributed build systems",         "build caching strategies",         "C++",         "Python",         "Swift build systems",         "3D mathematics",         "build automation",         "infrastructure bottlenecks"       ],       "tools_and_tech": [         "Jenkins",         "Swift",         "Swift build systems",         "C++",         "Python",         "distributed build systems",         "build caching",         "CI/CD automation"       ],       "categories": [         {           "category_id": "real-time 3D systems",           "category_label": "real-time 3D systems",           "priority": "must-have",           "jd_signals": ["real-time 3D programming", "3D mathematics"],           "evidence_dimensions": ["what", "how_why", "tools"]         },         {           "category_id": "build automation",           "category_label": "build automation",           "priority": "strong_signal",           "jd_signals": ["build automation", "distributed build systems"],           "evidence_dimensions": ["what", "how_why", "tools"]         },         {           "category_id": "CI/CD pipelines",           "category_label": "CI/CD pipelines",           "priority": "must-have",           "jd_signals": ["Jenkins", "CI/CD platforms"],           "evidence_dimensions": ["what", "how_why", "tools"]         }       ],       "skill_inventory": [         {           "group_id": "real-time 3D programming",           "group_label": "real-time 3D programming",           "items": [             "real-time rendering systems",             "engine-level graphics programming",             "3D math and spatial transforms"           ],           "jd_signals": ["real-time 3D programming"]         },         {           "group_id": "build automation",           "group_label": "build automation",           "items": [             "modern C++ build systems",             "distributed builds",             "build caching strategies"           ],           "jd_signals": ["build automation"]         },         {           "group_id": "CI/CD systems",           "group_label": "CI/CD systems",           "items": [             "Jenkins pipelines",             "CI infrastructure at scale",             "automated testing and delivery"           ],           "jd_signals": ["CI/CD systems"]         }       ],       "question_bank": {         "skill_questions": [           {             "question_id": "1",             "group_id": "real-time 3D programming",             "skill": "real-time 3D programming",             "question_text": "Do you have experience with distributed build systems?",             "answer_fields": [               {                 "field_key": "experience",                 "field_label": "experience",                 "format": "Designed and maintained distributed build systems to support large-scale real-time graphics projects, reducing build times and improving iteration speed for engine developers."               }             ]           },           {             "question_id": "2",             "group_id": "build automation",             "skill": "build automation",             "question_text": "What did you do with CI/CD pipelines?",             "answer_fields": [               {                 "field_key": "experience",                 "field_label": "experience",                 "format": "Built and optimized CI/CD pipelines to automate builds, tests, and validation for graphics frameworks, ensuring fast feedback and reliable delivery across platforms."               }             ]           }         ],         "category_questions": [           {             "question_id": "1",             "category_id": "real-time 3D systems",             "question_text": "How do you manage Jenkins or similar CI/CD platforms?",             "answer_fields": [               {                 "field_key": "experience",                 "field_label": "experience",                 "format": "Managed Jenkins at scale by designing reusable pipelines, implementing build caching, monitoring system health, and resolving infrastructure bottlenecks impacting graphics teams."               }             ]           },           {             "question_id": "2",             "category_id": "build automation",             "question_text": "What tools do you use for build automation?",             "answer_fields": [               {                 "field_key": "experience",                 "field_label": "experience",                 "format": "Used modern C++ build systems, Swift build tooling, Python automation scripts, and distributed build infrastructure to streamline compilation, testing, and deployment."               }             ]           }         ]       }     }   } }",
+          "properties": {
+            "categories": {
+              "type": "array",
+              "description": "Variable length categories derived from the job post",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "category_id": { "type": "string", "description": "e.g., frontend, backend, mobile, cloud, data, devops, ai_tools" },
+                  "category_label": { "type": "string", "description": "Human label" },
+                  "priority": { "type": "string", "description": "must_have | strong_signal | nice_to_have" },
+
+                  "questions": {
+                    "type": "array",
+                    "description": "Variable length questions in this category",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "question_id": { "type": "string", "description": "numeric or stable id" },
+                        "question_text": { "type": "string", "description": "exact question asked" },
+                        "answer": { "type": "string", "description": "PASTE USER ANSWER HERE (or placeholder until filled)" },
+
+                        "resume_mapping_hint": {
+                          "type": "string",
+                          "description": "Where this answer belongs: summary | skills | project_bullets | experience_bullets | cover_letter_proof"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": ["{{job_post_text}}", "responses"]
+    },
+
+    "analysis": {
+      "type": "object",
+      "properties": {
+        "inferred_target_role": { "type": "string" },
+        "positioning_thesis": { "type": "string" },
+
+        "ats_keyword_set": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+
+        "proof_points": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Top 3–6 strongest evidence points pulled from answers"
+        },
+
+        "coverage_by_category": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category_id": { "type": "string" },
+              "coverage_score": { "type": "number" },
+              "missing_question_ids": { "type": "array", "items": { "type": "string" } },
+              "notes": { "type": "string" }
+            }
+          }
+        },
+
+        "do_not_invent_list": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["inferred_target_role", "positioning_thesis", "ats_keyword_set", "coverage_by_category", "do_not_invent_list"]
+    },
+
+    "deliverable": {
+      "type": "object",
+      "properties": {
+        "resume": {
+          "type": "object",
+          "properties": {
+            "headline": { "type": "string", "description": "Name + target role + location/remote (if known)" },
+
+            "summary_bullets": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "2–4 bullets. Use job language + proof points."
+            },
+
+            "skills_groups": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "group": { "type": "string" },
+                  "items": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+
+            "projects": {
+              "type": "array",
+              "description": "Prefer 2–4 projects for intern/new grad",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "stack": { "type": "array", "items": { "type": "string" } },
+                  "bullets": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "3–5 bullets each. Action + tool + scope + result/impact."
+                  },
+                  "links": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+
+            "experience": {
+              "type": "array",
+              "description": "Can be empty if no work experience; do not invent",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "role": { "type": "string" },
+                  "company": { "type": "string" },
+                  "dates": { "type": "string" },
+                  "bullets": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+
+            "education": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+
+        "resume_text": { "type": "string", "description": "Fully assembled plain-text resume" },
+
+        "cover_letter": {
+          "type": "object",
+          "properties": {
+            "opening_hook": { "type": "string" },
+            "proof_paragraphs": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "2 paragraphs, each anchored by a proof point"
+            },
+            "closing": { "type": "string" }
+          }
+        },
+
+        "cover_letter_text": { "type": "string", "description": "Fully assembled cover letter" }
+      },
+      "required": ["resume_text", "cover_letter_text"]
+    }
+  },
+  "required": ["variable_name", "analysis", "deliverable"]
+}

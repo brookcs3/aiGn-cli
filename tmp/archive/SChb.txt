@@ -1,0 +1,108 @@
+<instructions>
+1. Use the provided job_post_text + categories_json + answers_json to compile a targeted resume.
+2. Grounding rule: Do NOT invent facts. Only use what appears in resume_base_text and/or answers_json. If something is missing, list it in do_not_invent_list.
+3. Build positioning:
+   - Infer target role and write a one-sentence positioning_thesis aligned to the job.
+   - Produce keyword_set_to_include using exact phrases from the posting when possible.
+4. Evaluate category coverage:
+   - For each category from categories_json, compute coverage_score (0–1), list missing_fields, and add concise notes.
+5. Produce deliverables:
+   - resume_sections (headline, summary bullets, skills groupings, experience entries, projects, education).
+   - resume_text as a fully assembled resume using those sections.
+   - If resume_base_text is provided, also output patch_plan edits (insert/replace/append) where helpful.
+6. Make bullets recruiter-ready:
+   - Use action + tool/skill + scope + impact (metrics if provided).
+   - Weave in relevant ATS keywords naturally without keyword stuffing.
+Return structured JSON ONLY.
+</instructions>
+{
+  "type": "object",
+  "properties": {
+    "variable_name": {
+      "type": "object",
+      "properties": {
+        "{{job_post_text}}": {
+          "type": "string",
+          "description": "Full job posting text"
+        }
+      },
+      "required": ["{{job_post_text}}"],
+      "additionalProperties": false
+    },
+    "analysis": {
+      "type": "object",
+      "properties": {
+        "role_title": { "type": "string" },
+        "company_name": { "type": "string" },
+        "seniority_level": {
+          "type": "string",
+          "enum": ["intern", "junior", "mid", "senior", "staff", "principal", "lead", "manager", "director", "unknown"]
+        },
+        "categories": {
+          "type": "array",
+          "description": "Variable set of competency categories derived from the job post",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "properties": {
+              "category_id": {
+                "type": "string",
+                "description": "Stable machine-friendly key, e.g. collaboration, audio_post, ml_engineering, security_research"
+              },
+              "category_label": {
+                "type": "string",
+                "description": "Human label, e.g. Cross-functional collaboration"
+              },
+              "jd_signals": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Exact phrases from the job post that justify this category"
+              },
+              "priority": {
+                "type": "string",
+                "enum": ["must_have", "strong_signal", "nice_to_have"],
+                "description": "Importance based on posting emphasis"
+              },
+              "fields": {
+                "type": "array",
+                "description": "Fields your script should ask the user to fill; these become placeholders later",
+                "minItems": 3,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field_key": {
+                      "type": "string",
+                      "description": "Machine key. Your script will create {{field_key}} placeholders from this."
+                    },
+                    "field_label": {
+                      "type": "string",
+                      "description": "Human label, e.g. Project name"
+                    },
+                    "expected_format": {
+                      "type": "string",
+                      "enum": ["short_text", "long_text", "bullet_list", "metric_list", "tool_list", "date_range", "link_list"],
+                      "description": "How the answer should be captured"
+                    },
+                    "evidence_hint": {
+                      "type": "string",
+                      "description": "What good evidence looks like (for your script to generate verbose questions)"
+                    },
+                    "required_for_category": { "type": "boolean" }
+                  },
+                  "required": ["field_key", "field_label", "expected_format", "required_for_category"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["category_id", "category_label", "jd_signals", "priority", "fields"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["role_title", "company_name", "seniority_level", "categories"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["variable_name", "analysis"],
+  "additionalProperties": false
+}

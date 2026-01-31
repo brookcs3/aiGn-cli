@@ -1,0 +1,14 @@
+Analyze the target repository structure.
+
+Files (sample):
+
+
+README:
+[ERROR READING /Users/cameronbrooks/Server/Deep-Research-grokk/README.md: [Errno 2] No such file or directory: '/Users/cameronbrooks/Server/Deep-Research-grokk/README.md']
+
+Provide:
+1) What is this project?
+2) Main components/modules
+3) Entry points / usage
+4) Key dependencies
+5) Quick ASCII architecture diagram

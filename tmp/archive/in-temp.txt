@@ -1,0 +1,171 @@
+{
+  "type": "object",
+  "properties": {
+    "variable_name": {
+      "type": "object",
+      "properties": {
+        "{{job_post_text}}": {
+          "type": "string",
+          "description": "Full job posting text"
+        },
+        "{{resume_base_text}}": {
+          "type": "string",
+          "description": "Optional: current resume text to tailor/patch (empty string if building from scratch)"
+        },
+        "{{responses_json}}": {
+          "type": "string",
+          "description": "Stringified JSON containing categories -> questions -> answers (your script fills these). See required format below."
+        },
+        "{{output_mode}}": {
+          "type": "string",
+          "description": "One of: resume_only | cover_letter_only | resume_and_cover_letter",
+          "default": "resume_and_cover_letter"
+        }
+      },
+      "required": ["{{job_post_text}}", "{{responses_json}}"],
+      "additionalProperties": false
+    },
+    "analysis": {
+      "type": "object",
+      "properties": {
+        "inferred_target_role": { "type": "string" },
+        "positioning_thesis": {
+          "type": "string",
+          "description": "1 sentence: why this candidate fits THIS posting"
+        },
+        "ats_keyword_set": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Keywords/phrases to weave in naturally (prefer exact JD phrases)"
+        },
+        "coverage_by_category": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category_id": { "type": "string" },
+              "category_label": { "type": "string" },
+              "coverage_score": { "type": "number", "minimum": 0, "maximum": 1 },
+              "missing_answers": { "type": "array", "items": { "type": "string" } },
+              "notes": { "type": "string" }
+            },
+            "required": ["category_id", "category_label", "coverage_score", "missing_answers"]
+          }
+        },
+        "do_not_invent_list": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Requirements asked by JD but unsupported by responses/resume_base_text"
+        },
+        "resume_mapping_plan": {
+          "type": "array",
+          "description": "How categories feed sections (summary/skills/experience/projects)",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category_id": { "type": "string" },
+              "maps_to_sections": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["headline", "summary", "skills", "experience", "projects", "education"]
+                }
+              },
+              "bullet_style": {
+                "type": "string",
+                "enum": ["action_tool_impact", "project_story", "metrics_first", "skills_first"]
+              }
+            },
+            "required": ["category_id", "maps_to_sections", "bullet_style"]
+          }
+        }
+      },
+      "required": [
+        "inferred_target_role",
+        "positioning_thesis",
+        "ats_keyword_set",
+        "coverage_by_category",
+        "do_not_invent_list",
+        "resume_mapping_plan"
+      ],
+      "additionalProperties": false
+    },
+    "deliverable": {
+      "type": "object",
+      "properties": {
+        "resume_sections": {
+          "type": "object",
+          "properties": {
+            "headline": { "type": "string" },
+            "summary": { "type": "array", "items": { "type": "string" } },
+            "skills": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "group": { "type": "string" },
+                  "items": { "type": "array", "items": { "type": "string" } }
+                },
+                "required": ["group", "items"],
+                "additionalProperties": false
+              }
+            },
+            "experience": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "role": { "type": "string" },
+                  "company": { "type": "string" },
+                  "dates": { "type": "string" },
+                  "location": { "type": "string" },
+                  "bullets": { "type": "array", "items": { "type": "string" } }
+                },
+                "required": ["role", "company", "dates", "bullets"],
+                "additionalProperties": false
+              }
+            },
+            "projects": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "stack": { "type": "array", "items": { "type": "string" } },
+                  "bullets": { "type": "array", "items": { "type": "string" } },
+                  "links": { "type": "array", "items": { "type": "string" } }
+                },
+                "required": ["name", "bullets"],
+                "additionalProperties": false
+              }
+            },
+            "education": { "type": "array", "items": { "type": "string" } }
+          },
+          "required": ["headline", "summary", "skills", "experience", "projects", "education"],
+          "additionalProperties": false
+        },
+        "resume_text": { "type": "string" },
+        "cover_letter_text": { "type": "string" },
+        "patch_plan": {
+          "type": "array",
+          "description": "Optional deterministic edits if tailoring an existing resume_base_text",
+          "items": {
+            "type": "object",
+            "properties": {
+              "op": { "type": "string", "enum": ["insert_after", "replace", "append_to_section"] },
+              "section": { "type": "string", "enum": ["headline", "summary", "skills", "experience", "projects", "education"] },
+              "anchor_text": { "type": "string" },
+              "new_text": { "type": "string" }
+            },
+            "required": ["op", "section", "anchor_text", "new_text"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["resume_sections", "resume_text", "cover_letter_text"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["variable_name", "analysis", "deliverable"],
+  "additionalProperties": false
+}

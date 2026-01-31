@@ -1,0 +1,171 @@
+{
+  "type": "object",
+  "properties": {
+    "variable_name": {
+      "type": "object",
+      "properties": {
+        "{{job_post_text}}": {
+          "type": "string",
+          "description": "Intuit is the global financial technology platform that powers prosperity for the people and communities we serve. With approximately 100 million customers worldwide using products such as TurboTax, Credit Karma, QuickBooks, and Mailchimp, we believe that everyone should have the opportunity to prosper. We never stop working to find new, innovative ways to make that possible. This role is ideal for those at the start of their professional journey, who are eager to learn, grow, and make an immediate impact. As this is a general posting, we’ll align you with a team based on your skills, interests, and career aspirations to set you up for success. We're cultivating a culture that prioritizes innovators, risk-takers, and imaginative thinkers. In pursuit of becoming AI-native, we recognize that fostering a 'builder' mindset is essential. You’ll help create solutions that transform how millions of consumers and small businesses manage their finances in cloud, platform, mobile, and SaaS environments. Working in a culture that embraces experimentation and rapid prototyping, you’ll collaborate closely with customers and cross-functional teams, turning ideas into real impact while building the skills to launch a rewarding career.  Qualifications  Bachelor’s or Master’s degree in Computer Science, a related technical field, or equivalent practical experience. Foundational understanding of Agile development, object-oriented design, and programming principles. Coursework, internships, personal projects, or academic experience with one or more programming languages (e.g., Java, Python, JavaScript, C++, etc.). Basic knowledge of front-end web technologies (HTML, CSS, JavaScript) and familiarity with frameworks or tools is a plus. Strong written, verbal, and collaboration skills with the ability to work effectively in a team environment. Willingness to learn and adapt to new priorities, tools, and technologies in a fast-paced, dynamic environment. Able to leverage AI tools and platforms to enhance productivity and problem-solving Comfortable using AI-assisted development environments (such as GitHub Copilot, Tabnine, or similar tools) to improve code quality and speed. (this might be too similar to the point above) Able to identify tasks that could be automated or optimized using AI  Demonstrates awareness of ethical considerations, bias, and limitations of AI tools, applying them responsibly. Can effectively review and validate AI-generated outputs to ensure correctness and maintain software quality standards.  Intuit provides a competitive compensation package with a strong pay for performance rewards approach. This position will be eligible for a cash bonus, equity rewards and benefits, in accordance with our applicable plans and programs (see more about our compensation and benefits at Intuit®: Careers | Benefits). Pay offered is based on factors such as job-related knowledge, skills, experience, and work location"
+        },
+        "{{resume_base_text}}": {
+          "type": "string",
+          "description": "GUIED TO BUILD COVERLETTER/TRAILOR RESUMS INPTU AMNU CAT TO HELP"
+        },
+        "{{responses_json}}": {
+          "type": "string",
+          "description": ""analysis": {     "role_title": "Intuit",     "company_name": "Intuit",     "seniority_level": "intern",     "ats_keywords": [       "global financial technology platform",       "prosperity",       "innovators",       "builder",       "transform",       "cloud",       "platform",       "mobile",       "SaaS",       "AI-native",       "fostering",       "mentoring",       "innovation"     ],     "tools_and_tech": [       "frontend engineering",       "backend engineering",       "mobile engineering",       "cloud platforms",       "data",       "testing",       "devops",       "React",       "AngularJS",       "HTML",       "CSS",       "JavaScript",       "node.js",       "RESTful API",       "server-side languages",       "AI tools"     ],     "categories": {       "frontend": {         "priority": "must-have",         "jd_signals": [           "Frontend Engineering: ...",           "mobile engineering"         ],         "evidence_dimensions": [           "front-end engineering",           "backend engineering"         ]       },       "backend": {         "priority": "must-have",         "jd_signals": [           "Backend Engineering: ...",           "cloud platforms"         ],         "evidence_dimensions": [           "backend engineering",           "cloud platforms"         ]       },       "mobile": {         "priority": "must-have",         "jd_signals": [           "mobile engineering",           "SaaS"         ],         "evidence_dimensions": [           "mobile engineering",           "SaaS"         ]       },       "cloud": {         "priority": "must-have",         "jd_signals": [           "cloud platforms",           "data"         ],         "evidence_dimensions": [           "cloud platforms",           "data"         ]       },       "data": {         "priority": "must-have",         "jd_signals": [           "data",           "testing"         ],         "evidence_dimensions": [           "data",           "testing"         ]       },       "devops": {         "priority": "must-have",         "jd_signals": [           "devops",           "testing"         ],         "evidence_dimensions": [           "devops",           "testing"         ]       }     },     "skill_inventory": {       "frontend": [         {           "skill": "React",           "priority": "must-have",           "jd_signals": [             "Frontend Engineering: ..."           ],           "evidence_dimensions": [             "front-end engineering"           ]         },         {           "skill": "AngularJS",           "priority": "must-have",           "jd_signals": [             "Frontend Engineering: ..."           ],           "evidence_dimensions": [             "front-end engineering"           ]         }       ],       "backend": {         "skill": "node.js",         "priority": "must-have",         "jd_signals": [           "Backend Engineering: ..."         ],         "evidence_dimensions": [           "backend engineering"         ]       },       "mobile": {         "skill": "SaaS",         "priority": "must-have",         "jd_signals": [           "mobile engineering"         ],         "evidence_dimensions": [           "mobile engineering"         ]       },       "cloud": {         "skill": "cloud platforms",         "priority": "must-have",         "jd_signals": [           "cloud platforms"         ],         "evidence_dimensions": [           "cloud platforms"         ]       },       "data": {         "skill": "data",         "priority": "must-have",         "jd_signals": [           "data"         ],         "evidence_dimensions": [           "data"         ]       },       "devops": {         "skill": "testing",         "priority": "must-have",         "jd_signals": [           "devops"         ],         "evidence_dimensions": [           "testing"         ]       }     },     "question_bank": {       "skill_questions": [         {           "question_id": "1",           "group_id": "frontend",           "skill": "React",           "question_text": "Do you have experience with React?",           "answer_fields": [             {               "field_key": "experience",               "field_label": "Experience with",               "expected_format": "short_text",               "required": true             }           ]         },         {           "question_id": "2",           "group_id": "backend",           "skill": "node.js",           "question_text": "Do you have experience with Node.js?",           "answer_fields": [             {               "field_key": "experience",               "field_label": "Experience with",               "expected_format": "short_text",               "required": true             }           ]         },         {           "question_id": "3",           "group_id": "mobile",           "skill": "SaaS",           "question_text": "Do you have experience with SaaS?",           "answer_fields": [             {               "field_key": "experience",               "field_label": "Experience with",               "expected_format": "short_text",               "required": true             }           ]         },         {           "question_id": "4",           "group_id": "cloud",           "skill": "cloud platforms",           "question_text": "Do you have experience with cloud platforms?",           "answer_fields": [             {               "field_key": "experience",               "field_label": "Experience with",               "expected_format": "short_text",               "required": true             }           ]         },         {           "question_id": "5",           "group_id": "data",           "skill": "data",           "question_text": "Do you have experience with data?",           "answer_fields": [             {               "field_key": "experience",               "field_label": "Experience with",               "expected_format": "short_text",               "required": true             }           ]         },         {           "question_id": "6",           "group_id": "devops",           "skill": "testing",           "question_text": "Do you have experience with testing?",           "answer_fields": [             {               "field_key": "experience",               "field_label": "Experience with",               "expected_format": "short_text",               "required": true             }           ]         }       ],       "category_questions": [         {           "question_id": "7",           "category_id": "frontend",           "question_text": "What are your strengths in frontend engineering?",           "answer_fields": [             {               "field_key": "strengths",               "field_label": "Strengths",               "expected_format": "short_text",               "required": true             }           ]         },         {           "question_id": "8",           "category_id": "backend",           "question_text": "What are your strengths in backend engineering?",           "answer_fields": [             {               "field_key": "strengths",               "field_label": "Strengths",               "expected_format": "short_text",               "required": true             }           ]         },         {           "question_id": "9",           "category_id": "mobile",           "question_text": "What are your strengths in mobile engineering?",           "answer_fields": [             {               "field_key": "strengths",               "field_label": "Strengths",               "expected_format": "short_text",               "required": true             }           ]         },         {           "question_id": "10",           "category_id": "cloud",           "question_text": "What are your strengths in cloud platforms?",           "answer_fields": [             {               "field_key": "strengths",               "field_label": "Strengths",               "expected_format": "short_text",               "required": true             }           ]         },         {           "question_id": "11",           "category_id": "data",           "question_text": "What are your strengths in data?",           "answer_fields": [             {               "field_key": "strengths",               "field_label": "Strengths",               "expected_format": "short_text",               "required": true             }           ]         },         {           "question_id": "12",           "category_id": "devops",           "question_text": "What are your strengths in testing?",           "answer_fields": [             {               "field_key": "strengths",               "field_label": "Strengths",               "expected_format": "short_text",               "required": true             }           ]         }       ]"
+        },
+        "{{output_mode}}": {
+          "type": "string",
+          "description": "One of: resume_only | cover_letter_only | resume_and_cover_letter",
+          "default": "resume_and_cover_letter"
+        }
+      },
+      "required": ["{{job_post_text}}", "{{responses_json}}"],
+      "additionalProperties": false
+    },
+    "analysis": {
+      "type": "object",
+      "properties": {
+        "inferred_target_role": { "type": "string" },
+        "positioning_thesis": {
+          "type": "string",
+          "description": "1 sentence: why this candidate fits THIS posting"
+        },
+        "ats_keyword_set": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Keywords/phrases to weave in naturally (prefer exact JD phrases)"
+        },
+        "coverage_by_category": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category_id": { "type": "string" },
+              "category_label": { "type": "string" },
+              "coverage_score": { "type": "number", "minimum": 0, "maximum": 1 },
+              "missing_answers": { "type": "array", "items": { "type": "string" } },
+              "notes": { "type": "string" }
+            },
+            "required": ["category_id", "category_label", "coverage_score", "missing_answers"]
+          }
+        },
+        "do_not_invent_list": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Requirements asked by JD but unsupported by responses/resume_base_text"
+        },
+        "resume_mapping_plan": {
+          "type": "array",
+          "description": "How categories feed sections (summary/skills/experience/projects)",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category_id": { "type": "string" },
+              "maps_to_sections": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["headline", "summary", "skills", "experience", "projects", "education"]
+                }
+              },
+              "bullet_style": {
+                "type": "string",
+                "enum": ["action_tool_impact", "project_story", "metrics_first", "skills_first"]
+              }
+            },
+            "required": ["category_id", "maps_to_sections", "bullet_style"]
+          }
+        }
+      },
+      "required": [
+        "inferred_target_role",
+        "positioning_thesis",
+        "ats_keyword_set",
+        "coverage_by_category",
+        "do_not_invent_list",
+        "resume_mapping_plan"
+      ],
+      "additionalProperties": false
+    },
+    "deliverable": {
+      "type": "object",
+      "properties": {
+        "resume_sections": {
+          "type": "object",
+          "properties": {
+            "headline": { "type": "string" },
+            "summary": { "type": "array", "items": { "type": "string" } },
+            "skills": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "group": { "type": "string" },
+                  "items": { "type": "array", "items": { "type": "string" } }
+                },
+                "required": ["group", "items"],
+                "additionalProperties": false
+              }
+            },
+            "experience": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "role": { "type": "string" },
+                  "company": { "type": "string" },
+                  "dates": { "type": "string" },
+                  "location": { "type": "string" },
+                  "bullets": { "type": "array", "items": { "type": "string" } }
+                },
+                "required": ["role", "company", "dates", "bullets"],
+                "additionalProperties": false
+              }
+            },
+            "projects": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "stack": { "type": "array", "items": { "type": "string" } },
+                  "bullets": { "type": "array", "items": { "type": "string" } },
+                  "links": { "type": "array", "items": { "type": "string" } }
+                },
+                "required": ["name", "bullets"],
+                "additionalProperties": false
+              }
+            },
+            "education": { "type": "array", "items": { "type": "string" } }
+          },
+          "required": ["headline", "summary", "skills", "experience", "projects", "education"],
+          "additionalProperties": false
+        },
+        "resume_text": { "type": "string" },
+        "cover_letter_text": { "type": "string" },
+        "patch_plan": {
+          "type": "array",
+          "description": "Optional deterministic edits if tailoring an existing resume_base_text",
+          "items": {
+            "type": "object",
+            "properties": {
+              "op": { "type": "string", "enum": ["insert_after", "replace", "append_to_section"] },
+              "section": { "type": "string", "enum": ["headline", "summary", "skills", "experience", "projects", "education"] },
+              "anchor_text": { "type": "string" },
+              "new_text": { "type": "string" }
+            },
+            "required": ["op", "section", "anchor_text", "new_text"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["resume_sections", "resume_text", "cover_letter_text"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["variable_name", "analysis", "deliverable"],
+  "additionalProperties": false
+}

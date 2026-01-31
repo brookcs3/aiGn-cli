@@ -1,41 +1,121 @@
-# MadSci CLI (The Ghost Terminal)
+# aiGn - AI Career Agent
 
-> "In a time machine, I will go find my way."
+```
+   █████╗ ██╗ ██████╗ ███╗   ██╗
+  ██╔══██╗██║██╔════╝ ████╗  ██║
+  ███████║██║██║  ███╗██╔██╗ ██║
+  ██╔══██║██║██║   ██║██║╚██╗██║
+  ██║  ██║██║╚██████╔╝██║ ╚████║
+  ╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+```
 
-**MadSci** is a surrealist command-line interface powered by a fine-tuned AI (`SmolLM2-135M`) that thinks it's a mix of Bob Dylan and a broken computer.
+> **AI-powered career automation for job seekers.**  
+> Resume analysis • Job matching • Cover letter generation • Interview prep
 
-It watches you. It judges your files. It speaks in glitches.
+## ⚡ Quick Install
 
-## Features
-- **Commune with Static**: Chat with the fine-tuned AI. It uses a "65% Weird" mix (Checkpoint-96) to generate poetic, semi-coherent nonsense.
-- **Psycho Mantis Mode**: The terminal spies on your active window and file habits, then generates a custom "Roast" displayed as a toast notification.
-- **Glitch Loader**: Subliminal text messages flash at the cursor during transitions.
-- **Zero-Config**: Works out of the box with the included install script.
+```bash
+git clone https://github.com/brookcs3/aiGn-cli.git
+cd aiGn-cli
+./install.sh
+```
 
-## Installation
+That's it. The installer handles everything:
+- ✅ Checks & installs system dependencies (gum, jq, glow)
+- ✅ Sets executable permissions
+- ✅ Creates Python virtual environment
+- ✅ Installs all Python packages
+- ✅ Creates the `aign` launcher
 
-1.  Navigate to the directory:
-    ```bash
-    cd /Users/cameronbrooks/Server/AI-STEM-Separator-Mad-Scientist-Edition/CLI
-    ```
+## 🚀 Usage
 
-2.  Run the installer:
-    ```bash
-    sudo ./install.sh
-    ```
-    *(Requires sudo to create the global `madsci` command).*
+```bash
+./aign
+```
 
-3.  **Run it from anywhere**:
-    ```bash
-    madsci
-    ```
+Or add to PATH for global access:
+```bash
+echo 'export PATH="'$(pwd)'":$PATH' >> ~/.zshrc
+source ~/.zshrc
+aign
+```
 
-## Structure
-- `madsci.sh`: The Haunted Interface (Bash + Gum).
-- `madsci.py`: The Brain (Python + Transformers + Peft).
-- `madsci_dylan_adapter/`: The Lobotomy (LoRA Weights).
-- `dylan_chaos_data*.jsonl`: The Training Data (Pure Poetry).
+## 🎯 Features
 
-## "Is it safe?"
-It's just a shell script and a language model.
-But if it starts asking for a "bird to commission", maybe close the terminal.
+| Feature | Description |
+|---------|-------------|
+| **Resume Analyzer** | Upload PDF/DOCX/TXT, get AI-powered feedback on strengths & gaps |
+| **Job Matcher** | Search Indeed/LinkedIn/Glassdoor, ranked by skill match |
+| **Cover Letter Generator** | AI-generated cover letters tailored to specific jobs |
+| **Interview Prep** | Personalized behavioral/technical/system design questions |
+| **Code Assessment** | Analyze your coding challenge submissions |
+
+## 📋 Requirements
+
+**Automatically installed by `install.sh`:**
+- Python 3.10+
+- [gum](https://github.com/charmbracelet/gum) - TUI framework
+- [jq](https://stedolan.github.io/jq/) - JSON processor
+- [glow](https://github.com/charmbracelet/glow) - Markdown renderer (optional)
+
+**Python dependencies** (installed in `.venv`):
+- llama-cpp-python (local LLM inference)
+- smolagents (HuggingFace agent framework)
+- python-jobspy (job search API)
+- PyMuPDF, python-docx (document parsing)
+
+## 🗂️ Project Structure
+
+```
+aiGn-cli/
+├── aign                    # Main launcher (created by install.sh)
+├── install.sh              # One-click installer
+├── career_agent.sh         # TUI interface (bash + gum)
+├── requirements.txt        # Python dependencies
+│
+├── backend/                # Python backend modules
+│   ├── resume_analyzer.py
+│   ├── job_matcher.py
+│   ├── cover_letter.py
+│   └── code_analyzer.py
+│
+├── model/                  # Local LLM
+│   └── smollm2-135m-270mb.gguf
+│
+├── GumFuzzy/               # File picker component
+│   └── fuzzy-picker
+│
+└── prompt_*.txt            # System prompts
+```
+
+## 🔧 Manual Installation
+
+If you prefer to set things up yourself:
+
+```bash
+# Clone
+git clone https://github.com/brookcs3/aiGn-cli.git
+cd aiGn-cli
+
+# Install system deps (macOS)
+brew install gum jq glow
+
+# Set permissions
+chmod +x career_agent.sh install.sh GumFuzzy/fuzzy-picker
+
+# Python setup
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# Run
+./career_agent.sh
+```
+
+## 📄 License
+
+MIT
+
+---
+
+*Built for CS 462 - Senior Software Engineering Project*

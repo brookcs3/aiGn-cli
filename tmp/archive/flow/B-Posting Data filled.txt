@@ -1,0 +1,324 @@
+<instructions>
+1. Read the full job posting and infer: role_title, company_name, seniority_level.
+2. Extract ATS keywords and explicitly mentioned tools/tech from the job post.
+3. Build a variable set of categories (3–10) based on the job post emphasis.
+   - For each category, include jd_signals (exact phrases) and priority.
+4. Build a skill_inventory grouped by relevant domains ().
+   - Only include skills that are explicitly mentioned OR strongly implied by the job post context.
+5. Generate a question_bank that a separate script can ask:
+   A) skill_questions: for each skill in skill_inventory, generate a question that asks:
+      - whether the candidate has the skill
+      - how they used it (project/context)
+      - what they built (what)
+      - how/why they did it (how/why)
+      - result/impact (metrics if possible)
+      - links/artifacts if available
+   B) category_questions: for each category, generate 2–6 broader questions that collect the same evidence dimensions, if sub questions exists (how why when) gain answer here too.
+6. Do NOT answer the questions. Do NOT reference a resume. Output ONLY structured JSON matching schema.
+</instructions>
+{
+  "type": "object",
+  "properties": {
+    "variable_name": {
+      "type": "object",
+      "properties": {
+        "{{job_post_text}}": {
+          "type": "string",
+          "description": "Qualifications We're looking for an engineer with a background in graphics and real-time 3D programming who finds the greatest satisfaction in building the systems that make other engineers more productive You'll work at the boundary between graphics frameworks and infrastructure engineering, ensuring that complex spatial computing technologies can be developed, tested, and delivered with confidence across Apple's platforms Expert knowledge of Swift and Swift build systems Hands-on experience managing Jenkins or similar CI/CD platforms at scale Experience with distributed build systems and build caching strategies 5+ years of industry experience in graphics, game engines, or related fields BS in Computer Science, Computer Graphics, or equivalent degree/experience Strong knowledge of C++ and modern build systems Solid understanding of 3D mathematics Experience with CI/CD systems and build automation Proficiency in Python for tooling and automation Demonstrated ability to identify and solve infrastructure bottlenecks Excellent communication skills for cross-functional collaboration Responsibilities This unique role combines deep technical knowledge of real-time 3D systems with expertise in build technologies, CI/CD pipelines, and test automation You will design and maintain the development infrastructure that enables the RealityKit team to deliver cutting-edge rendering and spatial computing capabilities Your graphics background will inform decisions about performance testing harnesses, shader compilation pipelines, visual regression systems, and build optimizations specific to real-time 3D workloads and spatial rendering Contributions to build tooling or developer productivity tools Job description Apple is where individual imaginations gather together, committing to the values that lead to great work. Every new product we build, service we create, or Apple Store experience we deliver is the result of us making each other’s ideas stronger. That happens because every one of us shares a belief that we can make something wonderful and share it with the world, changing lives for the better. It’s the diversity of our people and their thinking that inspires the innovation that runs through everything we do. When we bring everybody in, we can do the best work of our lives. Here, you’ll do more than join something - you’ll add something.  Apple Vision Pro is a revolutionary spatial computer that seamlessly blends digital content with your physical space. It will allow us to do the things we love in ways never before possible - all while staying connected to the people around us.  Description  Join the RealityKit framework team building the infrastructure and automation systems that power Apple's spatial computing platform. This unique role combines deep technical knowledge of real-time 3D systems with expertise in build technologies, CI/CD pipelines, and test automation.  You will design and maintain the development infrastructure that enables the RealityKit team to deliver cutting-edge rendering and spatial computing capabilities. Your graphics background will inform decisions about performance testing harnesses, shader compilation pipelines, visual regression systems, and build optimizations specific to real-time 3D workloads and spatial rendering.  We're looking for an engineer with a background in graphics and real-time 3D programming who finds the greatest satisfaction in building the systems that make other engineers more productive. You'll work at the boundary between graphics frameworks and infrastructure engineering, ensuring that complex spatial computing technologies can be developed, tested, and delivered with confidence across Apple's platforms.  Preferred Qualifications  Expert knowledge of Swift and Swift build systems  Hands-on experience managing Jenkins or similar CI/CD platforms at scale  Experience with distributed build systems and build caching strategies  Contributions to build tooling or developer productivity tools  Minimum Qualifications  5+ years of industry experience in graphics, game engines, or related fields  BS in Computer Science, Computer Graphics, or equivalent degree/experience  Strong knowledge of C++ and modern build systems  Solid understanding of 3D mathematics  Experience with CI/CD systems and build automation  Proficiency in Python for tooling and automation  Demonstrated ability to identify and solve infrastructure bottlenecks  Excellent communication skills for cross-functional collaboration  Apple is an equal opportunity employer that is committed to inclusion and diversity. We seek to promote equal opportunity for all applicants without regard to race, color, religion, sex, sexual orientation, gender identity, national origin, disability, Veteran status, or other legally protected characteristics. Learn more about your EEO rights as an applicant."
+        }
+      },
+      "required": [
+        "{{job_post_text}}"
+      ],
+      "additionalProperties": false
+    },
+    "analysis": {
+      "type": "object",
+      "properties": {
+        "role_title": {
+          "type": "string"
+        },
+        "company_name": {
+          "type": "string"
+        },
+        "seniority_level": {
+          "type": "string",
+          "enum": [
+            "intern",
+            "junior",
+            "mid",
+            "senior",
+            "staff",
+            "principal",
+            "lead",
+            "manager",
+            "director",
+            "unknown"
+          ]
+        },
+        "ats_keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "ATS keywords/phrases (prefer exact wording from the job post)"
+        },
+        "tools_and_tech": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Explicit tools/tech mentioned in the job post"
+        },
+        "categories": {
+          "type": "array",
+          "minItems": 3,
+          "description": "Variable set of competency categories derived from the job post",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category_id": {
+                "type": "string"
+              },
+              "category_label": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "string",
+                "enum": [
+                  "must_have",
+                  "strong_signal",
+                  "nice_to_have"
+                ]
+              },
+              "jd_signals": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Exact phrases from the job post that justify this category"
+              },
+              "evidence_dimensions": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "what",
+                    "how_why",
+                    "tools",
+                    "scope",
+                    "result_impact",
+                    "collaboration",
+                    "constraints",
+                    "links_artifacts"
+                  ]
+                },
+                "description": "What dimensions should be collected for this category"
+              }
+            },
+            "required": [
+              "category_id",
+              "category_label",
+              "priority",
+              "jd_signals",
+              "evidence_dimensions"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "skill_inventory": {
+          "type": "array",
+          "description": "Skills grouped for targeted questioning",
+          "items": {
+            "type": "object",
+            "properties": {
+              "group_id": {
+                "type": "string",
+                "description": "e.g., frontend, backend, mobile, cloud_platform, testing_quality, data, devops"
+              },
+              "group_label": {
+                "type": "string"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Skills/tech items in this group"
+              },
+              "jd_signals": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "JD phrases that justify including this skill group"
+              }
+            },
+            "required": [
+              "group_id",
+              "group_label",
+              "items",
+              "jd_signals"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "question_bank": {
+          "type": "object",
+          "properties": {
+            "skill_questions": {
+              "type": "array",
+              "description": "One question per skill item, with answer keys your script will store",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "question_id": {
+                    "type": "string"
+                  },
+                  "group_id": {
+                    "type": "string"
+                  },
+                  "skill": {
+                    "type": "string"
+                  },
+                  "question_text": {
+                    "type": "string"
+                  },
+                  "answer_fields": {
+                    "type": "array",
+                    "description": "Fields your script should collect and store (these become placeholders later)",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "field_key": {
+                          "type": "string"
+                        },
+                        "field_label": {
+                          "type": "string"
+                        },
+                        "expected_format": {
+                          "type": "string",
+                          "enum": [
+                            "short_text",
+                            "long_text",
+                            "bullet_list",
+                            "metric_list",
+                            "tool_list",
+                            "date_range",
+                            "link_list",
+                            "boolean"
+                          ]
+                        },
+                        "required": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "field_key",
+                        "field_label",
+                        "expected_format",
+                        "required"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "question_id",
+                  "group_id",
+                  "skill",
+                  "question_text",
+                  "answer_fields"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "category_questions": {
+              "type": "array",
+              "description": "Broader questions per category (2–6 each)",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "question_id": {
+                    "type": "string"
+                  },
+                  "category_id": {
+                    "type": "string"
+                  },
+                  "question_text": {
+                    "type": "string"
+                  },
+                  "answer_fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "field_key": {
+                          "type": "string"
+                        },
+                        "field_label": {
+                          "type": "string"
+                        },
+                        "expected_format": {
+                          "type": "string",
+                          "enum": [
+                            "short_text",
+                            "long_text",
+                            "bullet_list",
+                            "metric_list",
+                            "tool_list",
+                            "date_range",
+                            "link_list",
+                            "boolean"
+                          ]
+                        },
+                        "required": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "field_key",
+                        "field_label",
+                        "expected_format",
+                        "required"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "question_id",
+                  "category_id",
+                  "question_text",
+                  "answer_fields"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "skill_questions",
+            "category_questions"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "role_title",
+        "company_name",
+        "seniority_level",
+        "ats_keywords",
+        "tools_and_tech",
+        "categories",
+        "skill_inventory",
+        "question_bank"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "variable_name",
+    "analysis"
+  ],
+  "additionalProperties": false
+}

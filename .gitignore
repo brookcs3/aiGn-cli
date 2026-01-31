@@ -13,3 +13,12 @@ model/
 screenshots from plan/
 SmolAgents-MCPs/
 
+# Magic / Pixi environment
+.magic/
+.pixi/
+pixi.lock
+mojoproject.toml
+
+# Working directories
+tmp/
+flow/

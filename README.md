@@ -21,23 +21,22 @@ cd aiGn-cli
 ```
 
 That's it. The installer handles everything:
-- ✅ Checks & installs system dependencies (gum, jq, glow)
-- ✅ Sets executable permissions
-- ✅ Creates Python virtual environment
-- ✅ Installs all Python packages
-- ✅ Creates the `aign` launcher
+- ✅ Checks & installs system dependencies (gum, jq, go)
+- ✅ Sets up Magic (Modular) for Python environment management
+- ✅ Installs all Python packages automatically
+- ✅ Builds local tools (GumFuzzy)
+- ✅ Creates the global `career-agent` launcher
 
 ## 🚀 Usage
 
+Run the global command (if installed):
 ```bash
-./aign
+career-agent
 ```
 
-Or add to PATH for global access:
+Or run locally:
 ```bash
-echo 'export PATH="'$(pwd)'":$PATH' >> ~/.zshrc
-source ~/.zshrc
-aign
+./career.sh
 ```
 
 ## 🎯 Features
@@ -53,12 +52,12 @@ aign
 ## 📋 Requirements
 
 **Automatically installed by `install.sh`:**
-- Python 3.10+
+- [Magic](https://magic.modular.com/) - Python package manager
 - [gum](https://github.com/charmbracelet/gum) - TUI framework
 - [jq](https://stedolan.github.io/jq/) - JSON processor
-- [glow](https://github.com/charmbracelet/glow) - Markdown renderer (optional)
+- Go (for building tools)
 
-**Python dependencies** (installed in `.venv`):
+**Python dependencies** (managed by `magic`):
 - llama-cpp-python (local LLM inference)
 - smolagents (HuggingFace agent framework)
 - python-jobspy (job search API)
@@ -68,48 +67,14 @@ aign
 
 ```
 aiGn-cli/
-├── aign                    # Main launcher (created by install.sh)
+├── career.sh               # Main TUI interface
 ├── install.sh              # One-click installer
-├── career_agent.sh         # TUI interface (bash + gum)
-├── requirements.txt        # Python dependencies
-│
-├── backend/                # Python backend modules
-│   ├── resume_analyzer.py
-│   ├── job_matcher.py
-│   ├── cover_letter.py
-│   └── code_analyzer.py
-│
-├── model/                  # Local LLM
-│   └── smollm2-135m-270mb.gguf
-│
-├── GumFuzzy/               # File picker component
-│   └── fuzzy-picker
-│
-└── prompt_*.txt            # System prompts
-```
-
-## 🔧 Manual Installation
-
-If you prefer to set things up yourself:
-
-```bash
-# Clone
-git clone https://github.com/brookcs3/aiGn-cli.git
-cd aiGn-cli
-
-# Install system deps (macOS)
-brew install gum jq glow
-
-# Set permissions
-chmod +x career_agent.sh install.sh GumFuzzy/fuzzy-picker
-
-# Python setup
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-
-# Run
-./career_agent.sh
+├── core/                   # Core logic (LLM inference)
+├── jobs/                   # Job search & application logic
+├── utils/                  # Helper scripts & parsers
+├── prompts/                # AI Prompt templates
+├── tools/                  # External tools (GumFuzzy, GumMouse)
+└── pixi.toml               # Magic/Pixi project definition
 ```
 
 ## 📄 License

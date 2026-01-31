@@ -1,235 +1,170 @@
 #!/bin/bash
-#
-#   █████╗ ██╗ ██████╗ ███╗   ██╗
-#  ██╔══██╗██║██╔════╝ ████╗  ██║
-#  ███████║██║██║  ███╗██╔██╗ ██║
-#  ██╔══██║██║██║   ██║██║╚██╗██║
-#  ██║  ██║██║╚██████╔╝██║ ╚████║
-#  ╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝
-#
-#  AI Career Agent - One-Click Installer
-#  https://github.com/brookcs3/aiGn-cli
-#
 
-set -e
+# CareerAI Installer - Magic Edition
+# Installs dependencies, sets up the environment, and prepares the tool.
 
 # Colors
-RED='\033[0;31m'
 GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
-CYAN='\033[0;36m'
+RED='\033[0;31m'
 NC='\033[0m' # No Color
-BOLD='\033[1m'
 
-# Get script directory (works even when called from elsewhere)
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd "$SCRIPT_DIR"
-
-echo ""
-echo -e "${CYAN}╔════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${CYAN}║${NC}  ${BOLD}aiGn${NC} - AI Career Agent Installer                           ${CYAN}║${NC}"
-echo -e "${CYAN}║${NC}  Resume Analyzer • Job Matcher • Cover Letter Generator    ${CYAN}║${NC}"
-echo -e "${CYAN}╚════════════════════════════════════════════════════════════╝${NC}"
+echo -e "${BLUE}========================================${NC}"
+echo -e "${BLUE}   CareerAI Agent Professional Installer   ${NC}"
+echo -e "${BLUE}========================================${NC}"
 echo ""
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Step 1: Check system dependencies
-# ─────────────────────────────────────────────────────────────────────────────
-echo -e "${BLUE}[1/5]${NC} Checking system dependencies..."
+# 1. Detect OS
+OS="$(uname -s)"
+echo -e "${GREEN}[+] Detected OS: $OS${NC}"
 
-MISSING_DEPS=()
+# 2. Install System Dependencies
+echo -e "${GREEN}[+] Checking system dependencies...${NC}"
 
-# Check for Homebrew (macOS)
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [ "$OS" = "Darwin" ]; then
+    # macOS
     if ! command -v brew &> /dev/null; then
-        echo -e "${YELLOW}⚠${NC}  Homebrew not found. Install it from https://brew.sh"
-        MISSING_DEPS+=("brew")
+        echo -e "${RED}[!] Homebrew not found. Please install Homebrew first: https://brew.sh${NC}"
+        exit 1
     fi
-fi
 
-# Check for Python 3.10+
-if command -v python3 &> /dev/null; then
-    PYTHON_CMD="python3"
-elif command -v python &> /dev/null; then
-    PYTHON_CMD="python"
-else
-    echo -e "${RED}✗${NC}  Python not found"
-    MISSING_DEPS+=("python")
-fi
-
-if [ -n "$PYTHON_CMD" ]; then
-    PYTHON_VERSION=$($PYTHON_CMD -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
-    MAJOR=$(echo "$PYTHON_VERSION" | cut -d. -f1)
-    MINOR=$(echo "$PYTHON_VERSION" | cut -d. -f2)
-    if [ "$MAJOR" -lt 3 ] || ([ "$MAJOR" -eq 3 ] && [ "$MINOR" -lt 10 ]); then
-        echo -e "${RED}✗${NC}  Python $PYTHON_VERSION found, but 3.10+ required"
-        MISSING_DEPS+=("python>=3.10")
+    if ! command -v gum &> /dev/null; then
+        echo "Installing gum..."
+        brew install gum
     else
-        echo -e "${GREEN}✓${NC}  Python $PYTHON_VERSION"
+        echo "  - gum: found"
     fi
-fi
 
-# Check for gum (TUI framework)
-if ! command -v gum &> /dev/null; then
-    echo -e "${YELLOW}⚠${NC}  gum not found"
-    MISSING_DEPS+=("gum")
-else
-    echo -e "${GREEN}✓${NC}  gum $(gum --version 2>/dev/null | head -1 || echo '')"
-fi
-
-# Check for jq (JSON processor)
-if ! command -v jq &> /dev/null; then
-    echo -e "${YELLOW}⚠${NC}  jq not found"
-    MISSING_DEPS+=("jq")
-else
-    echo -e "${GREEN}✓${NC}  jq $(jq --version 2>/dev/null || echo '')"
-fi
-
-# Check for glow (Markdown renderer) - optional but recommended
-if ! command -v glow &> /dev/null; then
-    echo -e "${YELLOW}⚠${NC}  glow not found (optional, for pretty output)"
-    MISSING_DEPS+=("glow")
-else
-    echo -e "${GREEN}✓${NC}  glow"
-fi
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Step 2: Install missing dependencies
-# ─────────────────────────────────────────────────────────────────────────────
-if [ ${#MISSING_DEPS[@]} -gt 0 ]; then
-    echo ""
-    echo -e "${BLUE}[2/5]${NC} Installing missing dependencies..."
-    
-    if [[ "$OSTYPE" == "darwin"* ]] && command -v brew &> /dev/null; then
-        for dep in "${MISSING_DEPS[@]}"; do
-            case "$dep" in
-                "gum")
-                    echo -e "  ${CYAN}→${NC} Installing gum..."
-                    brew install gum
-                    ;;
-                "jq")
-                    echo -e "  ${CYAN}→${NC} Installing jq..."
-                    brew install jq
-                    ;;
-                "glow")
-                    echo -e "  ${CYAN}→${NC} Installing glow..."
-                    brew install glow
-                    ;;
-            esac
-        done
-    elif command -v apt-get &> /dev/null; then
-        # Linux (Debian/Ubuntu)
-        echo -e "  ${CYAN}→${NC} Updating package list..."
-        sudo apt-get update -qq
-        for dep in "${MISSING_DEPS[@]}"; do
-            case "$dep" in
-                "gum")
-                    echo -e "  ${CYAN}→${NC} Installing gum..."
-                    sudo mkdir -p /etc/apt/keyrings
-                    curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
-                    echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
-                    sudo apt-get update -qq && sudo apt-get install -y gum
-                    ;;
-                "jq")
-                    echo -e "  ${CYAN}→${NC} Installing jq..."
-                    sudo apt-get install -y jq
-                    ;;
-                "glow")
-                    echo -e "  ${CYAN}→${NC} Installing glow..."
-                    sudo apt-get install -y glow 2>/dev/null || echo "    (glow not in apt, skipping)"
-                    ;;
-            esac
-        done
+    if ! command -v jq &> /dev/null; then
+        echo "Installing jq..."
+        brew install jq
     else
-        echo -e "${YELLOW}⚠${NC}  Please install manually: ${MISSING_DEPS[*]}"
+        echo "  - jq: found"
     fi
-else
-    echo -e "${BLUE}[2/5]${NC} All system dependencies present ${GREEN}✓${NC}"
+
+    if ! command -v go &> /dev/null; then
+        echo "Installing go..."
+        brew install go
+    else
+        echo "  - go: found"
+    fi
+
+elif [ "$OS" = "Linux" ]; then
+    # Linux (Debian/Ubuntu/Fedora support)
+    if command -v apt-get &> /dev/null; then
+        # Debian/Ubuntu
+        sudo apt-get update
+
+        if ! command -v gum &> /dev/null; then
+            echo "Installing gum (requires manual setup or charm repo)..."
+            # Charm bracelet repo setup usually required, falling back to go install if not present
+             if ! command -v go &> /dev/null; then
+                 echo "Installing go..."
+                 sudo apt-get install -y golang-go
+             fi
+             go install github.com/charmbracelet/gum@latest
+             export PATH=$PATH:$(go env GOPATH)/bin
+        fi
+
+        if ! command -v jq &> /dev/null; then
+            echo "Installing jq..."
+            sudo apt-get install -y jq
+        fi
+
+    elif command -v dnf &> /dev/null; then
+        # Fedora
+        if ! command -v gum &> /dev/null; then
+             echo "Installing gum..."
+             # Gum is often in repo
+             sudo dnf install -y gum || {
+                 if ! command -v go &> /dev/null; then
+                     sudo dnf install -y golang
+                 fi
+                 go install github.com/charmbracelet/gum@latest
+                 export PATH=$PATH:$(go env GOPATH)/bin
+             }
+        fi
+
+        if ! command -v jq &> /dev/null; then
+            sudo dnf install -y jq
+        fi
+    fi
 fi
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Step 3: Set executable permissions
-# ─────────────────────────────────────────────────────────────────────────────
-echo ""
-echo -e "${BLUE}[3/5]${NC} Setting executable permissions..."
-
-chmod +x "$SCRIPT_DIR/career_agent.sh"
-echo -e "${GREEN}✓${NC}  career_agent.sh"
-
-chmod +x "$SCRIPT_DIR/install.sh"
-echo -e "${GREEN}✓${NC}  install.sh"
-
-if [ -f "$SCRIPT_DIR/GumFuzzy/fuzzy-picker" ]; then
-    chmod +x "$SCRIPT_DIR/GumFuzzy/fuzzy-picker"
-    echo -e "${GREEN}✓${NC}  GumFuzzy/fuzzy-picker"
-fi
-
-if [ -f "$SCRIPT_DIR/GumFuzzy/test_integration.sh" ]; then
-    chmod +x "$SCRIPT_DIR/GumFuzzy/test_integration.sh"
-    echo -e "${GREEN}✓${NC}  GumFuzzy/test_integration.sh"
-fi
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Step 4: Create Python virtual environment & install deps
-# ─────────────────────────────────────────────────────────────────────────────
-echo ""
-echo -e "${BLUE}[4/5]${NC} Setting up Python environment..."
-
-VENV_DIR="$SCRIPT_DIR/.venv"
-
-if [ ! -d "$VENV_DIR" ]; then
-    echo -e "  ${CYAN}→${NC} Creating virtual environment..."
-    $PYTHON_CMD -m venv "$VENV_DIR"
-fi
-
-# Activate and install
-source "$VENV_DIR/bin/activate"
-echo -e "  ${CYAN}→${NC} Installing Python dependencies..."
-pip install --upgrade pip -q
-pip install -r "$SCRIPT_DIR/requirements.txt" -q
-
-echo -e "${GREEN}✓${NC}  Python environment ready"
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Step 5: Create launcher wrapper
-# ─────────────────────────────────────────────────────────────────────────────
-echo ""
-echo -e "${BLUE}[5/5]${NC} Creating launcher..."
-
-# Create a wrapper script that activates venv before running
-LAUNCHER="$SCRIPT_DIR/aign"
-cat > "$LAUNCHER" << 'LAUNCHER_EOF'
-#!/bin/bash
-# aiGn Launcher - Activates venv and runs career agent
-
+# 3. Build Tools
+echo -e "${GREEN}[+] Building local tools...${NC}"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "$SCRIPT_DIR" || exit 1
 
-# Activate virtual environment
-source "$SCRIPT_DIR/.venv/bin/activate"
+# Build GumFuzzy
+if [ -f "tools/GumFuzzy/fuzzy_picker.go" ]; then
+    echo "Building GumFuzzy..."
+    cd tools/GumFuzzy
+    go build -o fuzzy-picker fuzzy_picker.go
+    if [ $? -eq 0 ]; then
+        echo "  - GumFuzzy built successfully"
+    else
+        echo -e "${RED}[!] Failed to build GumFuzzy${NC}"
+    fi
+    cd ../..
+else
+    echo -e "${RED}[!] tools/GumFuzzy/fuzzy-picker.go not found!${NC}"
+fi
 
-# Run the career agent
-exec "$SCRIPT_DIR/career_agent.sh" "$@"
-LAUNCHER_EOF
 
-chmod +x "$LAUNCHER"
-echo -e "${GREEN}✓${NC}  Created 'aign' launcher"
+# 4. Install Magic (Modular)
+echo -e "${GREEN}[+] Setting up Python environment with Magic...${NC}"
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Done!
-# ─────────────────────────────────────────────────────────────────────────────
+if ! command -v magic &> /dev/null; then
+    echo "Installing magic..."
+    curl -ssL https://magic.modular.com/b9714777-6262-4293-8515-565451e59544 | bash
+    # Reload profile/path to ensure magic is available
+    source ~/.bashrc 2>/dev/null || source ~/.zshrc 2>/dev/null
+
+    if ! command -v magic &> /dev/null; then
+        echo -e "${RED}[!] Magic installed but not in PATH. Please restart terminal or add to PATH manually.${NC}"
+        # Try to proceed using explicit path if known, otherwise warn
+    fi
+fi
+
+# Initialize magic project if needed
+if [ ! -f "mojoproject.toml" ] && [ ! -f "pixi.toml" ]; then
+    echo "Initializing magic project..."
+    magic init . --format pixi
+fi
+
+# Add Python dependencies
+echo "Adding dependencies via magic..."
+magic add llama-cpp-python>=0.3.0 smolagents>=1.0.0 litellm>=1.0.0 mcp>=1.0.0 \
+    PyMuPDF>=1.24.0 python-docx>=1.1.0 python-jobspy>=1.1.0 pandas>=2.0.0 \
+    pydantic>=2.0.0 requests>=2.31.0 python-dotenv>=1.0.0 prompt_toolkit pyperclip
+
+# 5. Global Command Setup
+echo -e "${GREEN}[+] Setting up global command 'career-agent'...${NC}"
+
+# Create a wrapper script in /usr/local/bin (requires sudo)
+WRAPPER_PATH="/usr/local/bin/career-agent"
+if [ -d "/usr/local/bin" ]; then
+    echo "Creating symlink/wrapper at $WRAPPER_PATH..."
+
+    # We need a wrapper that cd's to the directory first
+    sudo bash -c "cat > $WRAPPER_PATH" <<EOF
+#!/bin/bash
+cd "$SCRIPT_DIR"
+./career.sh
+EOF
+    sudo chmod +x $WRAPPER_PATH
+    echo "  - Command 'career-agent' installed!"
+else
+    echo -e "${WARNING}[!] /usr/local/bin not found. You can run the tool with ./career.sh${NC}"
+fi
+
 echo ""
-echo -e "${GREEN}╔════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${GREEN}║${NC}  ${BOLD}Installation Complete!${NC}                                    ${GREEN}║${NC}"
-echo -e "${GREEN}╚════════════════════════════════════════════════════════════╝${NC}"
-echo ""
-echo -e "  ${BOLD}To run aiGn:${NC}"
-echo ""
-echo -e "    ${CYAN}cd $(basename "$SCRIPT_DIR") && ./aign${NC}"
-echo ""
-echo -e "  ${BOLD}Or add to your PATH for global access:${NC}"
-echo ""
-echo -e "    ${CYAN}echo 'export PATH=\"$SCRIPT_DIR:\$PATH\"' >> ~/.zshrc${NC}"
-echo -e "    ${CYAN}source ~/.zshrc${NC}"
-echo -e "    ${CYAN}aign${NC}"
+echo -e "${BLUE}========================================${NC}"
+echo -e "${BLUE}   Installation Complete! 🚀            ${NC}"
+echo -e "${BLUE}========================================${NC}"
+echo "You can now run the tool by typing:"
+echo -e "  ${GREEN}career-agent${NC}"
+echo "or"
+echo -e "  ${GREEN}./career.sh${NC}"
 echo ""

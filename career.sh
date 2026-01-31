@@ -372,10 +372,17 @@ $COUNT. $TITLE @ $COMPANY (${SCORE}% match)
                 COUNT=$((COUNT + 1))
             done < <(echo "$RESULT" | jq -c '.jobs[:10][]')
 
-            # Display in scrollable pager (using standard gum)
-            gum pager "$(printf '\360\237\216\257') TOP JOB MATCHES (Based on: $SKILLS)
+            # Display in scrollable pager (using custom gum with auto-fit height)
+            GUM_CUSTOM="$SCRIPT_DIR/tools/gum/gum-custom"
+            if [ -x "$GUM_CUSTOM" ]; then
+                echo "$(printf '\360\237\216\257') TOP JOB MATCHES (Based on: $SKILLS)
+
+$JOB_DISPLAY" | "$GUM_CUSTOM" pager --viewport-height=-1 --show-line-numbers=false
+            else
+                gum pager "$(printf '\360\237\216\257') TOP JOB MATCHES (Based on: $SKILLS)
 
 $JOB_DISPLAY"
+            fi
 
             echo ""
             gum style --border normal --border-foreground "$ACCENT_COLOR" --padding "1 2" \

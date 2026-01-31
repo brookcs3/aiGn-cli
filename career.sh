@@ -123,7 +123,7 @@ while true; do
                 if [ "$FILE_METHOD" = "Paste file path" ]; then
                     RESUME_FILE=$(gum input --placeholder "Enter full path to resume...")
                 else
-                    RESUME_FILE=$("$TOOLS_DIR/GumFuzzy/fuzzy-picker" < /dev/tty 2>&1)
+                    RESUME_FILE=$("$SCRIPT_DIR/GumFuzzy/fuzzy-picker" < /dev/tty 2>&1)
                 fi
 
                 if [ -z "$RESUME_FILE" ]; then
@@ -519,7 +519,7 @@ print(text.strip())
                 if [ "$FILE_METHOD" = "Paste file path" ]; then
                     CODE_FILE=$(gum input --placeholder "Enter full path to code file...")
                 else
-                    CODE_FILE=$("$TOOLS_DIR/GumFuzzy/fuzzy-picker" </dev/tty)
+                    CODE_FILE=$("$SCRIPT_DIR/GumFuzzy/fuzzy-picker" </dev/tty)
                 fi
 
                 if [ -z "$CODE_FILE" ]; then

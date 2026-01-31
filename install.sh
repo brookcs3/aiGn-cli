@@ -97,18 +97,18 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$SCRIPT_DIR" || exit 1
 
 # Build GumFuzzy
-if [ -f "tools/GumFuzzy/fuzzy_picker.go" ]; then
+if [ -f "GumFuzzy/fuzzy_picker.go" ]; then
     echo "Building GumFuzzy..."
-    cd tools/GumFuzzy
+    cd GumFuzzy
     go build -o fuzzy-picker fuzzy_picker.go
     if [ $? -eq 0 ]; then
         echo "  - GumFuzzy built successfully"
     else
         echo -e "${RED}[!] Failed to build GumFuzzy${NC}"
     fi
-    cd ../..
+    cd ..
 else
-    echo -e "${RED}[!] tools/GumFuzzy/fuzzy-picker.go not found!${NC}"
+    echo -e "${RED}[!] GumFuzzy/fuzzy_picker.go not found!${NC}"
 fi
 
 

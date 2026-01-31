@@ -37,28 +37,28 @@ elif [ "$machine" == "Linux" ]; then
     fi
 fi
 
-# Install Magic (Modular)
-if ! command -v magic &> /dev/null; then
-    echo -e "${BLUE}Installing Magic (Modular)...${NC}"
-    curl -ssL https://magic.modular.com/b9714777-6262-4293-8515-565451e59544 | bash
+# Install Pixi (Magic replacement)
+if ! command -v pixi &> /dev/null; then
+    echo -e "${BLUE}Installing Pixi...${NC}"
+    curl -fsSL https://pixi.sh/install.sh | bash
 
-    # Attempt to add magic to path for this session
-    export PATH="$HOME/.modular/bin:$PATH"
+    # Attempt to add pixi to path for this session
+    export PATH="$HOME/.pixi/bin:$PATH"
 else
-    echo -e "${GREEN}Magic is already installed.${NC}"
+    echo -e "${GREEN}Pixi is already installed.${NC}"
 fi
 
 # Initialize Project & Install Python Deps
-echo -e "${BLUE}Setting up Python environment with Magic...${NC}"
+echo -e "${BLUE}Setting up Python environment with Pixi...${NC}"
 
-# Initialize magic project if not exists
-if [ ! -f "mojoproject.toml" ] && [ ! -f "pyproject.toml" ]; then
-    magic init . --format pyproject
+# Initialize pixi project if not exists
+if [ ! -f "pixi.toml" ]; then
+    pixi init .
 fi
 
 # Add dependencies
 echo -e "${BLUE}Adding Python dependencies...${NC}"
-magic add llama-cpp-python smolagents litellm mcp PyMuPDF python-docx python-jobspy pandas pydantic requests python-dotenv prompt_toolkit
+pixi add python-jobspy llama-cpp-python smolagents litellm mcp PyMuPDF python-docx pandas pydantic requests python-dotenv prompt_toolkit
 
 # Build GumFuzzy
 echo -e "${BLUE}Building GumFuzzy tool...${NC}"

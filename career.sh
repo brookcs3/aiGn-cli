@@ -14,8 +14,8 @@ if ! command -v gum &> /dev/null; then
     exit 1
 fi
 
-if ! command -v magic &> /dev/null; then
-    echo "magic (modular) could not be found. Please run './install.sh' first."
+if ! command -v pixi &> /dev/null; then
+    echo "pixi could not be found. Please run './install.sh' first."
     exit 1
 fi
 
@@ -32,7 +32,15 @@ SUCCESS_COLOR="82"
 WARNING_COLOR="220"
 ERROR_COLOR="196"
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# Resolve real path to script, handling symlinks
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+SCRIPT_DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+
 SRC_DIR="$SCRIPT_DIR/src"
 AGENT_DIR="$SRC_DIR/agent"
 JOBS_DIR="$SRC_DIR/jobs"
@@ -44,7 +52,7 @@ cd "$SCRIPT_DIR" || exit 1
 
 # -- Helper Functions --
 run_python() {
-    magic run python "$@"
+    pixi run python "$@"
 }
 
 call_agent() {
@@ -124,10 +132,13 @@ while true; do
                 if [ "$FILE_METHOD" = "Paste file path" ]; then
                     RESUME_FILE=$(gum input --placeholder "Enter full path to resume...")
                 else
+                    # Fallback chain: Local Bin -> Global Bin -> Gum File
                     if [ -x "$BIN_DIR/fuzzy-picker" ]; then
-                         RESUME_FILE=$("$BIN_DIR/fuzzy-picker" < /dev/tty 2>&1)
+                        RESUME_FILE=$("$BIN_DIR/fuzzy-picker" < /dev/tty 2>&1)
+                    elif command -v fuzzy-picker &> /dev/null; then
+                        RESUME_FILE=$(fuzzy-picker < /dev/tty 2>&1)
                     else
-                         RESUME_FILE=$(gum file --file)
+                        RESUME_FILE=$(gum file --file)
                     fi
                 fi
 
@@ -166,12 +177,12 @@ while true; do
             call_utils "resume_parser.py" --input-file "$RESUME_FILE" --output "$PROMPT_TEMP"
 
             # Run AI with spinner
-            RESULT=$(cat "$PROMPT_TEMP" | gum spin --spinner pulse --title "Analyzing with AI..." -- magic run python "$AGENT_DIR/llm_inference.py" --chat 2>/dev/null)
+            RESULT=$(cat "$PROMPT_TEMP" | gum spin --spinner pulse --title "Analyzing with AI..." -- pixi run python "$AGENT_DIR/llm_inference.py" --chat 2>/dev/null)
             rm -f "$PROMPT_TEMP"
 
             # Extract and flatten JSON from response with pandas
-            # Note: We need to use magic run python for this inline script too if it uses pandas
-            JSON_RESULT=$(echo "$RESULT" | magic run python -c "
+            # Note: We need to use pixi run python for this inline script too if it uses pandas
+            JSON_RESULT=$(echo "$RESULT" | pixi run python -c "
 import sys, json, re
 import pandas as pd
 
@@ -474,11 +485,11 @@ $JOB_DISPLAY"
                 "$PROMPTS_DIR/interview_prep_prompt.txt" > "$PROMPT_TEMP"
 
             # Generate with AI
-            RESULT=$(cat "$PROMPT_TEMP" | gum spin --spinner pulse --title "Generating personalized questions..." -- magic run python "$AGENT_DIR/llm_inference.py" --chat 2>/dev/null)
+            RESULT=$(cat "$PROMPT_TEMP" | gum spin --spinner pulse --title "Generating personalized questions..." -- pixi run python "$AGENT_DIR/llm_inference.py" --chat 2>/dev/null)
             rm -f "$PROMPT_TEMP"
 
             # Strip markdown code block wrappers if present
-            RESULT=$(echo "$RESULT" | magic run python -c "
+            RESULT=$(echo "$RESULT" | pixi run python -c "
 import sys, re
 text = sys.stdin.read()
 text = re.sub(r'\`\`\`markdown\s*', '', text)
@@ -526,9 +537,11 @@ print(text.strip())
                     CODE_FILE=$(gum input --placeholder "Enter full path to code file...")
                 else
                     if [ -x "$BIN_DIR/fuzzy-picker" ]; then
-                         CODE_FILE=$("$BIN_DIR/fuzzy-picker" </dev/tty)
+                        CODE_FILE=$("$BIN_DIR/fuzzy-picker" < /dev/tty 2>&1)
+                    elif command -v fuzzy-picker &> /dev/null; then
+                        CODE_FILE=$(fuzzy-picker < /dev/tty 2>&1)
                     else
-                         CODE_FILE=$(gum file --file)
+                        CODE_FILE=$(gum file --file)
                     fi
                 fi
 

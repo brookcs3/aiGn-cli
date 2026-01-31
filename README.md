@@ -15,7 +15,7 @@
 
 ## Installation
 
-We use **Magic** (by Modular) for seamless environment management. The installer handles everything for you.
+We use **Pixi** for seamless environment management. The installer handles everything for you.
 
 1.  **Clone the repository:**
     ```bash
@@ -28,9 +28,10 @@ We use **Magic** (by Modular) for seamless environment management. The installer
     ./install.sh
     ```
     This will:
-    - Install `magic` (if missing).
+    - Install `pixi` (if missing).
     - Set up a managed Python environment with all dependencies.
     - Install system tools (`gum`, `jq`, `go`).
+    - Build the custom tools (`gum-custom`, `GumFuzzy`).
     - Create a global `career-agent` command.
 
 3.  **Run the agent:**
@@ -54,7 +55,7 @@ This project has been professionally structured for maintainability:
 ## Dependencies
 
 - **System**: `gum`, `jq`, `go` (installed automatically).
-- **Python**: Managed via `magic` (see `requirements.txt` for details).
+- **Python**: Managed via `pixi` (see `pixi.toml` after install).
 - **Model**: `SmolLM2-135M` (downloaded automatically or included).
 
 ## Usage

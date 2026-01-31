@@ -13,3 +13,17 @@ model/
 screenshots from plan/
 SmolAgents-MCPs/
 
+# Temporary files
+tmp/
+flow/
+*.log
+.env
+
+# Build artifacts
+bin/
+tools/GumFuzzy/fuzzy-picker
+
+# Python/Environment
+.venv/
+venv/
+.magic/

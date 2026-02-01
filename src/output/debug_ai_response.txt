@@ -1,0 +1,186 @@
+{
+  "type": "object",
+  "properties": {
+    "variable_name": {
+      "type": "object",
+      "properties": {
+        "{{job_post_text}}": "Shape the future of spatial computing by building revolutionary UI rendering technologies for Apple Vision Pro and next-generation vision products. As part of the RealityKit team, you'll architect and optimize the foundational rendering systems that bring spatial interfaces to life-transforming how millions interact with applications in visionOS. Push the boundaries of real-time UI rendering to deliver fluid, responsive spatial experiences. You'll develop high-performance rendering pipelines that seamlessly blend 2D interface elements with 3D spatial content, optimize GPU workloads for crystal-clear text and graphics, and pioneer new techniques for rendering adaptive, context-aware user interfaces in mixed reality. Your work will directly impact how users interact with every application across Apple's vision ecosystem. Join a world-class team defining the next era of human-computer interaction. Every optimization you craft, every rendering technique you innovate, and every pixel you perfect will empower developers and delight users worldwide. This is your opportunity to work at the intersection of graphics, user interface design, and spatial computing-building technology that doesn't just render interfaces, but creates intuitive, immersive interactions."
+      }
+    },
+    "analysis": {
+      "role_title": "Spatial UI Rendering Engineer",
+      "company_name": "RealityKit",
+      "seniority_level": "lead",
+      "ats_keywords": [
+        "Spatial UI Rendering",
+        "RealityKit",
+        "Apple Vision Pro",
+        "next-generation vision products",
+        "GPU pipelines",
+        "rendering algorithms",
+        "rendering systems",
+        "high-performance rendering",
+        "real-time UI rendering",
+        "spatial interfaces",
+        "rendering pipelines",
+        "rendering algorithms",
+        "GPU optimization",
+        "rendering performance",
+        "rendering systems",
+        "rendering pipelines",
+        "rendering algorithms",
+        "GPU pipelines",
+        "rendering algorithms",
+        "rendering performance"
+      ],
+      "tools_and_tech": [
+        "GPU pipelines",
+        "rendering algorithms",
+        "rendering systems",
+        "real-time UI rendering",
+        "spatial interfaces",
+        "rendering pipelines",
+        "rendering algorithms",
+        "GPU optimization",
+        "rendering performance"
+      ],
+      "categories": [
+        {
+          "category_id": "Rendering Systems",
+          "category_label": "Rendering Systems",
+          "priority": "must_have",
+          "jd_signals": [
+            "high-performance rendering systems",
+            "rendering pipelines",
+            "rendering algorithms",
+            "real-time UI rendering",
+            "spatial interfaces"
+          ],
+          "evidence_dimensions": [
+            "what",
+            "how_why",
+            "tools",
+            "scope",
+            "result_impact"
+          ]
+        },
+        {
+          "category_id": "GPU Optimization",
+          "category_label": "GPU Optimization",
+          "priority": "must_have",
+          "jd_signals": [
+            "GPU pipelines",
+            "rendering algorithms",
+            "GPU optimization",
+            "rendering performance"
+          ],
+          "evidence_dimensions": [
+            "what",
+            "how_why",
+            "tools",
+            "scope"
+          ]
+        },
+        {
+          "category_id": "UI Design",
+          "category_label": "UI Design",
+          "priority": "must_have",
+          "jd_signals": [
+            "intuitive APIs",
+            "responsive interfaces",
+            "beautiful UI",
+            "context-aware user interfaces"
+          ],
+          "evidence_dimensions": [
+            "what",
+            "how_why",
+            "tools",
+            "result_impact"
+          ]
+        }
+      ],
+      "skill_inventory": [
+        {
+          "group_id": "GPU Optimization",
+          "group_label": "GPU Optimization",
+          "items": [
+            "GPU pipelines",
+            "rendering algorithms",
+            "GPU optimization",
+            "rendering performance"
+          ],
+          "jd_signals": [
+            "GPU pipelines",
+            "rendering algorithms",
+            "GPU optimization",
+            "rendering performance"
+          ]
+        },
+        {
+          "group_id": "UI Design",
+          "group_label": "UI Design",
+          "items": [
+            "intuitive APIs",
+            "responsive interfaces",
+            "beautiful UI",
+            "context-aware user interfaces"
+          ],
+          "jd_signals": [
+            "intuitive APIs",
+            "responsive interfaces",
+            "beautiful UI",
+            "context-aware user interfaces"
+          ]
+        }
+      ],
+      "question_bank": {
+        "skill_questions": [
+          {
+            "question_id": "1",
+            "group_id": "GPU Optimization",
+            "skill": "GPU pipelines",
+            "question_text": "Do you have experience with GPU rendering pipelines?",
+            "answer_fields": [
+              {"field_key": "what", "field_label": "What skills do you have?"},
+              {"field_key": "how_why", "field_label": "How did you use them?"},
+              {"field_key": "tools", "field_label": "Tools used?"}
+            ]
+          },
+          {
+            "question_id": "2",
+            "group_id": "UI Design",
+            "skill": "intuitive APIs",
+            "question_text": "How did you design intuitive APIs for user interfaces?",
+            "answer_fields": [
+              {"field_key": "what", "field_label": "What skills do you have?"},
+              {"field_key": "how_why", "field_label": "How did you use them?"},
+              {"field_key": "tools", "field_label": "Tools used?"}
+            ]
+          }
+        ],
+        "category_questions": [
+          {
+            "question_id": "1",
+            "category_id": "Rendering Systems",
+            "question_text": "What impact do you have on the rendering of spatial interfaces?",
+            "answer_fields": [
+              {"field_key": "what", "field_label": "What skills do you have?"},
+              {"field_key": "how_why", "field_label": "How did you use them?"},
+              {"field_key": "tools", "field_label": "Tools used?"}
+            ]
+          },
+          {
+            "question_id": "2",
+            "category_id": "GPU Optimization",
+            "question_text": "What are the key challenges in GPU rendering optimization?",
+            "answer_fields": [
+              {"field_key": "what", "field_label": "What skills do you have?"},
+              {"field_key": "how_why", "field_label": "How did you use them?"},
+              {"field_key": "tools", "field_label": "Tools used?"}
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+Resume Analysis for User - Sat Jan 31 19:10:44 PST 2026
+File: cameron_brooks_resume_anthropic.pdf
+
+CANDIDATE PROFILE: Cameron Brooks, a Software Engineer with a B.S. in Computer Science, specializes in AI/ML, cross-platform development, and developer tools. Key skills include Python, Swift, TypeScript, and expertise in AI workflows.
+TARGET ROLE: AI/ML Developer with Systems & Infrastructure Expertise, focusing on computational physics, audio processing, and privacy-first software.
+TYPE: technical
+
+SUMMARY:
+Cameron Brooks is a Software Engineer with a B.S. in Computer Science, specializing in AI/ML, cross-platform development, and developer tools, with experience in Python, Swift, and AI workflows.
+
+KEY POINTS:
+  • Software Engineer with experience in Python, Swift, and TypeScript, using Claude Code for real-world projects.
+  • Founder & Developer of Scriber Pro, a privacy-first macOS app with on-device transcription.
+  • Expert in AI/ML with experience in PyTorch, ONNX Runtime, and prompt engineering.
+  • Technical skills in audio DSP, cross-platform development, and privacy/security constraints.
+
+STRENGTHS:
+  ✓ Technical expertise in AI/ML, cross-platform development, and developer tools.
+  ✓ Experience in Python, Swift, and TypeScript with a B.S. in Computer Science.
+  ✓ Strong focus on computational physics and AI workflows.
+
+AREAS TO IMPROVE:
+
+--- RAW JSON ---
+{
+  "candidate_profile": "Cameron Brooks, a Software Engineer with a B.S. in Computer Science, specializes in AI/ML, cross-platform development, and developer tools. Key skills include Python, Swift, TypeScript, and expertise in AI workflows.",
+  "target_role": "AI/ML Developer with Systems & Infrastructure Expertise, focusing on computational physics, audio processing, and privacy-first software.",
+  "content_type": "technical",
+  "summary": "Cameron Brooks is a Software Engineer with a B.S. in Computer Science, specializing in AI/ML, cross-platform development, and developer tools, with experience in Python, Swift, and AI workflows.",
+  "key_points": [
+    "Software Engineer with experience in Python, Swift, and TypeScript, using Claude Code for real-world projects.",
+    "Founder & Developer of Scriber Pro, a privacy-first macOS app with on-device transcription.",
+    "Expert in AI/ML with experience in PyTorch, ONNX Runtime, and prompt engineering.",
+    "Technical skills in audio DSP, cross-platform development, and privacy/security constraints."
+  ],
+  "standout_quotes": [
+    "• Built custom MCP servers to extend Claude Code with domain-specific tools and knowledge bases for my own projects.",
+    "• Shipped privacy-first macOS app using whisper.cpp for fully on-device transcription—no cloud, no data leaving the machine."
+  ],
+  "strengths": [
+    "Technical expertise in AI/ML, cross-platform development, and developer tools.",
+    "Experience in Python, Swift, and TypeScript with a B.S. in Computer Science.",
+    "Strong focus on computational physics and AI workflows."
+  ],
+  "gaps_or_risks": []
+}

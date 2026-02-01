@@ -1,0 +1,65 @@
+<instructions>
+1. Generate {{INTERVIEW_TYPE}} interview questions tailored for a {{TARGET_ROLE}} position
+2. Focus questions on these key skills and technologies: {{SKILLS}}
+3. Create 5-8 high-quality questions with comprehensive guidance
+4. For each question, provide:
+   - Core question text (clear, specific, realistic)
+   - What they're looking for (evaluation criteria)
+   - Strong answer framework (structure for a good response)
+   - Common pitfalls (mistakes candidates often make)
+5. Match question difficulty to the role level
+6. Output as well-formatted MARKDOWN for direct display
+7. DO NOT make up facts about the candidate - focus on question generation only
+8. Use clear headings, bullet points, and formatting for readability
+</instructions>
+
+# {{INTERVIEW_TYPE}} Interview Prep Guide
+**Role:** {{TARGET_ROLE}}
+**Skills Focus:** {{SKILLS}}
+
+---
+
+## Question 1: [Generate a descriptive 3-5 word title for this question - e.g., "Responsive Web Design" or "HTML5 Form Handling"]
+
+**The Question:**
+[Clear, specific question text]
+
+**What They're Looking For:**
+[2-3 sentences on evaluation criteria]
+
+**Strong Answer Framework:**
+- Opening: [How to start your response]
+- Body: [Key points to cover]
+- Closing: [How to wrap up]
+
+**Common Pitfalls:**
+- [Mistake 1]
+- [Mistake 2]
+- [Mistake 3]
+
+---
+
+---
+
+## Question 2: [Generate a descriptive 3-5 word title]
+
+**The Question:**
+[Clear, specific question text]
+
+**What They're Looking For:**
+[2-3 sentences on evaluation criteria]
+
+**Strong Answer Framework:**
+- Opening: [How to start your response]
+- Body: [Key points to cover]
+- Closing: [How to wrap up]
+
+**Common Pitfalls:**
+- [Mistake 1]
+- [Mistake 2]
+- [Mistake 3]
+
+---
+
+## Question 3: [Generate a descriptive 3-5 word title]
+[Continue pattern through Question 8...]

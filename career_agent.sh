@@ -33,7 +33,7 @@ WARNING_COLOR="220"
 ERROR_COLOR="196"
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-BACKEND_DIR="$SCRIPT_DIR/backend"
+BACKEND_DIR="$SCRIPT_DIR/src/backend"
 cd "$SCRIPT_DIR" || exit 1
 
 # -- Backend Helper Function --
@@ -102,7 +102,7 @@ while true; do
                 if [ "$FILE_METHOD" = "Paste file path" ]; then
                     RESUME_FILE=$(gum input --placeholder "Enter full path to resume...")
                 else
-                    RESUME_FILE=$("$SCRIPT_DIR/GumFuzzy/fuzzy-picker" < /dev/tty 2>&1)
+                    RESUME_FILE=$("$SCRIPT_DIR/src/GumFuzzy/fuzzy-picker" < /dev/tty 2>&1)
                 fi
 
                 if [ -z "$RESUME_FILE" ]; then
@@ -137,10 +137,10 @@ while true; do
             # Run analysis pipeline: resume_parser.py -> llm_inference.py
             # Save prompt to temp file
             PROMPT_TEMP=$(mktemp)
-            python "$SCRIPT_DIR/resume_parser.py" --input-file "$RESUME_FILE" --output "$PROMPT_TEMP" 2>/dev/null
+            python "$SCRIPT_DIR/src/resume_parser.py" --input-file "$RESUME_FILE" --output "$PROMPT_TEMP" 2>/dev/null
 
             # Run AI with spinner
-            RESULT=$(cat "$PROMPT_TEMP" | gum spin --spinner pulse --title "Analyzing with AI..." -- python "$SCRIPT_DIR/llm_inference.py" --chat 2>/dev/null)
+            RESULT=$(cat "$PROMPT_TEMP" | gum spin --spinner pulse --title "Analyzing with AI..." -- python "$SCRIPT_DIR/src/llm_inference.py" --chat 2>/dev/null)
             rm -f "$PROMPT_TEMP"
 
             # Extract and flatten JSON from response with pandas
@@ -225,7 +225,7 @@ $GAPS_TEXT"
             echo ""
 
             gum confirm "Save this analysis to a file?" && {
-                OUTFILE="resume_analysis_$(date +%Y%m%d_%H%M%S).txt"
+                OUTFILE="src/output/resume_analysis_$(date +%Y%m%d_%H%M%S).txt"
                 {
                     echo "Resume Analysis for $NAME - $(date)"
                     echo "File: $(basename "$RESUME_FILE")"
@@ -347,7 +347,7 @@ $COUNT. $TITLE @ $COMPANY (${SCORE}% match)
 
             # Display in scrollable pager (using custom gum with auto-fit height)
             SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-            GUM_CUSTOM="$SCRIPT_DIR/Deep-CLI/_vendor/gum/gum-custom"
+            GUM_CUSTOM="$SCRIPT_DIR/src/Deep-CLI/_vendor/gum/gum-custom"
             if [ -x "$GUM_CUSTOM" ]; then
                 echo "$(printf '\360\237\216\257') TOP JOB MATCHES (Based on: $SKILLS)
 
@@ -374,7 +374,7 @@ $JOB_DISPLAY"
 
             echo ""
             gum confirm "Save job list to file?" && {
-                OUTFILE="job_matches_$(date +%Y%m%d_%H%M%S).txt"
+                OUTFILE="src/output/job_matches_$(date +%Y%m%d_%H%M%S).txt"
                 echo "Job Matches for: $SKILLS" > "$OUTFILE"
                 echo "Location: $LOCATION" >> "$OUTFILE"
                 echo "Generated: $(date)" >> "$OUTFILE"
@@ -395,7 +395,7 @@ $JOB_DISPLAY"
 
             # Run the job application pipeline directly
             # It handles everything: job search, selection, Q&A, generation, saving
-            python "job_application_pipeline.py" </dev/tty
+            python "$SCRIPT_DIR/src/job_application_pipeline.py" </dev/tty
 
             echo ""
             gum confirm "Return to menu?" && continue || break
@@ -443,12 +443,13 @@ $JOB_DISPLAY"
             gum spin --spinner dot --title "Analyzing your profile..." -- sleep 0.3
 
             # Build personalized prompt from template
+            export TYPE TARGET_ROLE SKILLS
             PROMPT_TEMP=$(mktemp)
-            sed "s/{{INTERVIEW_TYPE}}/$TYPE/g; s/{{TARGET_ROLE}}/$TARGET_ROLE/g; s/{{SKILLS}}/$SKILLS/g" \
-                "$SCRIPT_DIR/interview_prep_prompt.txt" > "$PROMPT_TEMP"
+            perl -pe 's/\{\{INTERVIEW_TYPE\}\}/$ENV{TYPE}/g; s/\{\{TARGET_ROLE\}\}/$ENV{TARGET_ROLE}/g; s/\{\{SKILLS\}\}/$ENV{SKILLS}/g' \
+                "$SCRIPT_DIR/src/prompts/interview_prep_prompt.txt" > "$PROMPT_TEMP"
 
             # Generate with AI
-            RESULT=$(cat "$PROMPT_TEMP" | gum spin --spinner pulse --title "Generating personalized questions..." -- python "$SCRIPT_DIR/llm_inference.py" --chat 2>/dev/null)
+            RESULT=$(cat "$PROMPT_TEMP" | gum spin --spinner pulse --title "Generating personalized questions..." -- python "$SCRIPT_DIR/src/llm_inference.py" --chat 2>/dev/null)
             rm -f "$PROMPT_TEMP"
 
             # Strip markdown code block wrappers if present
@@ -474,7 +475,7 @@ print(text.strip())
 
             echo ""
             gum confirm "Save this guide to a file?" && {
-                OUTFILE="interview_prep_$(echo "$TYPE" | tr ' ' '_' | tr '[:upper:]' '[:lower:]')_$(date +%Y%m%d_%H%M%S).md"
+                OUTFILE="src/output/interview_prep_$(echo "$TYPE" | tr ' ' '_' | tr '[:upper:]' '[:lower:]')_$(date +%Y%m%d_%H%M%S).md"
                 echo "$RESULT" > "$OUTFILE"
                 gum style --foreground "$SUCCESS_COLOR" "Saved to: $OUTFILE"
             }
@@ -499,7 +500,7 @@ print(text.strip())
                 if [ "$FILE_METHOD" = "Paste file path" ]; then
                     CODE_FILE=$(gum input --placeholder "Enter full path to code file...")
                 else
-                    CODE_FILE=$("$SCRIPT_DIR/GumFuzzy/fuzzy-picker" </dev/tty)
+                    CODE_FILE=$("$SCRIPT_DIR/src/GumFuzzy/fuzzy-picker" </dev/tty)
                 fi
 
                 if [ -z "$CODE_FILE" ]; then

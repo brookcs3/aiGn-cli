@@ -1,0 +1,10 @@
+#!/bin/bash
+# aiGn Launcher - Activates venv and runs career agent
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Activate virtual environment
+source "$SCRIPT_DIR/.venv/bin/activate"
+
+# Run the career agent
+exec "$SCRIPT_DIR/career_agent.sh" "$@"

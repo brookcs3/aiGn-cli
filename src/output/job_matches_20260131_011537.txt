@@ -1,0 +1,64 @@
+Job Matches for: Python, JavaScript, React, SQL
+Location: Remote, US
+Generated: Sat Jan 31 01:15:37 PST 2026
+
+Software Engineer Manager , JavaScript, React, Python, Golang - SVP @ Citi
+Match: 99%
+Location: Tampa, FL
+Salary: 141440.0 - 212160.0
+URL: https://www.glassdoor.com/job-listing/j?jl=1010015918932
+
+Software Engineer II @ Mercury Insurance Services, LLC
+Match: 78%
+Location: Brea, CA
+Salary: 69938.0 - 157868.0
+URL: https://www.glassdoor.com/job-listing/j?jl=1010016106846
+
+SR. SOFTWARE DEVELOPER FULL STACK - REMOTE @ Palco
+Match: 78%
+Location: Boston, MA
+Salary: 92384.0 - 140072.0
+URL: https://www.glassdoor.com/job-listing/j?jl=1010015429199
+
+Senior Software Engineer (full-stack) @ Ithaka
+Match: 78%
+Location: Remote, US
+Salary: 112240.0 - 140300.0
+URL: https://www.indeed.com/viewjob?jk=97e74dc549f6dcdf
+
+Mobile App Developer - React Native/Full Stack @ nan
+Match: 76%
+Location: Remote, US
+Salary: null - null
+URL: https://www.indeed.com/viewjob?jk=322a5476bc95eefa
+
+Software engineer @ Kinterview
+Match: 76%
+Location: Remote, US
+Salary: 15282.0 - 39905.0
+URL: https://www.indeed.com/viewjob?jk=f6b265fe7ebd38fd
+
+Senior Software Engineer (Full Stack) @ ZenBusiness Inc.
+Match: 75%
+Location: Austin, TX
+Salary: 114859.0 - 152680.0
+URL: https://www.glassdoor.com/job-listing/j?jl=1010015449932
+
+Senior Full Stack Software Engineer (Mobile Applications) @ Sharetec
+Match: 74%
+Location: Dallas-Fort Worth
+Salary: 110000.0 - 140000.0
+URL: https://www.glassdoor.com/job-listing/j?jl=1010016732782
+
+Senior Software Engineer FS - Rails (Remote) @ Ad Hoc
+Match: 74%
+Location: nan
+Salary: 142000.0 - 148000.0
+URL: https://www.glassdoor.com/job-listing/j?jl=1010014326906
+
+Senior Software Engineer FS - Rails (Remote) @ Ad Hoc
+Match: 74%
+Location: Remote, US
+Salary: 142000.0 - 148000.0
+URL: https://www.indeed.com/viewjob?jk=320e13e541a6c5a7
+

@@ -363,15 +363,48 @@
     "success": true,
     "jobs": [
       {
+        "title": "SR. SOFTWARE DEVELOPER FULL STACK - REMOTE",
+        "company": "Palco",
+        "location": "Los Angeles, CA, US",
+        "salary_min": NaN,
+        "salary_max": NaN,
+        "url": "https://www.indeed.com/viewjob?jk=18f82d9ea78b7a92",
+        "site": "indeed",
+        "date_posted": "2026-01-28",
+        "match_score": 78
+      },
+      {
+        "title": "Software Engineer II",
+        "company": "Mercury Insurance Company",
+        "location": "Brea, CA, US",
+        "salary_min": 69938.0,
+        "salary_max": 157868.0,
+        "url": "https://www.indeed.com/viewjob?jk=8af550691495a18c",
+        "site": "indeed",
+        "date_posted": "2026-01-28",
+        "match_score": 77
+      },
+      {
+        "title": "Robotics Software Engineer",
+        "company": "Applied Invention LLC",
+        "location": "Burbank, CA",
+        "salary_min": 120000.0,
+        "salary_max": 170000.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1009732761906",
+        "site": "glassdoor",
+        "date_posted": "2026-01-29",
+        "match_score": 76
+      },
+      {
         "title": "Application Software Engineer",
         "company": "SpaceX",
         "location": "Hawthorne, CA",
-        "salary_min": 111277.0,
-        "salary_max": 163132.0,
+        "salary_min": 111304.0,
+        "salary_max": 163173.0,
         "url": "https://www.glassdoor.com/job-listing/j?jl=1010014055446",
         "site": "glassdoor",
-        "date_posted": "2026-01-28",
-        "match_score": 76
+        "date_posted": "2026-01-29",
+        "match_score": 75
       },
       {
         "title": "Application Software Engineer",
@@ -382,51 +415,18 @@
         "url": "https://www.indeed.com/viewjob?jk=2ec0593e95ca222d",
         "site": "indeed",
         "date_posted": "2026-01-27",
-        "match_score": 75
+        "match_score": 72
       },
       {
-        "title": "Design Technologist, Prime Video",
-        "company": "Amazon.com Services LLC",
-        "location": "Culver City, CA",
-        "salary_min": 118600.0,
-        "salary_max": 205000.0,
-        "url": "https://www.glassdoor.com/job-listing/j?jl=1010014077903",
-        "site": "glassdoor",
-        "date_posted": "2026-01-28",
-        "match_score": 63
-      },
-      {
-        "title": "Application Developer I",
-        "company": "Herbalife",
-        "location": "Torrance, CA, US",
-        "salary_min": NaN,
-        "salary_max": NaN,
-        "url": "https://www.indeed.com/viewjob?jk=8c6ef6e1e7eadaac",
+        "title": "Robotics Software Engineer",
+        "company": "Applied Invention LLC",
+        "location": "Burbank, CA, US",
+        "salary_min": 120000.0,
+        "salary_max": 170000.0,
+        "url": "https://www.indeed.com/viewjob?jk=1daa1202f379e28a",
         "site": "indeed",
-        "date_posted": "2026-01-26",
-        "match_score": 63
-      },
-      {
-        "title": "Application Developer I",
-        "company": "Herbalife",
-        "location": "Torrance, CA",
-        "salary_min": 77303.0,
-        "salary_max": 98925.0,
-        "url": "https://www.glassdoor.com/job-listing/j?jl=1010013271050",
-        "site": "glassdoor",
-        "date_posted": "2026-01-28",
-        "match_score": 62
-      },
-      {
-        "title": "Application Developer III, Platform Engineering",
-        "company": "Herbalife",
-        "location": "Torrance, CA",
-        "salary_min": 95917.0,
-        "salary_max": 141539.0,
-        "url": "https://www.glassdoor.com/job-listing/j?jl=1010013271040",
-        "site": "glassdoor",
-        "date_posted": "2026-01-28",
-        "match_score": 62
+        "date_posted": "2026-01-27",
+        "match_score": 72
       },
       {
         "title": "Design Technologist, Prime Video",
@@ -434,27 +434,27 @@
         "location": "Culver City, CA, US",
         "salary_min": 118600.0,
         "salary_max": 205000.0,
-        "url": "https://www.indeed.com/viewjob?jk=73f39e7a6c13a4e5",
+        "url": "https://www.indeed.com/viewjob?jk=b9f41eb2f0d37128",
         "site": "indeed",
         "date_posted": "2025-11-23",
-        "match_score": 61
+        "match_score": 60
       },
       {
-        "title": "Application Developer III, Platform Engineering",
-        "company": "Herbalife",
-        "location": "Torrance, CA, US",
-        "salary_min": NaN,
-        "salary_max": NaN,
-        "url": "https://www.indeed.com/viewjob?jk=3c2578a5352fa976",
-        "site": "indeed",
-        "date_posted": "2026-01-26",
-        "match_score": 59
+        "title": "Design Technologist, Prime Video",
+        "company": "Amazon.com Services LLC",
+        "location": "Culver City, CA",
+        "salary_min": 118600.0,
+        "salary_max": 205000.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010017182687",
+        "site": "glassdoor",
+        "date_posted": "2026-01-31",
+        "match_score": 58
       }
     ],
     "total_found": 8,
     "search_term": "Python JavaScript React",
     "location": "90291",
-    "timestamp": "2026-01-28T17:08:14.247993",
+    "timestamp": "2026-01-31T02:34:58.292764",
     "from_cache": false
   },
   "plumber|90291": {
@@ -581,84 +581,18 @@
     "success": true,
     "jobs": [
       {
-        "title": "Software Engineer (Workbench Core, Full Stack)",
-        "company": "Expel",
-        "location": "Herndon, VA",
-        "salary_min": 118400.0,
-        "salary_max": 171700.0,
-        "url": "https://www.glassdoor.com/job-listing/j?jl=1010013812921",
+        "title": "SR. SOFTWARE DEVELOPER FULL STACK - REMOTE",
+        "company": "Palco",
+        "location": "Kansas City, KS",
+        "salary_min": 71052.0,
+        "salary_max": 111050.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010015429154",
         "site": "glassdoor",
         "date_posted": "2026-01-29",
         "match_score": 78
       },
       {
-        "title": "Senior Software Developer- Full Stack (Remote)",
-        "company": "Cisco Systems",
-        "location": "nan",
-        "salary_min": 131000.0,
-        "salary_max": 277600.0,
-        "url": "https://www.glassdoor.com/job-listing/j?jl=1010014693579",
-        "site": "glassdoor",
-        "date_posted": "2026-01-29",
-        "match_score": 77
-      },
-      {
-        "title": "Senior Java Developer (ReactJS)",
-        "company": "American Recruiting & Consulting Group",
-        "location": "nan",
-        "salary_min": NaN,
-        "salary_max": NaN,
-        "url": "https://www.glassdoor.com/job-listing/j?jl=1010014151160",
-        "site": "glassdoor",
-        "date_posted": "2026-01-29",
-        "match_score": 77
-      },
-      {
-        "title": "Senior Software Engineer",
-        "company": "GitHub, Inc.",
-        "location": "nan",
-        "salary_min": 124000.0,
-        "salary_max": 329200.0,
-        "url": "https://www.glassdoor.com/job-listing/j?jl=1010011445019",
-        "site": "glassdoor",
-        "date_posted": "2026-01-27",
-        "match_score": 76
-      },
-      {
-        "title": "Senior Java Developer (ReactJS)",
-        "company": "American Recruiting & Consulting Group",
-        "location": "Remote, US",
-        "salary_min": NaN,
-        "salary_max": NaN,
-        "url": "https://www.indeed.com/viewjob?jk=2cabf16ce3f9b07a",
-        "site": "indeed",
-        "date_posted": "2026-01-27",
-        "match_score": 76
-      },
-      {
-        "title": "Backend Developer",
-        "company": "Viderity Inc.",
-        "location": "Alexandria, VA",
-        "salary_min": 101465.0,
-        "salary_max": 158115.0,
-        "url": "https://www.glassdoor.com/job-listing/j?jl=1010014217860",
-        "site": "glassdoor",
-        "date_posted": "2026-01-29",
-        "match_score": 75
-      },
-      {
-        "title": "Software engineer",
-        "company": "nan",
-        "location": "Remote, US",
-        "salary_min": 15282.0,
-        "salary_max": 39905.0,
-        "url": "https://www.indeed.com/viewjob?jk=f6b265fe7ebd38fd",
-        "site": "indeed",
-        "date_posted": "2026-01-28",
-        "match_score": 75
-      },
-      {
-        "title": "Senior Software Engineer FS",
+        "title": "Senior Software Engineer FS - Rails (Remote)",
         "company": "Ad Hoc",
         "location": "Remote, US",
         "salary_min": 142000.0,
@@ -666,21 +600,21 @@
         "url": "https://www.indeed.com/viewjob?jk=320e13e541a6c5a7",
         "site": "indeed",
         "date_posted": "2026-01-27",
-        "match_score": 74
+        "match_score": 78
       },
       {
-        "title": "Sr JAVA/React Developer",
-        "company": "The Computer Merchant, Ltd",
-        "location": "Jacksonville, FL",
-        "salary_min": 60.0,
-        "salary_max": 66.0,
-        "url": "https://www.glassdoor.com/job-listing/j?jl=1010013682557",
+        "title": "Senior Manager, Software Engineering, Full Stack Enterprise Website - Capital One Software (Remote)",
+        "company": "Capital One",
+        "location": "Richmond, VA",
+        "salary_min": NaN,
+        "salary_max": NaN,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010016354735",
         "site": "glassdoor",
-        "date_posted": "2026-01-29",
-        "match_score": 72
+        "date_posted": "2026-01-30",
+        "match_score": 77
       },
       {
-        "title": "Senior Software Engineer FS",
+        "title": "Senior Software Engineer FS - Rails (Remote)",
         "company": "Ad Hoc",
         "location": "nan",
         "salary_min": 142000.0,
@@ -688,13 +622,79 @@
         "url": "https://www.glassdoor.com/job-listing/j?jl=1010014326906",
         "site": "glassdoor",
         "date_posted": "2026-01-29",
-        "match_score": 72
+        "match_score": 76
+      },
+      {
+        "title": "Software Engineer",
+        "company": "Evolent",
+        "location": "Remote, US",
+        "salary_min": 95000.0,
+        "salary_max": 105000.0,
+        "url": "https://www.indeed.com/viewjob?jk=6bfe68fb0c89ebfb",
+        "site": "indeed",
+        "date_posted": "2026-01-29",
+        "match_score": 76
+      },
+      {
+        "title": "Senior Software Engineer (full-stack)",
+        "company": "Ithaka",
+        "location": "Remote, US",
+        "salary_min": 112240.0,
+        "salary_max": 140300.0,
+        "url": "https://www.indeed.com/viewjob?jk=97e74dc549f6dcdf",
+        "site": "indeed",
+        "date_posted": "2026-01-28",
+        "match_score": 76
+      },
+      {
+        "title": "Forward Deployed Software Engineer",
+        "company": "Convr",
+        "location": "Chicago, IL",
+        "salary_min": 99578.0,
+        "salary_max": 162696.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010016999934",
+        "site": "glassdoor",
+        "date_posted": "2026-01-31",
+        "match_score": 75
+      },
+      {
+        "title": "Mobile App Developer - React Native/Full Stack",
+        "company": "nan",
+        "location": "Remote, US",
+        "salary_min": NaN,
+        "salary_max": NaN,
+        "url": "https://www.indeed.com/viewjob?jk=322a5476bc95eefa",
+        "site": "indeed",
+        "date_posted": "2026-01-30",
+        "match_score": 75
+      },
+      {
+        "title": "Software Engineer II",
+        "company": "Mercury Insurance Services, LLC",
+        "location": "Brea, CA",
+        "salary_min": 69938.0,
+        "salary_max": 157868.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010016106846",
+        "site": "glassdoor",
+        "date_posted": "2026-01-30",
+        "match_score": 74
+      },
+      {
+        "title": "Senior Manager, Software Engineering, Full Stack Enterprise Website - Capital One Software (Remote)",
+        "company": "Information Technology Senior Management Forum",
+        "location": "Richmond, VA",
+        "salary_min": 209000.0,
+        "salary_max": 238500.0,
+        "url": "https://www.glassdoor.com/job-listing/j?jl=1010015655477",
+        "site": "glassdoor",
+        "date_posted": "2026-01-30",
+        "match_score": 73
       }
     ],
-    "total_found": 20,
+    "total_found": 18,
     "search_term": "Python JavaScript React",
     "location": "Remote",
-    "timestamp": "2026-01-29T00:58:34.450687",
+    "timestamp": "2026-01-31T13:24:27.025867",
     "from_cache": false
   },
   "python, javascript, react, sql|90201": {

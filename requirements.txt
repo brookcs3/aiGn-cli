@@ -21,3 +21,5 @@ pydantic>=2.0.0              # Data validation
 # Utilities
 requests>=2.31.0             # HTTP requests
 python-dotenv>=1.0.0         # Environment variables
+pyperclip>=1.8.0             # Clipboard operations
+prompt-toolkit>=3.0.0        # Interactive CLI input

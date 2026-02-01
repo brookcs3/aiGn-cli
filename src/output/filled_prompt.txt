@@ -1,0 +1,512 @@
+<instructions>
+1. Build from scratch using ONLY:
+   - job_post_text
+   - responses.categories[].questions[].answer
+2. DO NOT invent facts. If the job requires something not supported by answers, add it to do_not_invent_list.
+3. Extract ATS keywords and mirror phrasing naturally (no keyword stuffing).
+4. Convert answers into proof points:
+   - Action + Tool/Tech + Scope + Result/Impact
+   - Prefer numbers if the answer includes them. Do not fabricate metrics.
+5. Resume output rules:
+   - 1 page-ish, ATS-friendly, plain text
+   - 2–4 summary bullets
+   - Skills grouped to match job emphasis
+   - 2–4 projects (preferred for interns/new grads)
+   - Experience section allowed but must not be invented
+6. Cover letter rules:
+   - 250–400 words, 3–4 paragraphs
+   - Hook: builder mindset + mission alignment
+   - Body: 2 proof paragraphs anchored by strongest evidence
+   - Close: collaboration/learning + call to action
+7. Output JSON matching the schema. Include both resume_text and cover_letter_text unless output_mode says otherwise.
+</instructions>
+{
+  "type": "object",
+  "properties": {
+    "variable_name": {
+      "type": "object",
+      "properties": {
+        "{{job_post_text}}": {
+          "type": "string",
+          "description": "Shape the future of spatial computing by building revolutionary UI rendering technologies for Apple Vision Pro and next\-generation vision products. As part of the RealityKit team, you'll architect and optimize the foundational rendering systems that bring spatial interfaces to life\-transforming how millions interact with applications in visionOS.  
+
+  
+
+Push the boundaries of real\-time UI rendering to deliver fluid, responsive spatial experiences. You'll develop high\-performance rendering pipelines that seamlessly blend 2D interface elements with 3D spatial content, optimize GPU workloads for crystal\-clear text and graphics, and pioneer new techniques for rendering adaptive, context\-aware user interfaces in mixed reality. Your work will directly impact how users interact with every application across Apple's vision ecosystem.  
+
+  
+
+Join a world\-class team defining the next era of human\-computer interaction. Every optimization you craft, every rendering technique you innovate, and every pixel you perfect will empower developers and delight users worldwide. This is your opportunity to work at the intersection of graphics, user interface design, and spatial computing\-building technology that doesn't just render interfaces, but creates intuitive, immersive interactions.  
+
+  
+
+**Description**  
+
+  
+
+As a Spatial UI Rendering Engineer on the RealityKit team, you'll architect and implement the core rendering systems that power user interfaces across visionOS and spatial computing products. You'll develop cutting\-edge GPU pipelines that render crisp text, smooth animations, and beautiful interface elements in 3D space, optimize real\-time rendering with advanced techniques to ensure responsive interactions, and collaborate closely with framework teams, Metal engineers, and designers to deliver exceptional visual quality and performance. Your work will span the full rendering stack\-from low\-level shader optimization and efficient compositing to high\-level API design\-ensuring developers have powerful, intuitive tools to create stunning spatial interfaces. You'll tackle complex challenges like efficient multi\-layer rendering, seamless integration of 2D and 3D content, and adaptive rendering for varying viewing distances, all while maintaining Apple's uncompromising standards for performance, visual fidelity, and user experience.","responsibilities":"Design and implement high\-performance rendering systems for spatial user interfaces in RealityKit.  
+
+  
+
+Optimize GPU shaders and rendering algorithms to achieve exceptional visual quality, smooth animations, and consistent frame rates on Apple silicon.  
+
+  
+
+Build intuitive APIs that enable developers to create responsive, beautiful interfaces for visionOS applications.  
+
+  
+
+Profile and debug complex rendering issues across the graphics stack using Instruments and GPU debugging tools.  
+
+  
+
+Collaborate with framework teams to integrate UI rendering capabilities with existing Apple technologies.  
+
+  
+
+Prototype innovative rendering features for future vision products and evaluate emerging graphics technologies.  
+
+  
+
+Write comprehensive unit tests and performance benchmarks to ensure rendering quality and stability across diverse content.  
+
+  
+
+Conduct code reviews and contribute to technical specifications that maintain exceptional engineering standards.  
+
+  
+
+**Preferred Qualifications**  
+
+  
+
+Master's degree or PhD in Computer Science, Computer Graphics, or related field  
+
+  
+
+7\+ years of experience shipping UI rendering features in high\-profile consumer products.  
+
+  
+
+Deep familiarity with Apple's 2D graphics frameworks such as Core Graphics, Core Animation, or UIKit.  
+
+  
+
+Experience developing rendering systems for user interfaces with text rendering, vector graphics, and compositing.  
+
+  
+
+Expert knowledge of GPU\-accelerated UI rendering, including efficient batching and draw call optimization.  
+
+  
+
+Proven track record optimizing rendering performance for Apple silicon and GPU architectures  
+
+  
+
+Experience with spatial computing, AR/VR rendering, or multi\-view display systems.  
+
+  
+
+Familiarity with accessibility features and rendering techniques that support diverse user needs.  
+
+  
+
+**Minimum Qualifications**  
+
+  
+
+Bachelor's degree in Computer Science, Computer Engineering, or equivalent practical experience.  
+
+  
+
+5\+ years of professional experience working on 2D and/or 3D real\-time rendering applications.  
+
+  
+
+High proficiency in writing safe, performant C\+\+ code.  
+
+  
+
+Knowledge of the graphics pipeline, modern rendering techniques, and image processing.  
+
+  
+
+Experience with modern graphics APIs (Metal, Vulkan, Direct3D 12, WebGPU) and shading languages (MSL, HLSL, GLSL, WGSL).  
+
+  
+
+Experience with all stages of software development, from prototyping to performance optimization.  
+
+  
+
+Strong problem\-solving skills and ability to debug complex rendering issues.  
+
+  
+
+Outstanding teamwork and communication skills.  
+
+  
+
+Apple is an equal opportunity employer that is committed to inclusion and diversity. We seek to promote equal opportunity for all applicants without regard to race, color, religion, sex, sexual orientation, gender identity, national origin, disability, Veteran status, or other legally protected characteristics. Learn more about your EEO rights as an applicant ."
+        },
+
+        "{{builder_guide}}": {
+          "type": "string",
+          "description": "RULES: Build from scratch. Do not invent facts. Use ONLY answers in responses. If missing, add to do_not_invent_list. Output must include BOTH a resume and a cover letter unless output_mode says otherwise. Resume must be 1 page-ish and ATS-friendly. Cover letter must be 250–400 words, 3–4 paragraphs, role-specific."
+        },
+
+        "{{output_mode}}": {
+          "type": "string",
+          "description": "resume_only | cover_letter_only | resume_and_cover_letter"
+        },
+
+        "responses": {
+          "type": "object",
+          "description": "{
+  "type": "object",
+  "properties": {
+    "variable_name": {
+      "type": "object",
+      "properties": {
+        "{{job_post_text}}": "Shape the future of spatial computing by building revolutionary UI rendering technologies for Apple Vision Pro and next-generation vision products. As part of the RealityKit team, you'll architect and optimize the foundational rendering systems that bring spatial interfaces to life-transforming how millions interact with applications in visionOS. Push the boundaries of real-time UI rendering to deliver fluid, responsive spatial experiences. You'll develop high-performance rendering pipelines that seamlessly blend 2D interface elements with 3D spatial content, optimize GPU workloads for crystal-clear text and graphics, and pioneer new techniques for rendering adaptive, context-aware user interfaces in mixed reality. Your work will directly impact how users interact with every application across Apple's vision ecosystem. Join a world-class team defining the next era of human-computer interaction. Every optimization you craft, every rendering technique you innovate, and every pixel you perfect will empower developers and delight users worldwide. This is your opportunity to work at the intersection of graphics, user interface design, and spatial computing-building technology that doesn't just render interfaces, but creates intuitive, immersive interactions."
+      }
+    },
+    "analysis": {
+      "role_title": "Spatial UI Rendering Engineer",
+      "company_name": "RealityKit",
+      "seniority_level": "lead",
+      "ats_keywords": [
+        "Spatial UI Rendering",
+        "RealityKit",
+        "Apple Vision Pro",
+        "next-generation vision products",
+        "GPU pipelines",
+        "rendering algorithms",
+        "rendering systems",
+        "high-performance rendering",
+        "real-time UI rendering",
+        "spatial interfaces",
+        "rendering pipelines",
+        "rendering algorithms",
+        "GPU optimization",
+        "rendering performance",
+        "rendering systems",
+        "rendering pipelines",
+        "rendering algorithms",
+        "GPU pipelines",
+        "rendering algorithms",
+        "rendering performance"
+      ],
+      "tools_and_tech": [
+        "GPU pipelines",
+        "rendering algorithms",
+        "rendering systems",
+        "real-time UI rendering",
+        "spatial interfaces",
+        "rendering pipelines",
+        "rendering algorithms",
+        "GPU optimization",
+        "rendering performance"
+      ],
+      "categories": [
+        {
+          "category_id": "Rendering Systems",
+          "category_label": "Rendering Systems",
+          "priority": "must_have",
+          "jd_signals": [
+            "high-performance rendering systems",
+            "rendering pipelines",
+            "rendering algorithms",
+            "real-time UI rendering",
+            "spatial interfaces"
+          ],
+          "evidence_dimensions": [
+            "what",
+            "how_why",
+            "tools",
+            "scope",
+            "result_impact"
+          ]
+        },
+        {
+          "category_id": "GPU Optimization",
+          "category_label": "GPU Optimization",
+          "priority": "must_have",
+          "jd_signals": [
+            "GPU pipelines",
+            "rendering algorithms",
+            "GPU optimization",
+            "rendering performance"
+          ],
+          "evidence_dimensions": [
+            "what",
+            "how_why",
+            "tools",
+            "scope"
+          ]
+        },
+        {
+          "category_id": "UI Design",
+          "category_label": "UI Design",
+          "priority": "must_have",
+          "jd_signals": [
+            "intuitive APIs",
+            "responsive interfaces",
+            "beautiful UI",
+            "context-aware user interfaces"
+          ],
+          "evidence_dimensions": [
+            "what",
+            "how_why",
+            "tools",
+            "result_impact"
+          ]
+        }
+      ],
+      "skill_inventory": [
+        {
+          "group_id": "GPU Optimization",
+          "group_label": "GPU Optimization",
+          "items": [
+            "GPU pipelines",
+            "rendering algorithms",
+            "GPU optimization",
+            "rendering performance"
+          ],
+          "jd_signals": [
+            "GPU pipelines",
+            "rendering algorithms",
+            "GPU optimization",
+            "rendering performance"
+          ]
+        },
+        {
+          "group_id": "UI Design",
+          "group_label": "UI Design",
+          "items": [
+            "intuitive APIs",
+            "responsive interfaces",
+            "beautiful UI",
+            "context-aware user interfaces"
+          ],
+          "jd_signals": [
+            "intuitive APIs",
+            "responsive interfaces",
+            "beautiful UI",
+            "context-aware user interfaces"
+          ]
+        }
+      ],
+      "question_bank": {
+        "skill_questions": [
+          {
+            "question_id": "1",
+            "group_id": "GPU Optimization",
+            "skill": "GPU pipelines",
+            "question_text": "Do you have experience with GPU rendering pipelines?",
+            "answer_fields": [
+              {"field_key": "what", "field_label": "What skills do you have?"},
+              {"field_key": "how_why", "field_label": "How did you use them?"},
+              {"field_key": "tools", "field_label": "Tools used?"}
+            ]
+          },
+          {
+            "question_id": "2",
+            "group_id": "UI Design",
+            "skill": "intuitive APIs",
+            "question_text": "How did you design intuitive APIs for user interfaces?",
+            "answer_fields": [
+              {"field_key": "what", "field_label": "What skills do you have?"},
+              {"field_key": "how_why", "field_label": "How did you use them?"},
+              {"field_key": "tools", "field_label": "Tools used?"}
+            ]
+          }
+        ],
+        "category_questions": [
+          {
+            "question_id": "1",
+            "category_id": "Rendering Systems",
+            "question_text": "What impact do you have on the rendering of spatial interfaces?",
+            "answer_fields": [
+              {"field_key": "what", "field_label": "What skills do you have?"},
+              {"field_key": "how_why", "field_label": "How did you use them?"},
+              {"field_key": "tools", "field_label": "Tools used?"}
+            ]
+          },
+          {
+            "question_id": "2",
+            "category_id": "GPU Optimization",
+            "question_text": "What are the key challenges in GPU rendering optimization?",
+            "answer_fields": [
+              {"field_key": "what", "field_label": "What skills do you have?"},
+              {"field_key": "how_why", "field_label": "How did you use them?"},
+              {"field_key": "tools", "field_label": "Tools used?"}
+            ]
+          }
+        ]
+      }
+    }
+  }
+}",
+          "properties": {
+            "categories": {
+              "type": "array",
+              "description": "Variable length categories derived from the job post",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "category_id": { "type": "string", "description": "e.g., frontend, backend, mobile, cloud, data, devops, ai_tools" },
+                  "category_label": { "type": "string", "description": "Human label" },
+                  "priority": { "type": "string", "description": "must_have | strong_signal | nice_to_have" },
+
+                  "questions": {
+                    "type": "array",
+                    "description": "Variable length questions in this category",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "question_id": { "type": "string", "description": "numeric or stable id" },
+                        "question_text": { "type": "string", "description": "exact question asked" },
+                        "answer": { "type": "string", "description": "PASTE USER ANSWER HERE (or placeholder until filled)" },
+
+                        "resume_mapping_hint": {
+                          "type": "string",
+                          "description": "Where this answer belongs: summary | skills | project_bullets | experience_bullets | cover_letter_proof"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": ["{{job_post_text}}", "responses"]
+    },
+
+    "analysis": {
+      "type": "object",
+      "properties": {
+        "inferred_target_role": { "type": "string" },
+        "positioning_thesis": { "type": "string" },
+
+        "ats_keyword_set": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+
+        "proof_points": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Top 3–6 strongest evidence points pulled from answers"
+        },
+
+        "coverage_by_category": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category_id": { "type": "string" },
+              "coverage_score": { "type": "number" },
+              "missing_question_ids": { "type": "array", "items": { "type": "string" } },
+              "notes": { "type": "string" }
+            }
+          }
+        },
+
+        "do_not_invent_list": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["inferred_target_role", "positioning_thesis", "ats_keyword_set", "coverage_by_category", "do_not_invent_list"]
+    },
+
+    "deliverable": {
+      "type": "object",
+      "properties": {
+        "resume": {
+          "type": "object",
+          "properties": {
+            "headline": { "type": "string", "description": "Name + target role + location/remote (if known)" },
+
+            "summary_bullets": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "2–4 bullets. Use job language + proof points."
+            },
+
+            "skills_groups": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "group": { "type": "string" },
+                  "items": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+
+            "projects": {
+              "type": "array",
+              "description": "Prefer 2–4 projects for intern/new grad",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "stack": { "type": "array", "items": { "type": "string" } },
+                  "bullets": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "3–5 bullets each. Action + tool + scope + result/impact."
+                  },
+                  "links": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+
+            "experience": {
+              "type": "array",
+              "description": "Can be empty if no work experience; do not invent",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "role": { "type": "string" },
+                  "company": { "type": "string" },
+                  "dates": { "type": "string" },
+                  "bullets": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+
+            "education": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+
+        "resume_text": { "type": "string", "description": "Fully assembled plain-text resume" },
+
+        "cover_letter": {
+          "type": "object",
+          "properties": {
+            "opening_hook": { "type": "string" },
+            "proof_paragraphs": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "2 paragraphs, each anchored by a proof point"
+            },
+            "closing": { "type": "string" }
+          }
+        },
+
+        "cover_letter_text": { "type": "string", "description": "Fully assembled cover letter" }
+      },
+      "required": ["resume_text", "cover_letter_text"]
+    }
+  },
+  "required": ["variable_name", "analysis", "deliverable"]
+}

@@ -36,6 +36,46 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKEND_DIR="$SCRIPT_DIR/src/backend"
 cd "$SCRIPT_DIR" || exit 1
 
+# -- Model Guard --
+MODEL_FILE="$SCRIPT_DIR/smollm2-135m.gguf"
+MODEL_URL="https://github.com/brookcs3/aiGn-cli/releases/download/v1.0/smollm2-135m.gguf"
+
+if [ ! -f "$MODEL_FILE" ] || [ "$(wc -c < "$MODEL_FILE")" -le 1000 ]; then
+    echo ""
+    gum style \
+        --foreground "$ERROR_COLOR" --border-foreground "$ERROR_COLOR" --border double \
+        --align center --width 60 --margin "1 2" --padding "1 4" \
+        'MODEL FILE MISSING' '' \
+        'smollm2-135m.gguf is missing or is a Git LFS pointer.' \
+        'The AI features require the full model (~364 MB).'
+
+    echo ""
+    if gum confirm "Download the model now? (~364 MB)"; then
+        gum spin --spinner dot --title "Downloading model from GitHub Releases..." -- \
+            curl -L -o "$MODEL_FILE" "$MODEL_URL"
+
+        if [ "$(wc -c < "$MODEL_FILE")" -le 1000 ]; then
+            rm -f "$MODEL_FILE"
+            gum style --foreground "$ERROR_COLOR" \
+                "Download failed or file is invalid." "" \
+                "Fix manually:" \
+                "  brew install git-lfs && git lfs install && git lfs pull" \
+                "  Or re-run: ./install.sh"
+            exit 1
+        fi
+
+        gum style --foreground "$SUCCESS_COLOR" "Model downloaded successfully!"
+        sleep 1
+    else
+        echo ""
+        gum style --foreground "$WARNING_COLOR" \
+            "To get the model, run one of:" \
+            "  ./install.sh" \
+            "  brew install git-lfs && git lfs install && git lfs pull"
+        exit 1
+    fi
+fi
+
 # -- Backend Helper Function --
 call_backend() {
     local script="$1"

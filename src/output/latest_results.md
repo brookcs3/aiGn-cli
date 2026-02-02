@@ -5,36 +5,36 @@
 ## Company: Apple
 Location: Culver City, CA  
 Source: glassdoor  
-Apply Here https://www.glassdoor.com/job-listing/j?jl=1010017464450
+Apply Here https://www.glassdoor.com/job-listing/j?jl=1010018701335
 
-## Apple Gift Card Product Marketing
+## Learning Program Manager - Apple Ads
 
 ---
 
 ## Company: Apple
 Location: Culver City, CA  
 Source: glassdoor  
-Apply Here https://www.glassdoor.com/job-listing/j?jl=1010017464448
+Apply Here https://www.glassdoor.com/job-listing/j?jl=1010016257006
 
-## Senior Data Scientist, Account & Data Security
+## Product Designer, Commerce & Subscriptions
+
+---
+
+## Company: Apple
+Location: Culver City, CA, US  
+Source: indeed  
+Apply Here https://www.indeed.com/viewjob?jk=8e7633d902580466
+
+## Marketing Lead, MLS on Apple TV
 
 ---
 
 ## Company: Apple
 Location: Los Angeles, CA, US  
 Source: indeed  
-Apply Here https://www.indeed.com/viewjob?jk=3bb374778dc7b796
+Apply Here https://www.indeed.com/viewjob?jk=b6d3be88f9c04129
 
-## AR/VR Software Development Engineer, Vision Products Software
-
----
-
-## Company: Apple
-Location: Los Angeles, CA, US  
-Source: indeed  
-Apply Here https://www.indeed.com/viewjob?jk=80a468675d2f7702
-
-## AR/VR Software Development Engineer, Vision Products Software
+## Brand Manager, Marcom LA
 
 ---
 
@@ -47,12 +47,12 @@ Apply Here https://www.linkedin.com/jobs/view/4367536478
 
 ---
 
-## Company: CNN
-Location: Atlanta, GA  
+## Company: Apple
+Location: Los Angeles, CA  
 Source: linkedin  
-Apply Here https://www.linkedin.com/jobs/view/4339024958
+Apply Here https://www.linkedin.com/jobs/view/4367523803
 
-## Talent Executive Assistant, CNN
+## Head of Brand, Marcom Services LA
 
 ---
 

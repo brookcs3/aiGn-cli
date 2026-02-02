@@ -5,92 +5,126 @@
     "variable_name": {
       "type": "object",
       "properties": {
-        "{{job_post_text}}": "Shape the future of spatial computing by building revolutionary UI rendering technologies for Apple Vision Pro and next-generation vision products. As part of the RealityKit team, you'll architect and optimize the foundational rendering systems that bring spatial interfaces to life-transforming how millions interact with applications in visionOS. Push the boundaries of real-time UI rendering to deliver fluid, responsive spatial experiences. You'll develop high-performance rendering pipelines that seamlessly blend 2D interface elements with 3D spatial content, optimize GPU workloads for crystal-clear text and graphics, and pioneer new techniques for rendering adaptive, context-aware user interfaces in mixed reality. Your work will directly impact how users interact with every application across Apple's vision ecosystem. Join a world-class team defining the next era of human-computer interaction. Every optimization you craft, every rendering technique you innovate, and every pixel you perfect will empower developers and delight users worldwide. This is your opportunity to work at the intersection of graphics, user interface design, and spatial computing-building technology that doesn't just render interfaces, but creates intuitive, immersive interactions."
-      },
-      "analysis": {
-        "inferred_target_role": "Spatial UI Rendering Engineer",
-        "positioning_thesis": "Build high-performance rendering systems that enable intuitive, immersive user interfaces for Apple's vision ecosystem.",
-        "ats_keyword_set": [
-          "Spatial UI Rendering",
-          "RealityKit",
-          "Apple Vision Pro",
-          "next-generation vision products",
-          "GPU pipelines",
-          "rendering algorithms",
-          "rendering systems",
-          "high-performance rendering",
-          "real-time UI rendering",
-          "spatial interfaces",
-          "rendering pipelines",
-          "rendering algorithms",
-          "GPU optimization",
-          "rendering performance"
-        ],
-        "proof_points": [
-          "Design and implement high-performance rendering systems for spatial user interfaces in RealityKit.",
-          "Optimize GPU shaders and rendering algorithms to achieve exceptional visual quality, smooth animations, and consistent frame rates.",
-          "Build intuitive APIs that enable developers to create responsive, beautiful interfaces for visionOS applications.",
-          "Profile and debug complex rendering issues across the graphics stack using Instruments and GPU debugging tools."
-        ],
-        "coverage_by_category": [
-          {
-            "category_id": "Rendering Systems",
-            "coverage_score": 100,
-            "missing_question_ids": [],
-            "notes": ""
-          },
-          {
-            "category_id": "GPU Optimization",
-            "coverage_score": 85,
-            "missing_question_ids": [],
-            "notes": ""
-          },
-          {
-            "category_id": "UI Design",
-            "coverage_score": 90,
-            "missing_question_ids": [],
-            "notes": ""
-          }
-        ],
-        "do_not_invent_list": []
+        "{{job_post_text}}": "Our team is hiring a skilled developer with strong fundamentals in software and systems design and architecture. The successful candidate will find themselves contributing to the Apple Business Essentials app (iPhone/iPad/mac), Schoolwork app (iPad), ClassKit framework (iOS/macOS), as well as other private frameworks and modules that are components of Apple’s business and educational services. Our team is looking for a dedicated engineer who will help us deliver even better experiences and features for these apps\-(and more) in the future that tackle the real world problems of IT administrators, employees, educators, and students alike. On our team you will be given projects that showcase your talents, challenge you to grow, and allow you to deliver your very best work. That work will have a direct and meaningful impact on millions of people around the world.",
+        "responsibilities": "Developing high quality features according to the specifications of Design, Product, and Engineering Leadership, working with multi-functional partners to integrate multiple platforms into new service offerings, engaging in research into new technologies and other developments, following quality first processes through architecture review, code review, and testing, triaging issues and using debugging tools and skills to identify solutions."
       }
+    },
+    "analysis": {
+      "inferred_target_role": "SKILLED DEVELOPER",
+      "positioning_thesis": "Build from scratch with strong fundamentals in software and systems design, leveraging frameworks and mobile development expertise to deliver high-quality solutions.",
+      "ats_keyword_set": [
+        "skilled developer",
+        "Swift / Objective-C / SwiftUI / UIKit experience",
+        "framework development / middleware development experience",
+        "strong CS fundamental skills",
+        "Apple Business Essentials",
+        "Schoolwork app",
+        "ClassKit framework",
+        "private frameworks and modules",
+        "Apple Business Essentials app",
+        "Schoolwork app",
+        "ClassKit framework"
+      ],
+      "proof_points": [
+        "Developing high quality features according to the specifications of Design, Product, and Engineering Leadership",
+        "Working with multi-functional partners to integrate multiple platforms into new service offerings",
+        "Engaging in research into new technologies and other developments",
+        "Following quality first processes through architecture review, code review, and testing"
+      ],
+      "coverage_by_category": [
+        {
+          "category_id": "software_development",
+          "coverage_score": 1,
+          "missing_question_ids": [],
+          "notes": "Key areas of focus include developing high-quality features according to the specifications of Design, Product, and Engineering Leadership."
+        },
+        {
+          "category_id": "frameworks_and_integration",
+          "coverage_score": 1,
+          "missing_question_ids": [],
+          "notes": "Frameworks and modules such as Apple Business Essentials and ClassKit are central to the project."
+        },
+        {
+          "category_id": "technical_skills",
+          "coverage_score": 1,
+          "missing_question_ids": [],
+          "notes": "Strong coding fundamentals and passion for user experience are emphasized."
+        }
+      ],
+      "do_not_invent_list": [
+        "5+ years developing and shipping software"
+      ]
     },
     "deliverable": {
       "resume": {
-        "headline": "Spatial UI Rendering Engineer - RealityKit",
+        "headline": "SKILLED DEVELOPER - APPLE",
         "summary_bullets": [
-          "Shape the future of spatial computing by building revolutionary UI rendering technologies for Apple Vision Pro and next-generation vision products.",
-          "Design and implement high-performance rendering systems for spatial user interfaces in RealityKit."
+          "Developing high quality features according to the specifications of Design, Product, and Engineering Leadership",
+          "Working with multi-functional partners to integrate multiple platforms into new service offerings"
         ],
         "skills_groups": [
           {
-            "group": "GPU Optimization",
+            "group": "software_development",
             "items": [
-              "GPU pipelines",
-              "rendering algorithms",
-              "GPU optimization"
+              "Swift",
+              "Objective-C",
+              "SwiftUI",
+              "UIKit"
             ]
           },
           {
-            "group": "UI Design",
+            "group": "frameworks_and_integration",
             "items": [
-              "intuitive APIs",
-              "responsive interfaces",
-              "beautiful UI"
+              "Apple Business Essentials",
+              "Schoolwork app",
+              "ClassKit framework"
+            ]
+          },
+          {
+            "group": "technical_skills",
+            "items": [
+              "strong CS fundamental skills",
+              "5+ years developing and shipping software",
+              "solid coding fundamentals",
+              "passion for high quality user experiences",
+              "attention to detail"
             ]
           }
         ],
-        "projects": [],
+        "projects": [
+          {
+            "name": "Developing the Apple Business Essentials App",
+            "stack": ["Swift", "Objective-C", "SwiftUI", "UIKit"],
+            "bullets": [
+              "Developing high quality features according to the specifications of Design, Product, and Engineering Leadership",
+              "Working with multi-functional partners to integrate multiple platforms into new service offerings"
+            ]
+          },
+          {
+            "name": "Building the Schoolwork App",
+            "stack": ["Swift", "Objective-C", "SwiftUI", "UIKit"],
+            "bullets": [
+              "Engaging in research into new technologies and other developments",
+              "Following quality first processes through architecture review, code review, and testing"
+            ]
+          }
+        ],
         "experience": [],
         "education": []
       },
       "cover_letter": {
-        "opening_hook": "As a Spatial UI Rendering Engineer on the RealityKit team, you'll architect and optimize the foundational rendering systems that bring spatial interfaces to life-transforming how millions interact with applications in visionOS.",
+        "opening_hook": "As a builder, I bring hands-on experience to create impactful solutions that solve real-world problems.",
         "proof_paragraphs": [
-          "Your work directly impacts how users interact with every application across Apple's vision ecosystem. Every optimization you craft, every rendering technique you innovate, and every pixel you perfect will empower developers and delight users worldwide.",
-          "Join a world-class team defining the next era of human-computer interaction. Every optimization you craft, every rendering technique you innovate, and every pixel you perfect will empower developers and delight users."
+          {
+            "paragraph_id": 1,
+            "proof_point": "Developing high quality features according to the specifications of Design, Product, and Engineering Leadership"
+          },
+          {
+            "paragraph_id": 2,
+            "proof_point": "Working with multi-functional partners to integrate multiple platforms into new service offerings"
+          }
         ],
-        "closing": "This is your opportunity to work at the intersection of graphics, user interface design, and spatial computing-building technology that doesn't just render interfaces, but creates intuitive, immersive interactions."
+        "closing": "I'm eager to collaborate with your team to deliver even better experiences and impact."
       }
     }
   }

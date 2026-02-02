@@ -4,183 +4,260 @@
     "variable_name": {
       "type": "object",
       "properties": {
-        "{{job_post_text}}": "Shape the future of spatial computing by building revolutionary UI rendering technologies for Apple Vision Pro and next-generation vision products. As part of the RealityKit team, you'll architect and optimize the foundational rendering systems that bring spatial interfaces to life-transforming how millions interact with applications in visionOS. Push the boundaries of real-time UI rendering to deliver fluid, responsive spatial experiences. You'll develop high-performance rendering pipelines that seamlessly blend 2D interface elements with 3D spatial content, optimize GPU workloads for crystal-clear text and graphics, and pioneer new techniques for rendering adaptive, context-aware user interfaces in mixed reality. Your work will directly impact how users interact with every application across Apple's vision ecosystem. Join a world-class team defining the next era of human-computer interaction. Every optimization you craft, every rendering technique you innovate, and every pixel you perfect will empower developers and delight users worldwide. This is your opportunity to work at the intersection of graphics, user interface design, and spatial computing-building technology that doesn't just render interfaces, but creates intuitive, immersive interactions."
+        "{{job_post_text}}": "Apple’s services - App Store, Apple Music, Apple TV, Apple Podcasts, and many more are among the most exciting and dynamic in the world. Our teams work together to craft products and experiences that impact people’s lives in ways they could not have imagined, from having a more productive day or getting around town, to kicking back and enjoying some entertainment. The Apple Services design team is seeking a product designer to craft elegant experiences for purchasing and managing subscription-based products. The ideal candidate will have a passion for designing elegant products that improve business performance while always keeping the customer informed and in control."
       }
-    },
-    "analysis": {
-      "role_title": "Spatial UI Rendering Engineer",
-      "company_name": "RealityKit",
-      "seniority_level": "lead",
-      "ats_keywords": [
-        "Spatial UI Rendering",
-        "RealityKit",
-        "Apple Vision Pro",
-        "next-generation vision products",
-        "GPU pipelines",
-        "rendering algorithms",
-        "rendering systems",
-        "high-performance rendering",
-        "real-time UI rendering",
-        "spatial interfaces",
-        "rendering pipelines",
-        "rendering algorithms",
-        "GPU optimization",
-        "rendering performance",
-        "rendering systems",
-        "rendering pipelines",
-        "rendering algorithms",
-        "GPU pipelines",
-        "rendering algorithms",
-        "rendering performance"
-      ],
-      "tools_and_tech": [
-        "GPU pipelines",
-        "rendering algorithms",
-        "rendering systems",
-        "real-time UI rendering",
-        "spatial interfaces",
-        "rendering pipelines",
-        "rendering algorithms",
-        "GPU optimization",
-        "rendering performance"
-      ],
-      "categories": [
-        {
-          "category_id": "Rendering Systems",
-          "category_label": "Rendering Systems",
-          "priority": "must_have",
-          "jd_signals": [
-            "high-performance rendering systems",
-            "rendering pipelines",
-            "rendering algorithms",
-            "real-time UI rendering",
-            "spatial interfaces"
-          ],
-          "evidence_dimensions": [
-            "what",
-            "how_why",
-            "tools",
-            "scope",
-            "result_impact"
-          ]
-        },
-        {
-          "category_id": "GPU Optimization",
-          "category_label": "GPU Optimization",
-          "priority": "must_have",
-          "jd_signals": [
-            "GPU pipelines",
-            "rendering algorithms",
-            "GPU optimization",
-            "rendering performance"
-          ],
-          "evidence_dimensions": [
-            "what",
-            "how_why",
-            "tools",
-            "scope"
-          ]
-        },
-        {
-          "category_id": "UI Design",
-          "category_label": "UI Design",
-          "priority": "must_have",
-          "jd_signals": [
-            "intuitive APIs",
-            "responsive interfaces",
-            "beautiful UI",
-            "context-aware user interfaces"
-          ],
-          "evidence_dimensions": [
-            "what",
-            "how_why",
-            "tools",
-            "result_impact"
-          ]
-        }
-      ],
-      "skill_inventory": [
-        {
-          "group_id": "GPU Optimization",
-          "group_label": "GPU Optimization",
-          "items": [
-            "GPU pipelines",
-            "rendering algorithms",
-            "GPU optimization",
-            "rendering performance"
-          ],
-          "jd_signals": [
-            "GPU pipelines",
-            "rendering algorithms",
-            "GPU optimization",
-            "rendering performance"
-          ]
-        },
-        {
-          "group_id": "UI Design",
-          "group_label": "UI Design",
-          "items": [
-            "intuitive APIs",
-            "responsive interfaces",
-            "beautiful UI",
-            "context-aware user interfaces"
-          ],
-          "jd_signals": [
-            "intuitive APIs",
-            "responsive interfaces",
-            "beautiful UI",
-            "context-aware user interfaces"
-          ]
-        }
-      ],
-      "question_bank": {
-        "skill_questions": [
-          {
-            "question_id": "1",
-            "group_id": "GPU Optimization",
-            "skill": "GPU pipelines",
-            "question_text": "Do you have experience with GPU rendering pipelines?",
-            "answer_fields": [
-              {"field_key": "what", "field_label": "What skills do you have?"},
-              {"field_key": "how_why", "field_label": "How did you use them?"},
-              {"field_key": "tools", "field_label": "Tools used?"}
-            ]
-          },
-          {
-            "question_id": "2",
-            "group_id": "UI Design",
-            "skill": "intuitive APIs",
-            "question_text": "How did you design intuitive APIs for user interfaces?",
-            "answer_fields": [
-              {"field_key": "what", "field_label": "What skills do you have?"},
-              {"field_key": "how_why", "field_label": "How did you use them?"},
-              {"field_key": "tools", "field_label": "Tools used?"}
-            ]
-          }
+    }
+  },
+  "analysis": {
+    "role_title": "product designer",
+    "company_name": "Apple",
+    "seniority_level": "staff",
+    "ats_keywords": [
+      "UI controls available in Apple UI frameworks",
+      "accessibility standards, inclusive design practices",
+      "design for all aspects of subscription-based products",
+      "Apple TV and Apple Watch",
+      "design for all aspects of subscription-based products",
+      "UI consistency with designers, engineers, product managers, and executives",
+      "communication through writing, visuals, and presentations",
+      "design for all aspects of subscription-based products"
+    ],
+    "tools_and_tech": [
+      "Sketch",
+      "Figma",
+      "Photoshop",
+      "Keynote",
+      "Figma",
+      "Adobe XD",
+      "Adobe Illustrator",
+      "Adobe XD",
+      "Adobe InDesign"
+    ],
+    "categories": [
+      {
+        "category_id": "ui_design",
+        "category_label": "UI/UX",
+        "priority": "must_have",
+        "jd_signals": [
+          "UI controls available in Apple UI frameworks",
+          "accessibility standards, inclusive design practices"
         ],
-        "category_questions": [
-          {
-            "question_id": "1",
-            "category_id": "Rendering Systems",
-            "question_text": "What impact do you have on the rendering of spatial interfaces?",
-            "answer_fields": [
-              {"field_key": "what", "field_label": "What skills do you have?"},
-              {"field_key": "how_why", "field_label": "How did you use them?"},
-              {"field_key": "tools", "field_label": "Tools used?"}
-            ]
-          },
-          {
-            "question_id": "2",
-            "category_id": "GPU Optimization",
-            "question_text": "What are the key challenges in GPU rendering optimization?",
-            "answer_fields": [
-              {"field_key": "what", "field_label": "What skills do you have?"},
-              {"field_key": "how_why", "field_label": "How did you use them?"},
-              {"field_key": "tools", "field_label": "Tools used?"}
-            ]
-          }
+        "evidence_dimensions": [
+          "what",
+          "how_why",
+          "tools"
+        ]
+      },
+      {
+        "category_id": "design_principles",
+        "category_label": "Design Principles",
+        "priority": "must_have",
+        "jd_signals": [
+          "design for all aspects of subscription-based products",
+          "UI consistency with designers, engineers, product managers, and executives"
+        ],
+        "evidence_dimensions": [
+          "what",
+          "how_why",
+          "tools"
+        ]
+      },
+      {
+        "category_id": "accessibility",
+        "category_label": "Accessibility",
+        "priority": "must_have",
+        "jd_signals": [
+          "familiarity with accessibility standards, inclusive design practices"
+        ],
+        "evidence_dimensions": [
+          "what",
+          "how_why"
         ]
       }
+    ],
+    "skill_inventory": [
+      {
+        "group_id": "ui_design",
+        "group_label": "UI/UX",
+        "items": [
+          "UI controls available in Apple UI frameworks",
+          "accessibility standards, inclusive design practices"
+        ],
+        "jd_signals": [
+          "UI controls available in Apple UI frameworks",
+          "accessibility standards, inclusive design practices"
+        ]
+      },
+      {
+        "group_id": "design_principles",
+        "group_label": "Design Principles",
+        "items": [
+          "design for all aspects of subscription-based products",
+          "UI consistency with designers, engineers, product managers, and executives"
+        ],
+        "jd_signals": [
+          "design for all aspects of subscription-based products",
+          "UI consistency with designers, engineers, product managers, and executives"
+        ]
+      },
+      {
+        "group_id": "accessibility",
+        "group_label": "Accessibility",
+        "items": [
+          "familiarity with accessibility standards, inclusive design practices"
+        ],
+        "jd_signals": [
+          "familiarity with accessibility standards, inclusive design practices"
+        ]
+      }
+    ],
+    "question_bank": {
+      "skill_questions": [
+        {
+          "question_id": "1",
+          "group_id": "ui_design",
+          "skill": "UI controls available in Apple UI frameworks",
+          "question_text": "Do you have experience with UI controls available in Apple UI frameworks?",
+          "answer_fields": [
+            {
+              "field_key": "what",
+              "field_label": "What",
+              "expected_format": "short_text"
+            },
+            {
+              "field_key": "how_why",
+              "field_label": "How",
+              "expected_format": "short_text"
+            }
+          ]
+        },
+        {
+          "question_id": "2",
+          "group_id": "ui_design",
+          "skill": "UI controls available in Apple UI frameworks",
+          "question_text": "How did you use UI controls available in Apple UI frameworks?",
+          "answer_fields": [
+            {
+              "field_key": "what",
+              "field_label": "What",
+              "expected_format": "short_text"
+            },
+            {
+              "field_key": "how_why",
+              "field_label": "How",
+              "expected_format": "short_text"
+            }
+          ]
+        },
+        {
+          "question_id": "3",
+          "group_id": "ui_design",
+          "skill": "UI controls available in Apple UI frameworks",
+          "question_text": "What did you build with UI controls available in Apple UI frameworks?",
+          "answer_fields": [
+            {
+              "field_key": "what",
+              "field_label": "What",
+              "expected_format": "short_text"
+            },
+            {
+              "field_key": "how_why",
+              "field_label": "How",
+              "expected_format": "short_text"
+            }
+          ]
+        },
+        {
+          "question_id": "4",
+          "group_id": "ui_design",
+          "skill": "UI controls available in Apple UI frameworks",
+          "question_text": "What impact did you have with UI controls available in Apple UI frameworks?",
+          "answer_fields": [
+            {
+              "field_key": "what",
+              "field_label": "What",
+              "expected_format": "short_text"
+            },
+            {
+              "field_key": "how_why",
+              "field_label": "How",
+              "expected_format": "short_text"
+            }
+          ]
+        },
+        {
+          "question_id": "5",
+          "group_id": "ui_design",
+          "skill": "UI controls available in Apple UI frameworks",
+          "question_text": "What tools did you use to create UI controls available in Apple UI frameworks?",
+          "answer_fields": [
+            {
+              "field_key": "what",
+              "field_label": "What",
+              "expected_format": "short_text"
+            },
+            {
+              "field_key": "how_why",
+              "field_label": "How",
+              "expected_format": "short_text"
+            }
+          ]
+        },
+        {
+          "question_id": "6",
+          "group_id": "ui_design",
+          "skill": "UI controls available in Apple UI frameworks",
+          "question_text": "What was the result of using UI controls available in Apple UI frameworks?",
+          "answer_fields": [
+            {
+              "field_key": "what",
+              "field_label": "What",
+              "expected_format": "short_text"
+            },
+            {
+              "field_key": "how_why",
+              "field_label": "How",
+              "expected_format": "short_text"
+            }
+          ]
+        }
+      ],
+      "category_questions": [
+        {
+          "question_id": "1",
+          "category_id": "ui_design",
+          "question_text": "How did you apply UI controls available in Apple UI frameworks to design for subscription-based products?",
+          "answer_fields": [
+            {
+              "field_key": "what",
+              "field_label": "What",
+              "expected_format": "short_text"
+            },
+            {
+              "field_key": "how_why",
+              "field_label": "How",
+              "expected_format": "short_text"
+            }
+          ]
+        },
+        {
+          "question_id": "2",
+          "category_id": "ui_design",
+          "question_text": "What was the impact of UI controls available in Apple UI frameworks on the design of subscription-based products?",
+          "answer_fields": [
+            {
+              "field_key": "what",
+              "field_label": "What",
+              "expected_format": "short_text"
+            },
+            {
+              "field_key": "how_why",
+              "field_label": "How",
+              "expected_format": "short_text"
+            }
+          ]
+        }
+      ]
     }
   }
 }

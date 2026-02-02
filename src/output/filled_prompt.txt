@@ -28,15 +28,7 @@
       "properties": {
         "{{job_post_text}}": {
           "type": "string",
-          "description": "Shape the future of spatial computing by building revolutionary UI rendering technologies for Apple Vision Pro and next\-generation vision products. As part of the RealityKit team, you'll architect and optimize the foundational rendering systems that bring spatial interfaces to life\-transforming how millions interact with applications in visionOS.  
-
-  
-
-Push the boundaries of real\-time UI rendering to deliver fluid, responsive spatial experiences. You'll develop high\-performance rendering pipelines that seamlessly blend 2D interface elements with 3D spatial content, optimize GPU workloads for crystal\-clear text and graphics, and pioneer new techniques for rendering adaptive, context\-aware user interfaces in mixed reality. Your work will directly impact how users interact with every application across Apple's vision ecosystem.  
-
-  
-
-Join a world\-class team defining the next era of human\-computer interaction. Every optimization you craft, every rendering technique you innovate, and every pixel you perfect will empower developers and delight users worldwide. This is your opportunity to work at the intersection of graphics, user interface design, and spatial computing\-building technology that doesn't just render interfaces, but creates intuitive, immersive interactions.  
+          "description": "Our team is hiring a skilled developer with strong fundamentals in software and systems design and architecture. The successful candidate will find themselves contributing to the Apple Business Essentials app (iPhone/iPad/mac), Schoolwork app (iPad), ClassKit framework (iOS/macOS), as well as other private frameworks and modules that are components of Apple’s business and educational services.  
 
   
 
@@ -44,35 +36,31 @@ Join a world\-class team defining the next era of human\-computer interaction. E
 
   
 
-As a Spatial UI Rendering Engineer on the RealityKit team, you'll architect and implement the core rendering systems that power user interfaces across visionOS and spatial computing products. You'll develop cutting\-edge GPU pipelines that render crisp text, smooth animations, and beautiful interface elements in 3D space, optimize real\-time rendering with advanced techniques to ensure responsive interactions, and collaborate closely with framework teams, Metal engineers, and designers to deliver exceptional visual quality and performance. Your work will span the full rendering stack\-from low\-level shader optimization and efficient compositing to high\-level API design\-ensuring developers have powerful, intuitive tools to create stunning spatial interfaces. You'll tackle complex challenges like efficient multi\-layer rendering, seamless integration of 2D and 3D content, and adaptive rendering for varying viewing distances, all while maintaining Apple's uncompromising standards for performance, visual fidelity, and user experience.","responsibilities":"Design and implement high\-performance rendering systems for spatial user interfaces in RealityKit.  
+Apple Business Essentials is a service which makes it easy to run and own your small business’s Macs, iPads, iPhones, and Apple TVs. The Apple Business Essentials app is a critical piece of that service, allowing employees to easily install apps provided by their business and to request repairs for their work devices. Schoolwork is a fully featured workflow app for teachers and supports such features as assigning collaborative documents, assessments, apps and app activities, exit tickets, and more. In both of these cases, whether business and school, the users are part of a managed organization and make use of Managed Apple Accounts.  
 
   
 
-Optimize GPU shaders and rendering algorithms to achieve exceptional visual quality, smooth animations, and consistent frame rates on Apple silicon.  
+Our team is looking for a dedicated engineer who will help us deliver even better experiences and features for these apps\-(and more) in the future\-that tackle the real world problems of IT administrators, employees, educators, and students alike. On our team you will be given projects that showcase your talents, challenge you to grow, and allow you to deliver your very best work. That work will have a direct and meaningful impact on millions of people around the world.  
 
   
 
-Build intuitive APIs that enable developers to create responsive, beautiful interfaces for visionOS applications.  
+","responsibilities":"Developing high quality features according to the specifications of Design, Product, and Engineering Leadership  
 
   
 
-Profile and debug complex rendering issues across the graphics stack using Instruments and GPU debugging tools.  
+Working with multi\-functional partners to integrate multiple platforms into new service offerings  
 
   
 
-Collaborate with framework teams to integrate UI rendering capabilities with existing Apple technologies.  
+Engaging in research into new technologies and other developments, and presenting findings to our stakeholders  
 
   
 
-Prototype innovative rendering features for future vision products and evaluate emerging graphics technologies.  
+Following quality first processes through architecture review, code review, and testing  
 
   
 
-Write comprehensive unit tests and performance benchmarks to ensure rendering quality and stability across diverse content.  
-
-  
-
-Conduct code reviews and contribute to technical specifications that maintain exceptional engineering standards.  
+Triaging issues and using debugging tools and skills to identify solutions  
 
   
 
@@ -80,35 +68,15 @@ Conduct code reviews and contribute to technical specifications that maintain ex
 
   
 
-Master's degree or PhD in Computer Science, Computer Graphics, or related field  
+Swift / Objective\-C / SwiftUI / UIKit experience  
 
   
 
-7\+ years of experience shipping UI rendering features in high\-profile consumer products.  
+Framework development / middleware development experience  
 
   
 
-Deep familiarity with Apple's 2D graphics frameworks such as Core Graphics, Core Animation, or UIKit.  
-
-  
-
-Experience developing rendering systems for user interfaces with text rendering, vector graphics, and compositing.  
-
-  
-
-Expert knowledge of GPU\-accelerated UI rendering, including efficient batching and draw call optimization.  
-
-  
-
-Proven track record optimizing rendering performance for Apple silicon and GPU architectures  
-
-  
-
-Experience with spatial computing, AR/VR rendering, or multi\-view display systems.  
-
-  
-
-Familiarity with accessibility features and rendering techniques that support diverse user needs.  
+Strong CS fundamental skills are crucial. Whether you have a traditional CS degree or learned some other way, we’d love to talk with you!  
 
   
 
@@ -116,35 +84,27 @@ Familiarity with accessibility features and rendering techniques that support di
 
   
 
-Bachelor's degree in Computer Science, Computer Engineering, or equivalent practical experience.  
+5\+ years developing and shipping software  
 
   
 
-5\+ years of professional experience working on 2D and/or 3D real\-time rendering applications.  
+Strong testing fundamentals and a strict alignment to quality engineering  
 
   
 
-High proficiency in writing safe, performant C\+\+ code.  
+Solid coding fundamentals and a thirst to improve and challenge yourself  
 
   
 
-Knowledge of the graphics pipeline, modern rendering techniques, and image processing.  
+Passion for high quality user experiences and an unmatched attention to detail  
 
   
 
-Experience with modern graphics APIs (Metal, Vulkan, Direct3D 12, WebGPU) and shading languages (MSL, HLSL, GLSL, WGSL).  
+Ability to work optimally on a highly collaborative team  
 
   
 
-Experience with all stages of software development, from prototyping to performance optimization.  
-
-  
-
-Strong problem\-solving skills and ability to debug complex rendering issues.  
-
-  
-
-Outstanding teamwork and communication skills.  
+Great communication skills  
 
   
 
@@ -169,57 +129,52 @@ Apple is an equal opportunity employer that is committed to inclusion and divers
     "variable_name": {
       "type": "object",
       "properties": {
-        "{{job_post_text}}": "Shape the future of spatial computing by building revolutionary UI rendering technologies for Apple Vision Pro and next-generation vision products. As part of the RealityKit team, you'll architect and optimize the foundational rendering systems that bring spatial interfaces to life-transforming how millions interact with applications in visionOS. Push the boundaries of real-time UI rendering to deliver fluid, responsive spatial experiences. You'll develop high-performance rendering pipelines that seamlessly blend 2D interface elements with 3D spatial content, optimize GPU workloads for crystal-clear text and graphics, and pioneer new techniques for rendering adaptive, context-aware user interfaces in mixed reality. Your work will directly impact how users interact with every application across Apple's vision ecosystem. Join a world-class team defining the next era of human-computer interaction. Every optimization you craft, every rendering technique you innovate, and every pixel you perfect will empower developers and delight users worldwide. This is your opportunity to work at the intersection of graphics, user interface design, and spatial computing-building technology that doesn't just render interfaces, but creates intuitive, immersive interactions."
+        "{{job_post_text}}": "Our team is hiring a skilled developer with strong fundamentals in software and systems design and architecture. The successful candidate will find themselves contributing to the Apple Business Essentials app (iPhone/iPad/mac), Schoolwork app (iPad), ClassKit framework (iOS/macOS), as well as other private frameworks and modules that are components of Apple’s business and educational services. Our team is looking for a dedicated engineer who will help us deliver even better experiences and features for these apps\-(and more) in the future that tackle the real world problems of IT administrators, employees, educators, and students alike. On our team you will be given projects that showcase your talents, challenge you to grow, and allow you to deliver your very best work. That work will have a direct and meaningful impact on millions of people around the world."
       }
     },
     "analysis": {
-      "role_title": "Spatial UI Rendering Engineer",
-      "company_name": "RealityKit",
-      "seniority_level": "lead",
+      "role_title": "SKILLED DEVELOPER",
+      "company_name": "APPLE",
+      "seniority_level": "senior",
       "ats_keywords": [
-        "Spatial UI Rendering",
-        "RealityKit",
-        "Apple Vision Pro",
-        "next-generation vision products",
-        "GPU pipelines",
-        "rendering algorithms",
-        "rendering systems",
-        "high-performance rendering",
-        "real-time UI rendering",
-        "spatial interfaces",
-        "rendering pipelines",
-        "rendering algorithms",
-        "GPU optimization",
-        "rendering performance",
-        "rendering systems",
-        "rendering pipelines",
-        "rendering algorithms",
-        "GPU pipelines",
-        "rendering algorithms",
-        "rendering performance"
+        "skilled developer",
+        "Swift / Objective-C / SwiftUI / UIKit experience",
+        "framework development / middleware development experience",
+        "strong CS fundamental skills",
+        "Apple Business Essentials",
+        "Schoolwork app",
+        "ClassKit framework",
+        "private frameworks and modules",
+        "Apple Business Essentials app",
+        "Schoolwork app",
+        "ClassKit framework",
+        "Apple Business Essentials",
+        "Schoolwork app",
+        "ClassKit framework"
       ],
       "tools_and_tech": [
-        "GPU pipelines",
-        "rendering algorithms",
-        "rendering systems",
-        "real-time UI rendering",
-        "spatial interfaces",
-        "rendering pipelines",
-        "rendering algorithms",
-        "GPU optimization",
-        "rendering performance"
+        "Swift",
+        "Objective-C",
+        "SwiftUI",
+        "UIKit",
+        "framework development",
+        "middleware development",
+        "strong CS fundamentals",
+        "Apple Business Essentials",
+        "Schoolwork app",
+        "ClassKit framework"
       ],
       "categories": [
         {
-          "category_id": "Rendering Systems",
-          "category_label": "Rendering Systems",
+          "category_id": "software_development",
+          "category_label": "Software Development",
           "priority": "must_have",
           "jd_signals": [
-            "high-performance rendering systems",
-            "rendering pipelines",
-            "rendering algorithms",
-            "real-time UI rendering",
-            "spatial interfaces"
+            "developing high quality features according to the specifications of Design, Product, and Engineering Leadership",
+            "working with multi-functional partners to integrate multiple platforms into new service offerings",
+            "engaging in research into new technologies and other developments",
+            "following quality first processes through architecture review, code review, and testing",
+            "triaging issues and using debugging tools and skills to identify solutions"
           ],
           "evidence_dimensions": [
             "what",
@@ -230,14 +185,15 @@ Apple is an equal opportunity employer that is committed to inclusion and divers
           ]
         },
         {
-          "category_id": "GPU Optimization",
-          "category_label": "GPU Optimization",
+          "category_id": "frameworks_and_integration",
+          "category_label": "Frameworks and Integration",
           "priority": "must_have",
           "jd_signals": [
-            "GPU pipelines",
-            "rendering algorithms",
-            "GPU optimization",
-            "rendering performance"
+            "Apple Business Essentials app",
+            "Schoolwork app",
+            "ClassKit framework",
+            "private frameworks and modules",
+            "components of Apple’s business and educational services"
           ],
           "evidence_dimensions": [
             "what",
@@ -247,101 +203,209 @@ Apple is an equal opportunity employer that is committed to inclusion and divers
           ]
         },
         {
-          "category_id": "UI Design",
-          "category_label": "UI Design",
+          "category_id": "technical_skills",
+          "category_label": "Technical Skills",
           "priority": "must_have",
           "jd_signals": [
-            "intuitive APIs",
-            "responsive interfaces",
-            "beautiful UI",
-            "context-aware user interfaces"
+            "strong CS fundamental skills",
+            "5+ years developing and shipping software",
+            "solid coding fundamentals",
+            "passion for high quality user experiences",
+            "attention to detail"
           ],
           "evidence_dimensions": [
             "what",
             "how_why",
-            "tools",
-            "result_impact"
+            "tools"
           ]
         }
       ],
       "skill_inventory": [
         {
-          "group_id": "GPU Optimization",
-          "group_label": "GPU Optimization",
+          "group_id": "software_development",
+          "group_label": "Software Development",
           "items": [
-            "GPU pipelines",
-            "rendering algorithms",
-            "GPU optimization",
-            "rendering performance"
+            "Swift",
+            "Objective-C",
+            "SwiftUI",
+            "UIKit"
           ],
           "jd_signals": [
-            "GPU pipelines",
-            "rendering algorithms",
-            "GPU optimization",
-            "rendering performance"
+            "developing high quality features according to the specifications of Design, Product, and Engineering Leadership",
+            "working with multi-functional partners to integrate multiple platforms into new service offerings",
+            "engaging in research into new technologies and other developments",
+            "following quality first processes through architecture review, code review, and testing",
+            "triaging issues and using debugging tools and skills to identify solutions"
           ]
         },
         {
-          "group_id": "UI Design",
-          "group_label": "UI Design",
+          "group_id": "frameworks_and_integration",
+          "group_label": "Frameworks and Integration",
           "items": [
-            "intuitive APIs",
-            "responsive interfaces",
-            "beautiful UI",
-            "context-aware user interfaces"
+            "Apple Business Essentials",
+            "Schoolwork app",
+            "ClassKit framework"
           ],
           "jd_signals": [
-            "intuitive APIs",
-            "responsive interfaces",
-            "beautiful UI",
-            "context-aware user interfaces"
+            "components of Apple’s business and educational services",
+            "private frameworks and modules",
+            "Apple Business Essentials app"
+          ]
+        },
+        {
+          "group_id": "technical_skills",
+          "group_label": "Technical Skills",
+          "items": [
+            "strong CS fundamental skills",
+            "5+ years developing and shipping software",
+            "solid coding fundamentals",
+            "passion for high quality user experiences",
+            "attention to detail"
+          ],
+          "jd_signals": [
+            "passion for high quality user experiences",
+            "attention to detail"
           ]
         }
       ],
       "question_bank": {
         "skill_questions": [
           {
-            "question_id": "1",
-            "group_id": "GPU Optimization",
-            "skill": "GPU pipelines",
-            "question_text": "Do you have experience with GPU rendering pipelines?",
+            "question_id": "skill_1",
+            "group_id": "software_development",
+            "skill": "Swift",
+            "question_text": "Do you have experience with Swift?",
             "answer_fields": [
-              {"field_key": "what", "field_label": "What skills do you have?"},
-              {"field_key": "how_why", "field_label": "How did you use them?"},
-              {"field_key": "tools", "field_label": "Tools used?"}
+              {
+                "field_key": "what",
+                "field_label": "What",
+                "expected_format": "short_text"
+              },
+              {
+                "field_key": "how_why",
+                "field_label": "How",
+                "expected_format": "short_text"
+              },
+              {
+                "field_key": "tools",
+                "field_label": "Tools",
+                "expected_format": "tool_list"
+              }
             ]
           },
           {
-            "question_id": "2",
-            "group_id": "UI Design",
-            "skill": "intuitive APIs",
-            "question_text": "How did you design intuitive APIs for user interfaces?",
+            "question_id": "skill_2",
+            "group_id": "software_development",
+            "skill": "Objective-C",
+            "question_text": "Do you have experience with Objective-C?",
             "answer_fields": [
-              {"field_key": "what", "field_label": "What skills do you have?"},
-              {"field_key": "how_why", "field_label": "How did you use them?"},
-              {"field_key": "tools", "field_label": "Tools used?"}
+              {
+                "field_key": "what",
+                "field_label": "What",
+                "expected_format": "short_text"
+              },
+              {
+                "field_key": "how_why",
+                "field_label": "How",
+                "expected_format": "short_text"
+              },
+              {
+                "field_key": "tools",
+                "field_label": "Tools",
+                "expected_format": "tool_list"
+              }
+            ]
+          },
+          {
+            "question_id": "skill_3",
+            "group_id": "software_development",
+            "skill": "SwiftUI",
+            "question_text": "Do you have experience with SwiftUI?",
+            "answer_fields": [
+              {
+                "field_key": "what",
+                "field_label": "What",
+                "expected_format": "short_text"
+              },
+              {
+                "field_key": "how_why",
+                "field_label": "How",
+                "expected_format": "short_text"
+              },
+              {
+                "field_key": "tools",
+                "field_label": "Tools",
+                "expected_format": "tool_list"
+              }
+            ]
+          },
+          {
+            "question_id": "skill_4",
+            "group_id": "software_development",
+            "skill": "UIKit",
+            "question_text": "Do you have experience with UIKit?",
+            "answer_fields": [
+              {
+                "field_key": "what",
+                "field_label": "What",
+                "expected_format": "short_text"
+              },
+              {
+                "field_key": "how_why",
+                "field_label": "How",
+                "expected_format": "short_text"
+              },
+              {
+                "field_key": "tools",
+                "field_label": "Tools",
+                "expected_format": "tool_list"
+              }
             ]
           }
         ],
         "category_questions": [
           {
-            "question_id": "1",
-            "category_id": "Rendering Systems",
-            "question_text": "What impact do you have on the rendering of spatial interfaces?",
+            "question_id": "category_1",
+            "category_id": "software_development",
+            "question_text": "What are the key areas you focus on in your work?",
             "answer_fields": [
-              {"field_key": "what", "field_label": "What skills do you have?"},
-              {"field_key": "how_why", "field_label": "How did you use them?"},
-              {"field_key": "tools", "field_label": "Tools used?"}
+              {
+                "field_key": "what",
+                "field_label": "What",
+                "expected_format": "short_text"
+              },
+              {
+                "field_key": "how_why",
+                "field_label": "How",
+                "expected_format": "short_text"
+              },
+              {
+                "field_key": "tools",
+                "field_label": "Tools",
+                "expected_format": "tool_list"
+              }
             ]
           },
           {
-            "question_id": "2",
-            "category_id": "GPU Optimization",
-            "question_text": "What are the key challenges in GPU rendering optimization?",
+            "question_id": "category_2",
+            "category_id": "frameworks_and_integration",
+            "question_text": "What frameworks or modules do you work with?",
             "answer_fields": [
-              {"field_key": "what", "field_label": "What skills do you have?"},
-              {"field_key": "how_why", "field_label": "How did you use them?"},
-              {"field_key": "tools", "field_label": "Tools used?"}
+              {
+                "field_key": "what",
+                "field_label": "What",
+                "expected_format": "short_text"
+              },
+              {
+                "field_key": "how_why",
+                "field_label": "How",
+                "expected_format": "short_text"
+              },
+              {
+                "field_key": "tools",
+                "field_label": "Tools",
+                "expected_format": "tool_list"
+              }
             ]
           }
         ]

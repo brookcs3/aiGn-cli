@@ -63,6 +63,8 @@ def read_chat_input() -> str:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--chat", action="store_true", help="Interactive/piped chat input mode")
+    parser.add_argument("--system", type=str, default=None, help="System prompt string")
+    parser.add_argument("--system-file", type=str, default=None, help="Path to system prompt file")
     # Model is in parent dir (root of repo)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     default_model = os.path.join(script_dir, "..", "smollm2-135m.gguf")
@@ -70,6 +72,14 @@ def main():
     parser.add_argument("--ctx", type=int, default=32768, help="Context window (n_ctx)")
     parser.add_argument("--gpu", type=int, default=-1, help="n_gpu_layers (-1 = all)")
     args = parser.parse_args()
+
+    # Build system prompt
+    system_prompt = None
+    if args.system_file:
+        with open(args.system_file, "r") as f:
+            system_prompt = f.read().strip()
+    elif args.system:
+        system_prompt = args.system
 
     # Load model silently
     with SuppressStderr():
@@ -81,6 +91,11 @@ def main():
             n_gpu_layers=args.gpu,
             verbose=False
         )
+
+    # Build base messages (system prompt if provided, otherwise empty)
+    base_messages = []
+    if system_prompt:
+        base_messages.append({"role": "system", "content": system_prompt})
 
     if args.chat:
         # Loop for continuous chat interaction
@@ -96,7 +111,7 @@ def main():
                 break
 
             output = llm.create_chat_completion(
-                messages=[{"role": "user", "content": user_text}]
+                messages=base_messages + [{"role": "user", "content": user_text}]
             )
             raw = output["choices"][0]["message"]["content"]
 
@@ -105,7 +120,7 @@ def main():
         # Single-shot mode
         user_text = "What is the capital of France?"
         output = llm.create_chat_completion(
-            messages=[{"role": "user", "content": user_text}]
+            messages=base_messages + [{"role": "user", "content": user_text}]
         )
         raw = output["choices"][0]["message"]["content"]
         print(strip_think_blocks(raw))
